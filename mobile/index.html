@@ -57,7 +57,7 @@
       </section>
 <section class="landing-section" id="practice-guides" aria-labelledby="guide-title">
   <h2 id="guide-title">음성 롤플레이 실습 가이드</h2>
-  <div class="guide-grid">
+  <div class="guide-grid" id="guide-slides" tabindex="0" role="region" aria-label="좌우로 넘기는 실습 가이드">
     <a href="guide-1-full.webp" aria-label="모바일 음성 실습과 다섯 가지 유형 크게 보기"><img src="guide-1-preview.webp" width="720" height="1018" loading="lazy" alt="모바일 음성 실습과 다섯 가지 유형"><span>모바일 음성 실습과 다섯 가지 유형　⤢</span></a>
     <a href="guide-2-full.webp" aria-label="실시간 대화 자막과 AI 분석·코칭 크게 보기"><img src="guide-2-preview.webp" width="720" height="1018" loading="lazy" alt="실시간 대화 자막과 AI 분석·코칭"><span>실시간 대화 자막과 AI 분석·코칭　⤢</span></a>
     <a href="guide-3-full.webp" aria-label="취업면접 · 취준생과 대학생 크게 보기"><img src="guide-3-preview.webp" width="720" height="1018" loading="lazy" alt="취업면접 · 취준생과 대학생"><span>취업면접 · 취준생과 대학생　⤢</span></a>
@@ -67,6 +67,11 @@
     <a href="guide-7-full.webp" aria-label="영양상담 · 학교 영양상담사 크게 보기"><img src="guide-7-preview.webp" width="720" height="1018" loading="lazy" alt="영양상담 · 학교 영양상담사"><span>영양상담 · 학교 영양상담사　⤢</span></a>
     <a href="guide-8-full.webp" aria-label="개인·관리자 대시보드 크게 보기"><img src="guide-8-preview.webp" width="720" height="1018" loading="lazy" alt="개인·관리자 대시보드"><span>개인·관리자 대시보드　⤢</span></a>
   </div>
+  <div class="guide-navigation">
+    <button type="button" class="quiet" aria-controls="guide-slides" data-prev>← 이전</button>
+    <span aria-live="polite" data-position></span>
+    <button type="button" class="quiet" aria-controls="guide-slides" data-next>다음 →</button>
+  </div>
   <dialog id="guide-viewer" aria-label="실습 가이드 확대 보기">
     <div class="guide-tools"><a target="_blank" rel="noopener">원본 이미지 열기 ↗</a><button class="quiet" type="button" autofocus>닫기</button></div>
     <img alt="">
@@ -74,6 +79,31 @@
 </section>
 <script>
 (() => {
+  const track = document.getElementById('guide-slides');
+  const cards = Array.from(track.children);
+  const navigation = track.nextElementSibling;
+  const previous = navigation.querySelector('[data-prev]');
+  const next = navigation.querySelector('[data-next]');
+  const position = navigation.querySelector('[data-position]');
+  function slideWidth() {
+    return cards[1].offsetLeft - cards[0].offsetLeft;
+  }
+  function updatePosition() {
+    const first = Math.round(track.scrollLeft / slideWidth()) + 1;
+    const last = Math.min(cards.length, first + Math.round(track.clientWidth / slideWidth()) - 1);
+    const label = (last > first ? first + '–' + last : first) + ' / ' + cards.length;
+    if (position.textContent !== label) position.textContent = label;
+    previous.disabled = track.scrollLeft <= 1;
+    next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 1;
+  }
+  function advance(direction) {
+    track.scrollBy({left: direction * slideWidth(), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+  }
+  previous.onclick = () => advance(-1);
+  next.onclick = () => advance(1);
+  track.addEventListener('scroll', updatePosition, {passive:true});
+  new ResizeObserver(updatePosition).observe(track);
+  updatePosition();
   const viewer = document.getElementById('guide-viewer');
   const image = viewer.querySelector('img');
   for (const link of document.querySelectorAll('.guide-grid a')) {
