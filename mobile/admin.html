@@ -8,7 +8,7 @@
   <link rel="icon" href="./favicon.png">
   <link rel="stylesheet" href="./mobile.css">
   <link rel="stylesheet" href="./admin.css?v=2">
-  <script src="./admin.js?v=3" defer></script>
+  <script src="./admin.js?v=4" defer></script>
 </head>
 <body>
   <main class="admin">
@@ -20,6 +20,7 @@
       <label>면접 유형<select id="type"><option value="all">전체</option><option value="job">A1. 취업면접 (취준생/대학생)</option><option value="college">A2. 대학 입학 면접(고등생)</option></select></label>
       <button class="primary" type="submit">집계 조회</button>
     </form>
+    <button id="logout" type="button" hidden>관리자 로그아웃</button>
     <p id="metrics-status" role="status"></p>
     <div id="report" hidden>
       <h2>앱 이용 현황</h2>

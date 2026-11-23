@@ -95,8 +95,25 @@ function render(data) {
   }
 }
 
-form.addEventListener('submit', async event => {
-  event.preventDefault();
+const storageKey = 'roleplay-admin-view';
+let session = '';
+function setAuthenticated(active) {
+  field('token').required = !active;
+  field('token').parentElement.hidden = active;
+  field('logout').hidden = !active;
+}
+function forget() {
+  session = '';
+  sessionStorage.removeItem(storageKey);
+  setAuthenticated(false);
+  report.hidden = true;
+  field('token').value = '';
+}
+field('logout').addEventListener('click', () => {
+  forget();
+  location.reload();
+});
+async function refreshReport() {
   const button = form.querySelector('button');
   if (button.disabled) return;
   button.disabled = true;
@@ -105,11 +122,20 @@ form.addEventListener('submit', async event => {
   try {
     const query = new URLSearchParams({ days: field('days').value, type: field('type').value });
     const response = await fetch('/api/interview-analytics?' + query, {
-      headers: { Authorization: 'Bearer ' + field('token').value.trim() },
+      headers: session ? { 'X-Dashboard-Session': session } : { Authorization: 'Bearer ' + field('token').value.trim() },
       cache: 'no-store', signal: AbortSignal.timeout(8000)
     });
     const data = await response.json();
-    if (!response.ok) throw new Error(data.error);
+    if (!response.ok) {
+      if (response.status === 401) forget();
+      throw new Error(data.error);
+    }
+    session = response.headers.get('X-Dashboard-Session') || session;
+    if (session) {
+      sessionStorage.setItem(storageKey, JSON.stringify({ session, days: query.get('days'), type: query.get('type') }));
+      field('token').value = '';
+      setAuthenticated(true);
+    }
     render(data);
     report.hidden = false;
     status.textContent = data.started || Object.values(data.counseling).some(item => item.started) ? '' : '선택한 기간에 집계된 연습이 없습니다.';
@@ -118,4 +144,18 @@ form.addEventListener('submit', async event => {
   } finally {
     button.disabled = false;
   }
+}
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  refreshReport();
 });
+try {
+  const saved = JSON.parse(sessionStorage.getItem(storageKey));
+  if (saved?.session) {
+    session = saved.session;
+    field('days').value = saved.days;
+    field('type').value = saved.type;
+    setAuthenticated(true);
+    refreshReport();
+  }
+} catch { forget(); }
