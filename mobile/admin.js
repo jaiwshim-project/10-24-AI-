@@ -29,7 +29,7 @@ function completionRate(item) {
   return item.started ? (item.completed / item.started * 100).toFixed(1) + '%' : '데이터 없음';
 }
 
-const topics = { job: 'A1. 취업면접 (취준생/대학생)', college: 'A2. 대학입학 면접 (고등생)', school: '진학상담교사(학교)', career: '취업상담코치(대학)', nutrition: '영양상담사(학교)' };
+const topics = { job: 'A1. 취업면접 (취준생/대학생)', college: 'A2. 대학입학 면접 (고등생)', school: 'B1. 진학상담교사(학교)', career: 'B2. 취업상담코치(대학)', nutrition: 'B3. 영양상담사(학교)' };
 const criteria = { listening: '경청', context: '상황 파악', questions: '질문의 적절성',
   options: '대안 제시', agreement: '다음 행동 합의' };
 
