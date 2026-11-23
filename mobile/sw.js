@@ -1,4 +1,4 @@
-const version = 'rolecoach-mobile-v42';
+const version = 'rolecoach-mobile-v43';
 const shell = ['./', './index.html', './mobile.css', './mobile.js', './member-account.bundle.js', './interview-overview.js', './feedback-history.js', './feedback-example.json', './counseling-examples.json', './manifest.webmanifest', './favicon.png', './brand-icon-192.png', './brand-icon-512.png', './interview-hero.jpg'];
 
 self.addEventListener('install', event => {
