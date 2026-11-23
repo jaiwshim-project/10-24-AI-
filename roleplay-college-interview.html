@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="입시면접 롤플레이 - Roleplay AI Coach">
+  <meta name="author" content="심재우">
+  <meta name="copyright" content="© 2026 Roleplay AI Coach. All rights reserved.">
+  <title>입시면접 롤플레이 - Roleplay AI Coach</title>
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Green Theme */
+    :root {
+      --primary-color: #22c55e;
+      --primary-light: #bbf7d0;
+      --primary-bg: #f0fdf4;
+    }
+
+    .hero-section {
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      color: var(--white);
+      padding: 3rem 0;
+      text-align: center;
+    }
+
+    .hero-section h1 {
+      color: var(--white);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      opacity: 1;
+    }
+
+    .hero-section p {
+      color: var(--white);
+      font-size: 1.1rem;
+      opacity: 0.95;
+    }
+
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 2rem;
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      color: var(--slate-700);
+      font-weight: 600;
+      opacity: 1;
+    }
+
+    .step.active {
+      border-color: var(--primary-color);
+      background: var(--primary-bg);
+      color: var(--primary-color);
+    }
+
+    .step.completed {
+      border-color: #22c55e;
+      background: var(--primary-bg);
+      color: #22c55e;
+    }
+
+    .scenario-card {
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .scenario-card:hover {
+      border-color: var(--primary-color);
+      background: var(--primary-bg);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .scenario-card.selected {
+      border-color: var(--primary-color);
+      border-width: 3px;
+      background: var(--primary-bg);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .scenario-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 0.5rem;
+      opacity: 1;
+    }
+
+    .scenario-desc {
+      color: var(--slate-700);
+      opacity: 1;
+      line-height: 1.6;
+    }
+
+    .record-section {
+      text-align: center;
+      padding: 3rem;
+      background: var(--primary-bg);
+      border-radius: 1rem;
+      border: 2px solid var(--primary-light);
+    }
+
+    .record-btn {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: none;
+      background: var(--primary-color);
+      color: var(--white);
+      font-size: 3rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .record-btn:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .record-btn.recording {
+      background: #dc2626;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .timer {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-top: 1.5rem;
+      opacity: 1;
+    }
+
+    .coach-card {
+      background: var(--white);
+      border: 2px solid var(--primary-light);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .coach-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--primary-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .coach-info h4 {
+      font-size: 1.1rem;
+      color: var(--slate-900);
+      margin-bottom: 0.25rem;
+      opacity: 1;
+    }
+
+    .coach-info p {
+      font-size: 0.9rem;
+      color: var(--slate-700);
+      opacity: 1;
+    }
+
+    .custom-scenario-input {
+      width: 100%;
+      min-height: 120px;
+      padding: 1rem;
+      border: 2px solid var(--slate-200);
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      margin-top: 1rem;
+      resize: vertical;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Language Selector */
+    .language-selector {
+      background: var(--white);
+      border: 2px solid var(--primary-color);
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .language-selector label {
+      font-weight: 700;
+      color: var(--slate-900);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .language-selector select {
+      flex: 1;
+      padding: 0.5rem 0.75rem;
+      border: 2px solid var(--slate-300);
+      border-radius: 0.375rem;
+      font-size: 0.95rem;
+      color: var(--slate-800);
+      background: var(--white);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .language-selector select:hover {
+      border-color: var(--primary-color);
+    }
+
+    .language-selector select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px var(--primary-bg);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 968px) {
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <style>
+    /* 🎨 초현실적 3D 클레이 파스텔톤 이모티콘 */
+    .emoji-3d {
+      display: inline-block;
+      font-style: normal;
+      position: relative;
+
+      /* 매우 강한 3D 입체감 */
+      text-shadow:
+        4px 4px 12px rgba(0, 0, 0, 0.35),
+        -3px -3px 6px rgba(255, 255, 255, 1),
+        0 0 20px rgba(255, 255, 255, 0.9),
+        2px 2px 4px rgba(0, 0, 0, 0.2),
+        -1px -1px 2px rgba(255, 255, 255, 0.8);
+
+      /* 부드러운 파스텔톤 필터 */
+      filter:
+        brightness(1.15)
+        saturate(1.5)
+        contrast(1.2)
+        drop-shadow(0 6px 14px rgba(0, 0, 0, 0.2))
+        drop-shadow(0 0 18px rgba(255, 255, 255, 0.7))
+        drop-shadow(-2px -2px 6px rgba(255, 255, 255, 0.4));
+
+      transform: translateZ(0) perspective(1000px);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* 클레이 질감 배경 */
+      background:
+        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.5), transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15), transparent 70%);
+
+      border-radius: 50%;
+      padding: 0.2em;
+    }
+
+    /* 강한 하이라이트 효과 */
+    .emoji-3d::before {
+      content: '';
+      position: absolute;
+      top: -15%;
+      left: -15%;
+      right: -15%;
+      bottom: -15%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.7), transparent 40%),
+        radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), transparent 55%);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.8;
+      filter: blur(1px);
+    }
+
+    /* 부드러운 그림자 효과 */
+    .emoji-3d::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .emoji-3d:hover {
+      transform: translateY(-4px) scale(1.1) rotateZ(-3deg) perspective(1000px) rotateX(5deg);
+      filter:
+        brightness(1.25)
+        saturate(1.7)
+        contrast(1.25)
+        drop-shadow(0 8px 18px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 24px rgba(255, 255, 255, 0.8))
+        drop-shadow(-3px -3px 8px rgba(255, 255, 255, 0.5));
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 8px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 1),
+        3px 3px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    /* 로고 이모티콘 - 초강력 효과 */
+    .logo .emoji-3d {
+      font-size: 1.4em;
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 7px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 0.95),
+        3px 3px 6px rgba(0, 0, 0, 0.2),
+        -2px -2px 4px rgba(255, 255, 255, 0.9);
+      filter:
+        brightness(1.25)
+        saturate(1.5)
+        contrast(1.18)
+        drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+    }
+
+    .logo .emoji-3d:hover {
+      transform: translateY(-5px) scale(1.15) rotateZ(-4deg) perspective(1000px) rotateX(8deg);
+      filter:
+        brightness(1.3)
+        saturate(1.7)
+        contrast(1.22)
+        drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))
+        drop-shadow(0 0 28px rgba(255, 255, 255, 0.9));
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span><span class="emoji-3d">🎯</span></span>
+        <span>Roleplay AI Coach</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="index.html">홈</a></li>
+          <li><a href="dashboard.html">대시보드</a></li>
+          <li><a href="manual.html">매뉴얼</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero-section">
+    <div class="container">
+      <h1><span class="emoji-3d">🎓</span> 입시면접 롤플레이</h1>
+      <p>대학 입시면접을 AI 면접관과 함께 완벽하게 준비하세요.</p>
+    </div>
+  </section>
+
+  <!-- Step Indicator -->
+  <section>
+    <div class="container">
+      <div class="step-indicator">
+        <div class="step active" id="step1-indicator">
+          <span><span class="emoji-3d">1️⃣</span></span>
+          <span>시나리오 선택</span>
+        </div>
+        <div class="step" id="step2-indicator">
+          <span><span class="emoji-3d">2️⃣</span></span>
+          <span>AI 면접</span>
+        </div>
+        <div class="step" id="step3-indicator">
+          <span><span class="emoji-3d">3️⃣</span></span>
+          <span>맞춤 피드백</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 1: Scenario Selection -->
+  <section id="step1">
+    <div class="container">
+      <h2 class="section-title">면접 시나리오를 선택하세요</h2>
+
+      <!-- Case Selection -->
+      <div style="max-width: 900px; margin: 0 auto 2.5rem;">
+        <h3 style="color: var(--slate-900); font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; opacity: 1;">
+          <span class="emoji-3d">📋</span> 추천 사례
+        </h3>
+
+        <!-- 사용 가이드 -->
+        <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid #0ea5e9; border-left: 5px solid #0ea5e9; border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 1.5rem;">
+          <h4 style="font-size: 1.1rem; font-weight: 700; color: #0369a1; margin-bottom: 1rem; opacity: 1; display: flex; align-items: center; gap: 0.5rem;">
+            <span style="font-size: 1.5rem;"><span class="emoji-3d">💡</span></span> 사례 선택 가이드
+          </h4>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem;">
+            <div style="background: white; padding: 1rem; border-radius: 0.5rem; border: 1px solid #bae6fd;">
+              <div style="font-weight: 700; color: #0369a1; margin-bottom: 0.5rem; opacity: 1;"><span class="emoji-3d">1️⃣</span> 난이도 확인</div>
+              <div style="font-size: 0.9rem; color: var(--slate-700); line-height: 1.6; opacity: 1;">
+                <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span> 초급: 기본 상황<br>
+                <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span> 중급: 복잡한 변수<br>
+                <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span> 고급: 위기 상황
+              </div>
+            </div>
+            <div style="background: white; padding: 1rem; border-radius: 0.5rem; border: 1px solid #bae6fd;">
+              <div style="font-weight: 700; color: #0369a1; margin-bottom: 0.5rem; opacity: 1;"><span class="emoji-3d">2️⃣</span> 사례 읽기</div>
+              <div style="font-size: 0.9rem; color: var(--slate-700); line-height: 1.6; opacity: 1;">
+                상황·목표·챌린지를 꼼꼼히 읽고 실제 상황처럼 준비하세요
+              </div>
+            </div>
+            <div style="background: white; padding: 1rem; border-radius: 0.5rem; border: 1px solid #bae6fd;">
+              <div style="font-weight: 700; color: #0369a1; margin-bottom: 0.5rem; opacity: 1;"><span class="emoji-3d">3️⃣</span> 카드 클릭</div>
+              <div style="font-size: 0.9rem; color: var(--slate-700); line-height: 1.6; opacity: 1;">
+                사례 카드를 클릭하면 선택됩니다. 이후 시나리오를 선택하고 면접을 시작하세요
+              </div>
+            </div>
+          </div>
+          <div style="background: #fef3c7; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #f59e0b;">
+            <div style="font-weight: 700; color: #92400e; margin-bottom: 0.5rem; opacity: 1; display: flex; align-items: center; gap: 0.5rem;">
+              <span><span class="emoji-3d">🎯</span></span> 실전 팁
+            </div>
+            <div style="font-size: 0.9rem; color: #78350f; opacity: 1; line-height: 1.6;">
+              • 처음이라면 <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span> 난이도부터 시작하세요<br>
+              • 실제 업무와 유사한 사례를 선택하면 학습 효과가 높습니다<br>
+              • 4번째 "나만의 실제 사례"는 본인이 직면한 실제 상황을 입력할 수 있습니다<br>
+              • 면접 전에 사례 내용을 2-3번 읽고 역할을 머릿속으로 리허설하세요
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-3" style="gap: 1rem; margin-bottom: 1.5rem;">
+          <div class="scenario-card" data-case="leadership" style="border-color: var(--primary-color); background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+              <div class="scenario-title" style="font-size: 1.1rem;"><span class="emoji-3d">🎓</span> 학생부종합전형</div>
+            </div>
+            <div class="scenario-desc" style="font-size: 0.85rem; line-height: 1.6;">
+              <strong style="display: block; margin-top: 0.3rem;"><span class="emoji-3d">📍</span> 상황:</strong>
+              리더십 활동 부족한 학생의 면접, 동아리 활동 위주 생기부
+
+              <strong style="display: block; margin-top: 0.3rem;"><span class="emoji-3d">🎯</span> 목표:</strong>
+              강점을 끌어내고 합격 판단 근거 확보
+
+              <strong style="display: block; margin-top: 0.3rem;"><span class="emoji-3d">⚡</span> 챌린지:</strong>
+              겉으로 드러나지 않는 역량 발견, 짧은 시간 내 평가
+
+              <strong style="display: block; margin-top: 0.3rem;"><span class="emoji-3d">✅</span> 기대결과:</strong>
+              학생 강점 발견 + 전공 적합성 확인 + 합격/불합격 근거 확보
+
+              <strong style="display: block; margin-top: 0.3rem; color: #eab308;">난이도: <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span></strong>
+            </div>
+          </div>
+
+          <div class="scenario-card" data-case="international" style="border-color: var(--primary-color); background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+              <div class="scenario-title" style="font-size: 1.1rem;"><span class="emoji-3d">🌍</span> 국제특기자 영어</div>
+            </div>
+            <div class="scenario-desc" style="font-size: 0.85rem; line-height: 1.6;">
+              <strong style="display: block; margin-top: 0.3rem;"><span class="emoji-3d">📍</span> 상황:</strong>
+              해외 경험 풍부한 학생의 영어 심층 면접, 영어로만 진행
+
+              <strong style="display: block; margin-top: 0.3rem;"><span class="emoji-3d">🎯</span> 목표:</strong>
+              진정성 검증 및 글로벌 역량 평가
+
+              <strong style="display: block; margin-top: 0.3rem;"><span class="emoji-3d">⚡</span> 챌린지:</strong>
+              스펙 과장 여부 판별, 영어 외 내면 평가 병행
+
+              <strong style="display: block; margin-top: 0.3rem;"><span class="emoji-3d">✅</span> 기대결과:</strong>
+              진정성 확인 + 글로벌 리더십 평가 + 입학 후 적응력 판단
+
+              <strong style="display: block; margin-top: 0.3rem; color: #eab308;">난이도: <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span></strong>
+            </div>
+          </div>
+
+          <div class="scenario-card" data-case="science" style="border-color: var(--primary-color); background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+              <div class="scenario-title" style="font-size: 1.1rem;"><span class="emoji-3d">🔬</span> 과학 특기자</div>
+            </div>
+            <div class="scenario-desc" style="font-size: 0.85rem; line-height: 1.6;">
+              <strong style="display: block; margin-top: 0.3rem;"><span class="emoji-3d">📍</span> 상황:</strong>
+              과학 올림피아드 수상자의 전공 적합성 평가, 심화 질문 대응
+
+              <strong style="display: block; margin-top: 0.3rem;"><span class="emoji-3d">🎯</span> 목표:</strong>
+              암기 아닌 깊이 있는 이해도 확인
+
+              <strong style="display: block; margin-top: 0.3rem;"><span class="emoji-3d">⚡</span> 챌린지:</strong>
+              수상 배경 vs 실력 검증, 본인 연구 vs 외부 도움 구분
+
+              <strong style="display: block; margin-top: 0.3rem;"><span class="emoji-3d">✅</span> 기대결과:</strong>
+              실력 검증 + 연구 자세 평가 + 전공 발전 가능성 판단
+
+              <strong style="display: block; margin-top: 0.3rem; color: #eab308;">난이도: <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span></strong>
+            </div>
+          </div>
+        </div>
+        <p style="color: var(--slate-600); font-size: 0.9rem; text-align: center; opacity: 1;">
+          <span class="emoji-3d">💡</span> 추천 사례를 클릭하면 해당 시나리오가 자동으로 설정됩니다
+        </p>
+      </div>
+
+      <!-- Language Selector -->
+      <div class="language-selector" style="max-width: 900px; margin: 0 auto 1.5rem;">
+        <label for="languageSelect">
+          <span class="emoji-3d">🌐</span> 롤플레이 언어 선택:
+        </label>
+        <select id="languageSelect" onchange="changeLanguage()">
+          <option value="ko"><span class="emoji-3d">🇰🇷</span> 한국어 (Korean)</option>
+          <option value="en"><span class="emoji-3d">🇺🇸</span> English (영어)</option>
+          <option value="zh-CN"><span class="emoji-3d">🇨🇳</span> 简体中文 (중국어 간체)</option>
+          <option value="zh-TW"><span class="emoji-3d">🇹🇼</span> 繁體中文 (중국어 번체)</option>
+          <option value="ja"><span class="emoji-3d">🇯🇵</span> 日本語 (일본어)</option>
+          <option value="es"><span class="emoji-3d">🇪🇸</span> Español (스페인어)</option>
+          <option value="fr"><span class="emoji-3d">🇫🇷</span> Français (프랑스어)</option>
+          <option value="de"><span class="emoji-3d">🇩🇪</span> Deutsch (독일어)</option>
+          <option value="pt"><span class="emoji-3d">🇵🇹</span> Português (포르투갈어)</option>
+          <option value="ru"><span class="emoji-3d">🇷🇺</span> Русский (러시아어)</option>
+          <option value="ar"><span class="emoji-3d">🇸🇦</span> العربية (아랍어)</option>
+          <option value="hi"><span class="emoji-3d">🇮🇳</span> हिन्दी (힌디어)</option>
+          <option value="it"><span class="emoji-3d">🇮🇹</span> Italiano (이탈리아어)</option>
+          <option value="nl"><span class="emoji-3d">🇳🇱</span> Nederlands (네덜란드어)</option>
+          <option value="pl"><span class="emoji-3d">🇵🇱</span> Polski (폴란드어)</option>
+          <option value="tr"><span class="emoji-3d">🇹🇷</span> Türkçe (터키어)</option>
+          <option value="vi"><span class="emoji-3d">🇻🇳</span> Tiếng Việt (베트남어)</option>
+          <option value="th"><span class="emoji-3d">🇹🇭</span> ไทย (태국어)</option>
+          <option value="id"><span class="emoji-3d">🇮🇩</span> Bahasa Indonesia (인도네시아어)</option>
+          <option value="ms"><span class="emoji-3d">🇲🇾</span> Bahasa Melayu (말레이시아어)</option>
+          <option value="sv"><span class="emoji-3d">🇸🇪</span> Svenska (스웨덴어)</option>
+          <option value="no"><span class="emoji-3d">🇳🇴</span> Norsk (노르웨이어)</option>
+          <option value="da"><span class="emoji-3d">🇩🇰</span> Dansk (덴마크어)</option>
+          <option value="fi"><span class="emoji-3d">🇫🇮</span> Suomi (핀란드어)</option>
+          <option value="cs"><span class="emoji-3d">🇨🇿</span> Čeština (체코어)</option>
+          <option value="ro"><span class="emoji-3d">🇷🇴</span> Română (루마니아어)</option>
+          <option value="hu"><span class="emoji-3d">🇭🇺</span> Magyar (헝가리어)</option>
+          <option value="el"><span class="emoji-3d">🇬🇷</span> Ελληνικά (그리스어)</option>
+          <option value="he"><span class="emoji-3d">🇮🇱</span> עברית (히브리어)</option>
+          <option value="uk"><span class="emoji-3d">🇺🇦</span> Українська (우크라이나어)</option>
+        </select>
+        <p style="color: var(--slate-700); font-size: 0.85rem; margin: 0;">
+          선택한 언어로 AI가 대응합니다
+        </p>
+      </div>
+
+      <div class="grid grid-2" style="max-width: 900px; margin: 0 auto 2rem;">
+        <div class="scenario-card" data-scenario="motivation">
+          <div class="scenario-title"><span class="emoji-3d">🎯</span> 지원동기 면접</div>
+          <div class="scenario-desc">
+            "우리 대학(학과)에 지원한 동기는 무엇인가요?"<br>
+            학교·전공 선택 이유와 진로 비전을 명확하게 전달하는 연습입니다.
+          </div>
+        </div>
+
+        <div class="scenario-card" data-scenario="school-record">
+          <div class="scenario-title">📚 학생부 기반 면접</div>
+          <div class="scenario-desc">
+            "생활기록부에 나온 '○○ 활동'에 대해 설명해주세요."<br>
+            학생부의 구체적 활동을 깊이 있게 설명하는 연습입니다.
+          </div>
+        </div>
+
+        <div class="scenario-card" data-scenario="text">
+          <div class="scenario-title"><span class="emoji-3d">📖</span> 제시문 기반 면접</div>
+          <div class="scenario-desc">
+            "제시문을 읽고 요지를 요약하고 자신의 의견을 말씀해주세요."<br>
+            논리적 사고와 비판적 분석 능력을 보여주는 연습입니다.
+          </div>
+        </div>
+
+        <div class="scenario-card" data-scenario="major">
+          <div class="scenario-title"><span class="emoji-3d">🔬</span> 전공적합성 면접</div>
+          <div class="scenario-desc">
+            "이 전공에서 가장 중요한 능력은 무엇이라고 생각하나요?"<br>
+            전공에 대한 이해도와 학업 준비도를 입증하는 연습입니다.
+          </div>
+        </div>
+
+        <div class="scenario-card" data-scenario="ethics">
+          <div class="scenario-title">⚕️ 의료윤리 면접</div>
+          <div class="scenario-desc">
+            "의료진이 환자의 비밀을 지켜야 하는 이유는 무엇인가요?"<br>
+            의학·간호 등 보건계열 지원자를 위한 윤리적 판단 훈련입니다.
+          </div>
+        </div>
+
+        <div class="scenario-card" data-scenario="custom">
+          <div class="scenario-title">✍️ 사용자 직접 입력</div>
+          <div class="scenario-desc">
+            실제 예상 질문이나 과거 기출 문제를 직접 입력하여<br>
+            맞춤형 면접 훈련을 진행할 수 있습니다.
+          </div>
+        </div>
+      </div>
+
+      <div id="custom-input-section" class="hidden" style="max-width: 900px; margin: 0 auto 2rem;">
+        <label for="custom-question" style="display: block; font-weight: 600; color: var(--slate-900); margin-bottom: 0.5rem;">
+          면접 질문을 입력하세요
+        </label>
+        <textarea
+          id="custom-question" maxlength="1900"
+          class="custom-scenario-input"
+          placeholder="예시: '본인이 생각하는 리더십이란 무엇이며, 리더십을 발휘했던 경험을 구체적으로 말씀해주세요.'"
+        ></textarea>
+      </div>
+
+      <div style="text-align: center;">
+        <button class="btn btn-primary" id="next-to-step2" disabled>다음 단계로 →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 2: Interview -->
+  <section id="step2" class="hidden">
+    <div class="container" style="max-width: 800px;">
+      <h2 class="section-title">AI 면접관과 모의 면접을 시작하세요</h2>
+
+      <!-- Scenario Context -->
+      <div class="card" style="margin-bottom: 2rem; border: 2px solid var(--primary-light); background: var(--primary-bg);">
+        <h3 style="color: var(--slate-900); margin-bottom: 1rem; opacity: 1;">면접 질문</h3>
+        <p id="scenario-context" tabindex="-1" style="color: var(--slate-800); line-height: 1.8; opacity: 1;">
+          <!-- 동적 삽입 -->
+        </p>
+      </div>
+
+      <div class="card" style="margin-bottom: 1rem;">
+        <label for="interview-answer"><strong>내 답변</strong></label>
+        <textarea id="interview-answer" rows="5" maxlength="3000" style="display:block;width:100%;margin:0.5rem 0;font:inherit;"></textarea>
+        <p>음성으로 답하거나 직접 입력하세요. 제출한 텍스트는 Claude에 전달됩니다.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem;">
+          <button type="button" class="btn btn-secondary" id="interview-mic">음성 답변</button>
+          <button type="button" class="btn btn-primary" id="interview-submit" disabled>답변 제출</button>
+          <button type="button" class="btn btn-secondary" id="interview-finish" disabled>면접 종료 · 피드백 받기</button>
+        </div>
+        <p id="interview-status" role="status" style="margin-top:0.75rem;"></p>
+      </div>
+      <details class="card" style="margin-bottom:1rem;">
+        <summary>제출한 질문과 답변 기록</summary>
+        <ol id="interview-transcript" style="padding-inline-start:1.5rem;overflow-wrap:anywhere;"></ol>
+      </details>
+      <section id="interview-result" class="card" tabindex="-1" hidden>
+        <h3>맞춤 면접 피드백</h3>
+        <p id="interview-feedback" style="white-space:pre-wrap;overflow-wrap:anywhere;"></p>
+      </section>
+
+      <div style="text-align: center; margin-top: 2rem;">
+        <button class="btn btn-secondary" id="back-to-step1">← 이전</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2026 Roleplay AI Coach. All rights reserved. | 심재우 &lt;jaiwshim@gmail.com&gt;</p>
+      <div class="footer-links">
+        <a href="manual.html">📖 매뉴얼</a>
+        <a href="copyright.html">© 저작권</a>
+        <a href="patent.html">⚖️ 특허</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/interview.js"></script>
+  <script>
+    // ========================================
+    // Global State
+    // ========================================
+    let selectedScenario = null;
+    const interview = createInterview('college');
+    let selectedLanguage = 'ko'; // 기본값: 한국어
+
+    // 30개 언어 정보
+    const LANGUAGES = {
+      'ko': { name: '한국어', nativeName: '한국어', flag: '<span class="emoji-3d">🇰🇷</span>' },
+      'en': { name: 'English', nativeName: 'English', flag: '<span class="emoji-3d">🇺🇸</span>' },
+      'zh-CN': { name: '简体中文', nativeName: '简体中文', flag: '<span class="emoji-3d">🇨🇳</span>' },
+      'zh-TW': { name: '繁體中文', nativeName: '繁體中文', flag: '<span class="emoji-3d">🇹🇼</span>' },
+      'ja': { name: '日本語', nativeName: '日本語', flag: '<span class="emoji-3d">🇯🇵</span>' },
+      'es': { name: 'Español', nativeName: 'Español', flag: '<span class="emoji-3d">🇪🇸</span>' },
+      'fr': { name: 'Français', nativeName: 'Français', flag: '<span class="emoji-3d">🇫🇷</span>' },
+      'de': { name: 'Deutsch', nativeName: 'Deutsch', flag: '<span class="emoji-3d">🇩🇪</span>' },
+      'pt': { name: 'Português', nativeName: 'Português', flag: '<span class="emoji-3d">🇵🇹</span>' },
+      'ru': { name: 'Русский', nativeName: 'Русский', flag: '<span class="emoji-3d">🇷🇺</span>' },
+      'ar': { name: 'العربية', nativeName: 'العربية', flag: '<span class="emoji-3d">🇸🇦</span>' },
+      'hi': { name: 'हिन्दी', nativeName: 'हिन्दी', flag: '<span class="emoji-3d">🇮🇳</span>' },
+      'it': { name: 'Italiano', nativeName: 'Italiano', flag: '<span class="emoji-3d">🇮🇹</span>' },
+      'nl': { name: 'Nederlands', nativeName: 'Nederlands', flag: '<span class="emoji-3d">🇳🇱</span>' },
+      'pl': { name: 'Polski', nativeName: 'Polski', flag: '<span class="emoji-3d">🇵🇱</span>' },
+      'tr': { name: 'Türkçe', nativeName: 'Türkçe', flag: '<span class="emoji-3d">🇹🇷</span>' },
+      'vi': { name: 'Tiếng Việt', nativeName: 'Tiếng Việt', flag: '<span class="emoji-3d">🇻🇳</span>' },
+      'th': { name: 'ไทย', nativeName: 'ไทย', flag: '<span class="emoji-3d">🇹🇭</span>' },
+      'id': { name: 'Bahasa Indonesia', nativeName: 'Bahasa Indonesia', flag: '<span class="emoji-3d">🇮🇩</span>' },
+      'ms': { name: 'Bahasa Melayu', nativeName: 'Bahasa Melayu', flag: '<span class="emoji-3d">🇲🇾</span>' },
+      'sv': { name: 'Svenska', nativeName: 'Svenska', flag: '<span class="emoji-3d">🇸🇪</span>' },
+      'no': { name: 'Norsk', nativeName: 'Norsk', flag: '<span class="emoji-3d">🇳🇴</span>' },
+      'da': { name: 'Dansk', nativeName: 'Dansk', flag: '<span class="emoji-3d">🇩🇰</span>' },
+      'fi': { name: 'Suomi', nativeName: 'Suomi', flag: '<span class="emoji-3d">🇫🇮</span>' },
+      'cs': { name: 'Čeština', nativeName: 'Čeština', flag: '<span class="emoji-3d">🇨🇿</span>' },
+      'ro': { name: 'Română', nativeName: 'Română', flag: '<span class="emoji-3d">🇷🇴</span>' },
+      'hu': { name: 'Magyar', nativeName: 'Magyar', flag: '<span class="emoji-3d">🇭🇺</span>' },
+      'el': { name: 'Ελληνικά', nativeName: 'Ελληνικά', flag: '<span class="emoji-3d">🇬🇷</span>' },
+      'he': { name: 'עברית', nativeName: 'עברית', flag: '<span class="emoji-3d">🇮🇱</span>' },
+      'uk': { name: 'Українська', nativeName: 'Українська', flag: '<span class="emoji-3d">🇺🇦</span>' }
+    };
+
+    // 언어 변경
+    function changeLanguage() {
+      const select = document.getElementById('languageSelect');
+      selectedLanguage = select.value;
+
+      const langInfo = LANGUAGES[selectedLanguage];
+      showToast(`${langInfo.flag} ${langInfo.nativeName}로 변경되었습니다. AI가 ${langInfo.nativeName}로 대응합니다.`, 'success');
+
+      // localStorage에 저장
+      localStorage.setItem('roleplay_language', selectedLanguage);
+    }
+
+    // 페이지 로드 시 저장된 언어 복원
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLanguage = localStorage.getItem('roleplay_language') || 'ko';
+      selectedLanguage = savedLanguage;
+      document.getElementById('languageSelect').value = savedLanguage;
+    });
+
+    // 추천 사례 데이터
+    const caseData = {
+      leadership: {
+        title: '<span class="emoji-3d">🎓</span> 학생부종합전형 면접',
+        scenario: 'school-record',
+        customQuestion: '생활기록부를 보니 동아리 활동은 많이 하셨는데, 학생회나 반장 같은 리더십 활동 경험이 없네요. 팀 프로젝트에서 주로 어떤 역할을 맡으셨나요? 구체적인 사례를 들어 설명해주세요.'
+      },
+      international: {
+        title: '<span class="emoji-3d">🌍</span> 국제특기자 영어 면접',
+        scenario: 'custom',
+        customQuestion: 'I see you have lived abroad for several years. Can you tell me about a specific cross-cultural challenge you faced and how you overcame it? Please also explain how this experience has prepared you for studying at our university.'
+      },
+      science: {
+        title: '<span class="emoji-3d">🔬</span> 과학 특기자 심화 질문',
+        scenario: 'major',
+        customQuestion: '과학 올림피아드에서 수상하셨다고 들었습니다. 출전했던 문제 중 가장 인상 깊었던 문제와 그 문제를 해결한 접근 방식을 설명해주세요. 그리고 그 경험이 우리 학과에서 어떻게 도움이 될 것이라고 생각하나요?'
+      }
+    };
+
+    const scenarioData = {
+      motivation: {
+        title: '<span class="emoji-3d">🎯</span> 지원동기 면접',
+        context: '면접관: "우리 대학(학과)에 지원한 동기는 무엇인가요? 이 학과를 선택한 이유와 졸업 후 진로 계획을 구체적으로 말씀해주세요."'
+      },
+      'school-record': {
+        title: '📚 학생부 기반 면접',
+        context: '면접관: "생활기록부에 나온 \'○○ 활동\'에 대해 설명해주세요. 이 활동을 통해 무엇을 배웠고, 어떻게 성장했나요?"'
+      },
+      text: {
+        title: '<span class="emoji-3d">📖</span> 제시문 기반 면접',
+        context: '면접관: "방금 읽으신 제시문의 핵심 논지를 요약하고, 찬성 또는 반대 입장에서 자신의 의견을 논리적으로 제시해주세요."'
+      },
+      major: {
+        title: '<span class="emoji-3d">🔬</span> 전공적합성 면접',
+        context: '면접관: "이 전공에서 가장 중요한 능력은 무엇이라고 생각하나요? 본인은 그 능력을 어떻게 준비해왔나요?"'
+      },
+      ethics: {
+        title: '⚕️ 의료윤리 면접',
+        context: '면접관: "의료진이 환자의 비밀을 지켜야 하는 이유는 무엇이라고 생각하나요? 만약 환자의 비밀 유지와 생명 보호가 충돌한다면 어떻게 판단하시겠습니까?"'
+      },
+      custom: {
+        title: '✍️ 사용자 직접 입력',
+        context: '' // 사용자 입력값으로 대체
+      }
+    };
+
+    // ========================================
+    // Step 1: Scenario Selection
+    // ========================================
+
+    // 추천 사례 선택 처리
+    document.querySelectorAll('[data-case]').forEach(card => {
+      card.addEventListener('click', () => {
+        const caseId = card.dataset.case;
+        const caseInfo = caseData[caseId];
+
+        if (!caseInfo) return;
+
+        // 모든 카드 선택 해제
+        document.querySelectorAll('.scenario-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+
+        // 해당 시나리오 자동 선택
+        selectedScenario = caseInfo.scenario;
+
+        // Custom 시나리오면 질문 자동 입력
+        if (caseInfo.scenario === 'custom') {
+          document.getElementById('custom-input-section').classList.remove('hidden');
+          document.getElementById('custom-question').value = caseInfo.customQuestion;
+          document.getElementById('next-to-step2').disabled = false;
+        } else {
+          document.getElementById('custom-input-section').classList.add('hidden');
+          // 기본 시나리오는 context를 사례별 질문으로 덮어쓰기
+          scenarioData[caseInfo.scenario].context = `면접관: "${caseInfo.customQuestion}"`;
+          document.getElementById('next-to-step2').disabled = false;
+        }
+
+        showToast(`${caseInfo.title} 사례가 선택되었습니다.`, 'success');
+        console.log('[Step1] 추천 사례 선택:', caseId);
+      });
+    });
+
+    // 일반 시나리오 선택 처리
+    document.querySelectorAll('[data-scenario]').forEach(card => {
+      card.addEventListener('click', () => {
+        // 이전 선택 해제
+        document.querySelectorAll('.scenario-card').forEach(c => c.classList.remove('selected'));
+
+        // 현재 선택
+        card.classList.add('selected');
+        selectedScenario = card.dataset.scenario;
+
+        // Custom 시나리오인 경우 입력창 표시
+        if (selectedScenario === 'custom') {
+          document.getElementById('custom-input-section').classList.remove('hidden');
+          document.getElementById('next-to-step2').disabled = true; // 입력 전까지 비활성화
+        } else {
+          document.getElementById('custom-input-section').classList.add('hidden');
+          document.getElementById('next-to-step2').disabled = false;
+        }
+
+        console.log('[Step1] 시나리오 선택:', selectedScenario);
+      });
+    });
+
+    // Custom 질문 입력 감지
+    document.getElementById('custom-question').addEventListener('input', (e) => {
+      const value = e.target.value.trim();
+      document.getElementById('next-to-step2').disabled = value.length === 0;
+    });
+
+    document.getElementById('next-to-step2').addEventListener('click', () => {
+      if (!selectedScenario) {
+        showToast('시나리오를 선택해주세요.', 'error');
+        return;
+      }
+
+      if (selectedScenario === 'custom') {
+        const customQuestion = document.getElementById('custom-question').value.trim();
+        if (!customQuestion) {
+          showToast('질문을 입력해주세요.', 'error');
+          return;
+        }
+        scenarioData.custom.context = `면접관: "${customQuestion}"`;
+      }
+
+      // Step 2로 이동
+      document.getElementById('step1').classList.add('hidden');
+      document.getElementById('step2').classList.remove('hidden');
+
+      // Step Indicator 업데이트
+      document.getElementById('step1-indicator').classList.remove('active');
+      document.getElementById('step1-indicator').classList.add('completed');
+      document.getElementById('step2-indicator').classList.add('active');
+
+      // 시나리오 컨텍스트 삽입
+      const scenario = scenarioData[selectedScenario];
+      interview.start(scenario.context, selectedLanguage);
+      document.getElementById('scenario-context').focus();
+    });
+
+    document.getElementById('back-to-step1').addEventListener('click', () => {
+      document.getElementById('step2').classList.add('hidden');
+      document.getElementById('step1').classList.remove('hidden');
+
+      // Step Indicator 업데이트
+      document.getElementById('step1-indicator').classList.add('active');
+      document.getElementById('step1-indicator').classList.remove('completed');
+      document.getElementById('step2-indicator').classList.remove('active');
+    });
+
+    // ========================================
+    // Page Init
+    // ========================================
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('[RolePlay-College-Interview] 페이지 로드 완료');
+    });
+  </script>
+</body>
+</html>

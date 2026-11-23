@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Roleplay AI Coach 35개 적용 분야 - 의료, 세일즈, 스타트업, 정치, 면접, 리더십, 전문직, 커머스, 종교, 글로벌, 프랜차이즈">
+  <meta name="author" content="심재우">
+  <meta name="copyright" content="© 2026 Roleplay AI Coach. All rights reserved.">
+  <title>35개 적용 분야 - Roleplay AI Coach</title>
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Hero Section Optimization */
+    .hero {
+      padding: 2rem 0;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+    }
+
+    /* Section Optimization */
+    section {
+      padding: 2rem 0;
+    }
+
+    .container {
+      padding: 1rem;
+    }
+
+    /* Super Category Optimization */
+    .super-category {
+      margin-bottom: 2rem;
+    }
+
+    .super-category-header {
+      background: var(--white);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      border: 2px solid var(--slate-200);
+      text-align: center;
+    }
+
+    .super-category-icon {
+      font-size: 3rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .super-category-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--slate-900);
+      opacity: 1;
+    }
+
+    .super-category-desc {
+      color: var(--slate-700);
+      font-size: 1rem;
+      opacity: 1;
+    }
+
+    /* Category Grid Optimization */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+    }
+
+    /* Mini Card Optimization */
+    .mini-card {
+      background: var(--white);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      border: 2px solid var(--slate-200);
+      transition: all 0.3s;
+      cursor: pointer;
+      margin-bottom: 0.75rem;
+    }
+
+    .mini-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .mini-card.medical {
+      border-left: 4px solid #2563eb;
+    }
+
+    .mini-card.sales {
+      border-left: 4px solid #ea580c;
+    }
+
+    .mini-card.startup {
+      border-left: 4px solid #0d9488;
+    }
+
+    .mini-card.politics {
+      border-left: 4px solid #9333ea;
+    }
+
+    .mini-card.interview {
+      border-left: 4px solid #16a34a;
+    }
+
+    .mini-card.leadership {
+      border-left: 4px solid #8b5cf6;
+    }
+
+    .mini-card.professional {
+      border-left: 4px solid #dc2626;
+    }
+
+    .mini-card.commerce {
+      border-left: 4px solid #f59e0b;
+    }
+
+    .mini-card.religion {
+      border-left: 4px solid #06b6d4;
+    }
+
+    .mini-card.global {
+      border-left: 4px solid #10b981;
+    }
+
+    .mini-card.franchise {
+      border-left: 4px solid #f43f5e;
+    }
+
+    .mini-card-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .mini-card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: var(--slate-900);
+      opacity: 1;
+    }
+
+    .mini-card-target {
+      font-size: 0.85rem;
+      color: var(--slate-600);
+      margin-bottom: 0.5rem;
+      opacity: 1;
+    }
+
+    .mini-card-methodology {
+      font-size: 0.8rem;
+      color: var(--slate-700);
+      background: var(--slate-50);
+      padding: 0.4rem;
+      border-radius: 0.375rem;
+      opacity: 1;
+    }
+
+    /* Count Badge Optimization */
+    .count-badge {
+      background: linear-gradient(135deg, var(--hospital-primary) 0%, var(--politics-primary) 100%);
+      color: var(--white);
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      font-size: 1rem;
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 0.75rem;
+    }
+
+    /* CTA Optimization */
+    .card {
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 1.75rem;
+      }
+
+      .super-category-icon {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+  <style>
+    /* 🎨 초현실적 3D 클레이 파스텔톤 이모티콘 */
+    .emoji-3d {
+      display: inline-block;
+      font-style: normal;
+      position: relative;
+
+      /* 매우 강한 3D 입체감 */
+      text-shadow:
+        4px 4px 12px rgba(0, 0, 0, 0.35),
+        -3px -3px 6px rgba(255, 255, 255, 1),
+        0 0 20px rgba(255, 255, 255, 0.9),
+        2px 2px 4px rgba(0, 0, 0, 0.2),
+        -1px -1px 2px rgba(255, 255, 255, 0.8);
+
+      /* 부드러운 파스텔톤 필터 */
+      filter:
+        brightness(1.15)
+        saturate(1.5)
+        contrast(1.2)
+        drop-shadow(0 6px 14px rgba(0, 0, 0, 0.2))
+        drop-shadow(0 0 18px rgba(255, 255, 255, 0.7))
+        drop-shadow(-2px -2px 6px rgba(255, 255, 255, 0.4));
+
+      transform: translateZ(0) perspective(1000px);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* 클레이 질감 배경 */
+      background:
+        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.5), transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15), transparent 70%);
+
+      border-radius: 50%;
+      padding: 0.2em;
+    }
+
+    /* 강한 하이라이트 효과 */
+    .emoji-3d::before {
+      content: '';
+      position: absolute;
+      top: -15%;
+      left: -15%;
+      right: -15%;
+      bottom: -15%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.7), transparent 40%),
+        radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), transparent 55%);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.8;
+      filter: blur(1px);
+    }
+
+    /* 부드러운 그림자 효과 */
+    .emoji-3d::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .emoji-3d:hover {
+      transform: translateY(-4px) scale(1.1) rotateZ(-3deg) perspective(1000px) rotateX(5deg);
+      filter:
+        brightness(1.25)
+        saturate(1.7)
+        contrast(1.25)
+        drop-shadow(0 8px 18px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 24px rgba(255, 255, 255, 0.8))
+        drop-shadow(-3px -3px 8px rgba(255, 255, 255, 0.5));
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 8px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 1),
+        3px 3px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    /* 로고 이모티콘 - 초강력 효과 */
+    .logo .emoji-3d {
+      font-size: 1.4em;
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 7px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 0.95),
+        3px 3px 6px rgba(0, 0, 0, 0.2),
+        -2px -2px 4px rgba(255, 255, 255, 0.9);
+      filter:
+        brightness(1.25)
+        saturate(1.5)
+        contrast(1.18)
+        drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+    }
+
+    .logo .emoji-3d:hover {
+      transform: translateY(-5px) scale(1.15) rotateZ(-4deg) perspective(1000px) rotateX(8deg);
+      filter:
+        brightness(1.3)
+        saturate(1.7)
+        contrast(1.22)
+        drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))
+        drop-shadow(0 0 28px rgba(255, 255, 255, 0.9));
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span><span class="emoji-3d">🎯</span></span>
+        <span>Roleplay AI Coach</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="index.html">홈</a></li>
+          <li><a href="categories-all.html" style="color: var(--hospital-primary);">전체 분야</a></li>
+          <li><a href="coaches.html">AI 코치</a></li>
+          <li><a href="dashboard.html">대시보드</a></li>
+          <li><a href="manual.html">매뉴얼</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <span class="count-badge">35개 적용 분야</span>
+      <h1 class="fade-in">모든 산업 분야의 커뮤니케이션</h1>
+      <p class="fade-in">상대방을 이해시키고, 신뢰를 만들고, 설득하고, 다음 행동을 이끌어내는 모든 대화 상황</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section>
+    <div class="container">
+
+      <!-- 1. 의료·병원 (4개) -->
+      <div class="super-category">
+        <div class="super-category-header" style="border-color: #2563eb; border-left: 5px solid #2563eb;">
+          <div class="super-category-icon"><span class="emoji-3d">🏥</span></div>
+          <h2 class="super-category-title">의료·병원 (4개)</h2>
+          <p class="super-category-desc">환자 상담, 진료 설명, 의료 커뮤니케이션</p>
+        </div>
+        <div class="category-grid">
+          <div class="mini-card medical" onclick="alert('롤플레이 페이지 준비 중')">
+            <div class="mini-card-icon"><span class="emoji-3d">🦷</span></div>
+            <h3 class="mini-card-title">1. 치과 환자상담</h3>
+            <p class="mini-card-target">치과 원장, 상담실장, 코디네이터</p>
+            <p class="mini-card-methodology">환자상담 5단계 설득 로드맵</p>
+          </div>
+          <div class="mini-card medical" onclick="alert('롤플레이 페이지 준비 중')">
+            <div class="mini-card-icon"><span class="emoji-3d">🏥</span></div>
+            <h3 class="mini-card-title">2. 병원 상담실장</h3>
+            <p class="mini-card-target">성형외과, 피부과, 안과, 정형외과 상담실장</p>
+            <p class="mini-card-methodology">고가 시술 상담 프로세스</p>
+          </div>
+          <div class="mini-card medical" onclick="alert('롤플레이 페이지 준비 중')">
+            <div class="mini-card-icon"><span class="emoji-3d">👨‍⚕️</span></div>
+            <h3 class="mini-card-title">3. 의사·전문가 진료 설명</h3>
+            <p class="mini-card-target">의사, 한의사, 수의사, 약사, 전문 클리닉 원장</p>
+            <p class="mini-card-methodology">환자 중심 설명 프로토콜</p>
+          </div>
+          <div class="mini-card medical" onclick="location.href='roleplay-foreign-patient.html'">
+            <div class="mini-card-icon">🌏</div>
+            <h3 class="mini-card-title">4. 외국인 환자 상담</h3>
+            <p class="mini-card-target">외국인 환자 유치 병원, 국제진료센터</p>
+            <p class="mini-card-methodology">다문화 의료 커뮤니케이션</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 세일즈·영업 (6개) -->
+      <div class="super-category">
+        <div class="super-category-header" style="border-color: #ea580c; border-left: 5px solid #ea580c;">
+          <div class="super-category-icon"><span class="emoji-3d">💼</span></div>
+          <h2 class="super-category-title">세일즈·영업 (6개)</h2>
+          <p class="super-category-desc">B2B/B2C 영업, 설득, 클로징</p>
+        </div>
+        <div class="category-grid">
+          <div class="mini-card sales" onclick="location.href='roleplay-sales.html'">
+            <div class="mini-card-icon">🤝</div>
+            <h3 class="mini-card-title">5. B2B 세일즈</h3>
+            <p class="mini-card-target">B2B 영업사원, 세일즈 매니저, 솔루션 영업</p>
+            <p class="mini-card-methodology">SPIN Selling + Insight Selling</p>
+          </div>
+          <div class="mini-card sales" onclick="location.href='roleplay-insurance.html'">
+            <div class="mini-card-icon">🛡️</div>
+            <h3 class="mini-card-title">6. 보험 상담</h3>
+            <p class="mini-card-target">보험설계사, GA 설계사, 재무상담사</p>
+            <p class="mini-card-methodology">보장분석 → 니즈 발굴 → 가치 설명</p>
+          </div>
+          <div class="mini-card sales" onclick="location.href='roleplay-car-sales.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">🚗</span></div>
+            <h3 class="mini-card-title">7. 자동차 판매</h3>
+            <p class="mini-card-target">자동차 카매니저, 수입차 딜러</p>
+            <p class="mini-card-methodology">니즈 발굴 → 시승 → 가치 설명</p>
+          </div>
+          <div class="mini-card sales" onclick="location.href='roleplay-realestate.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">🏢</span></div>
+            <h3 class="mini-card-title">8. 부동산·분양 상담</h3>
+            <p class="mini-card-target">공인중개사, 분양 상담사, 부동산 컨설턴트</p>
+            <p class="mini-card-methodology">목적 파악 → 입지 분석 → 투자 가치</p>
+          </div>
+          <div class="mini-card sales" onclick="location.href='roleplay-cold-call.html'">
+            <div class="mini-card-icon">📞</div>
+            <h3 class="mini-card-title">9. 전화영업·콜드콜</h3>
+            <p class="mini-card-target">보험설계사, B2B 영업사원, 병원 예약상담자</p>
+            <p class="mini-card-methodology">10초 후킹 → 가치 제안 → 미팅 예약</p>
+          </div>
+          <div class="mini-card sales" onclick="location.href='roleplay-customer-success.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">🔄</span></div>
+            <h3 class="mini-card-title">10. 고객성공·재계약</h3>
+            <p class="mini-card-target">B2B SaaS 고객성공팀, 컨설팅 회사</p>
+            <p class="mini-card-methodology">성과 확인 → 문제 발견 → 재계약</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. 스타트업·투자·사업발표 (3개) -->
+      <div class="super-category">
+        <div class="super-category-header" style="border-color: #0d9488; border-left: 5px solid #0d9488;">
+          <div class="super-category-icon"><span class="emoji-3d">🚀</span></div>
+          <h2 class="super-category-title">스타트업·투자·사업발표 (3개)</h2>
+          <p class="super-category-desc">투자 피칭, 정부지원사업, PoC 제안</p>
+        </div>
+        <div class="category-grid">
+          <div class="mini-card startup" onclick="location.href='roleplay-startup.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">🚀</span></div>
+            <h3 class="mini-card-title">11. 스타트업 CEO 피칭</h3>
+            <p class="mini-card-target">스타트업 CEO, 예비창업자, 초기창업자</p>
+            <p class="mini-card-methodology">10-20-30 Rule (Guy Kawasaki)</p>
+          </div>
+          <div class="mini-card startup" onclick="location.href='roleplay-government-grant.html'">
+            <div class="mini-card-icon">🏛️</div>
+            <h3 class="mini-card-title">12. 정부지원사업 발표</h3>
+            <p class="mini-card-target">예비창업패키지, 초기창업패키지, TIPS</p>
+            <p class="mini-card-methodology">사업계획서 기반 발표 + 질의응답</p>
+          </div>
+          <div class="mini-card startup" onclick="location.href='roleplay-poc-partnership.html'">
+            <div class="mini-card-icon">🤝</div>
+            <h3 class="mini-card-title">13. 대기업 PoC·파트너십</h3>
+            <p class="mini-card-target">B2B 솔루션 기업, AI 솔루션 기업</p>
+            <p class="mini-card-methodology">문제 이해 → PoC 목표 → 성과지표</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. 정치·공공 (4개) -->
+      <div class="super-category">
+        <div class="super-category-header" style="border-color: #9333ea; border-left: 5px solid #9333ea;">
+          <div class="super-category-icon"><span class="emoji-3d">🎤</span></div>
+          <h2 class="super-category-title">정치·공공 커뮤니케이션 (4개)</h2>
+          <p class="super-category-desc">선거, 공약, 토론, 민원응대</p>
+        </div>
+        <div class="category-grid">
+          <div class="mini-card politics" onclick="location.href='roleplay-politics.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">🎤</span></div>
+            <h3 class="mini-card-title">14. 정치인 선거유세</h3>
+            <p class="mini-card-target">지방선거 후보자, 국회의원 후보자</p>
+            <p class="mini-card-methodology">출마 이유 → 공감 → 비전 → 투표 호소</p>
+          </div>
+          <div class="mini-card politics" onclick="location.href='roleplay-policy-announcement.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">📋</span></div>
+            <h3 class="mini-card-title">15. 정치인 공약발표</h3>
+            <p class="mini-card-target">선거 후보자, 정책 담당자, 정당 발표자</p>
+            <p class="mini-card-methodology">문제 정의 → 공약 제시 → 실행 계획</p>
+          </div>
+          <div class="mini-card politics" onclick="location.href='roleplay-debate-interview.html'">
+            <div class="mini-card-icon">📺</div>
+            <h3 class="mini-card-title">16. TV토론·언론 인터뷰</h3>
+            <p class="mini-card-target">후보자, 대변인, 캠프 메시지 담당자</p>
+            <p class="mini-card-methodology">사실 확인 → 논점 명확화 → 신뢰 회복</p>
+          </div>
+          <div class="mini-card politics" onclick="location.href='roleplay-ministry.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">🏢</span></div>
+            <h3 class="mini-card-title">17. 공공기관 민원응대</h3>
+            <p class="mini-card-target">공무원, 공공기관 직원, 지자체 민원 담당자</p>
+            <p class="mini-card-methodology">감정 인정 → 규정 설명 → 대안 제시</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. 면접·입시·진로 (3개) -->
+      <div class="super-category">
+        <div class="super-category-header" style="border-color: #16a34a; border-left: 5px solid #16a34a;">
+          <div class="super-category-icon"><span class="emoji-3d">📝</span></div>
+          <h2 class="super-category-title">면접·입시·진로 (3개)</h2>
+          <p class="super-category-desc">취업, 입시, 진로 상담</p>
+        </div>
+        <div class="category-grid">
+          <div class="mini-card interview" onclick="location.href='roleplay-interview.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">💼</span></div>
+            <h3 class="mini-card-title">18. 취업면접</h3>
+            <p class="mini-card-target">취업준비생, 이직자, 경력직 지원자</p>
+            <p class="mini-card-methodology">STAR 프레임워크</p>
+          </div>
+          <div class="mini-card interview" onclick="location.href='roleplay-college-interview.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">🎓</span></div>
+            <h3 class="mini-card-title">19. 입시면접</h3>
+            <p class="mini-card-target">대학 수시 지원자, 특목고, 의대·약대</p>
+            <p class="mini-card-methodology">지원동기 → 학생부 → 전공적합성</p>
+          </div>
+          <div class="mini-card interview" onclick="location.href='roleplay-education-counseling.html'">
+            <div class="mini-card-icon">📚</div>
+            <h3 class="mini-card-title">20. 교육·입학상담</h3>
+            <p class="mini-card-target">학원 상담자, 입시 컨설턴트, 에듀테크 영업자</p>
+            <p class="mini-card-methodology">학생 진단 → 문제 발견 → 등록 전환</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. 조직·리더십 (3개) -->
+      <div class="super-category">
+        <div class="super-category-header" style="border-color: #8b5cf6; border-left: 5px solid #8b5cf6;">
+          <div class="super-category-icon"><span class="emoji-3d">👥</span></div>
+          <h2 class="super-category-title">조직·리더십·내부 커뮤니케이션 (3개)</h2>
+          <p class="super-category-desc">리더십, 피드백, 조직 관리</p>
+        </div>
+        <div class="category-grid">
+          <div class="mini-card leadership" onclick="location.href='roleplay-leadership-feedback.html'">
+            <div class="mini-card-icon">💬</div>
+            <h3 class="mini-card-title">21. 리더십·피드백 대화</h3>
+            <p class="mini-card-target">팀장, 임원, 관리자, HR 담당자</p>
+            <p class="mini-card-methodology">사실 전달 → 영향 설명 → 행동 합의</p>
+          </div>
+          <div class="mini-card leadership" onclick="location.href='roleplay-conflict-discipline.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">⚖️</span></div>
+            <h3 class="mini-card-title">22. 조직 갈등·징계</h3>
+            <p class="mini-card-target">팀장, 임원, HR, 노무 담당자</p>
+            <p class="mini-card-methodology">사실 확인 → 입장 청취 → 해결 방안</p>
+          </div>
+          <div class="mini-card leadership" onclick="location.href='roleplay-executive-presentation.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">📊</span></div>
+            <h3 class="mini-card-title">23. 사내 발표·임원 보고</h3>
+            <p class="mini-card-target">직장인, 팀장, 임원, PM, 기획자</p>
+            <p class="mini-card-methodology">결론 먼저 → 근거 → 대안 → 의사결정</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. 전문직 (4개) -->
+      <div class="super-category">
+        <div class="super-category-header" style="border-color: #dc2626; border-left: 5px solid #dc2626;">
+          <div class="super-category-icon"><span class="emoji-3d">⚖️</span></div>
+          <h2 class="super-category-title">전문직·고관여 상담 (4개)</h2>
+          <p class="super-category-desc">법률, 세무, 노무, 컨설팅</p>
+        </div>
+        <div class="category-grid">
+          <div class="mini-card professional" onclick="location.href='roleplay-legal.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">⚖️</span></div>
+            <h3 class="mini-card-title">24. 법률 상담</h3>
+            <p class="mini-card-target">변호사, 법무법인 상담실장</p>
+            <p class="mini-card-methodology">사실관계 → 법적 분석 → 수임 제안</p>
+          </div>
+          <div class="mini-card professional" onclick="location.href='roleplay-tax-accounting.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">💰</span></div>
+            <h3 class="mini-card-title">25. 세무·회계 상담</h3>
+            <p class="mini-card-target">세무사, 회계사, 세무법인 상담자</p>
+            <p class="mini-card-methodology">재무 상황 → 절세 방안 → 계약 제안</p>
+          </div>
+          <div class="mini-card professional" onclick="location.href='roleplay-labor.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">👔</span></div>
+            <h3 class="mini-card-title">26. 노무 상담</h3>
+            <p class="mini-card-target">노무사, HR 컨설턴트, 기업 인사담당자</p>
+            <p class="mini-card-methodology">사실관계 → 법적 분석 → 해결 방안</p>
+          </div>
+          <div class="mini-card professional" onclick="location.href='roleplay-consulting-sales.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">🎓</span></div>
+            <h3 class="mini-card-title">27. 강사·컨설턴트 영업</h3>
+            <p class="mini-card-target">기업교육 강사, 컨설턴트, 코치</p>
+            <p class="mini-card-methodology">문제 발굴 → 교육 효과 → 제안서 요청</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. 커머스·미디어 (2개) -->
+      <div class="super-category">
+        <div class="super-category-header" style="border-color: #f59e0b; border-left: 5px solid #f59e0b;">
+          <div class="super-category-icon">🛍️</div>
+          <h2 class="super-category-title">커머스·미디어·콘텐츠 (2개)</h2>
+          <p class="super-category-desc">라이브커머스, 인플루언서, 콘텐츠 판매</p>
+        </div>
+        <div class="category-grid">
+          <div class="mini-card commerce" onclick="location.href='roleplay-live-commerce.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">📱</span></div>
+            <h3 class="mini-card-title">28. 라이브커머스·쇼호스트</h3>
+            <p class="mini-card-target">쇼호스트, 라이브커머스 판매자, 인플루언서</p>
+            <p class="mini-card-methodology">10초 후킹 → 상품 가치 → 구매 유도</p>
+          </div>
+          <div class="mini-card commerce" onclick="location.href='roleplay-creator-branding.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">🎬</span></div>
+            <h3 class="mini-card-title">29. 크리에이터·인플루언서</h3>
+            <p class="mini-card-target">유튜버, 강사, 작가, 1인 기업가</p>
+            <p class="mini-card-methodology">브랜드 정체성 → 성과 입증 → 협업</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. 종교·상담 (2개) -->
+      <div class="super-category">
+        <div class="super-category-header" style="border-color: #06b6d4; border-left: 5px solid #06b6d4;">
+          <div class="super-category-icon">🙏</div>
+          <h2 class="super-category-title">종교·상담·돌봄 (2개)</h2>
+          <p class="super-category-desc">목회, 심리상담, 코칭</p>
+        </div>
+        <div class="category-grid">
+          <div class="mini-card religion" onclick="location.href='roleplay-hospital-counselor.html'">
+            <div class="mini-card-icon">⛪</div>
+            <h3 class="mini-card-title">30. 종교·목회 상담</h3>
+            <p class="mini-card-target">목회자, 전도자, 교회 리더</p>
+            <p class="mini-card-methodology">경청 → 공감 → 위로 → 방향 제시</p>
+          </div>
+          <div class="mini-card religion" onclick="location.href='roleplay-psychological-coaching.html'">
+            <div class="mini-card-icon">💭</div>
+            <h3 class="mini-card-title">31. 심리·코칭·상담 대화</h3>
+            <p class="mini-card-target">코치, 상담사, 멘토, 커리어 코치</p>
+            <p class="mini-card-methodology">경청 → 감정 반영 → 목표 → 행동계획</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. 글로벌 (2개) -->
+      <div class="super-category">
+        <div class="super-category-header" style="border-color: #10b981; border-left: 5px solid #10b981;">
+          <div class="super-category-icon"><span class="emoji-3d">🌍</span></div>
+          <h2 class="super-category-title">글로벌·외국어 비즈니스 (2개)</h2>
+          <p class="super-category-desc">해외 영업, 글로벌 투자 유치</p>
+        </div>
+        <div class="category-grid">
+          <div class="mini-card global" onclick="location.href='roleplay-global-buyer.html'">
+            <div class="mini-card-icon">🌏</div>
+            <h3 class="mini-card-title">32. 글로벌 바이어 상담</h3>
+            <p class="mini-card-target">수출기업, 무역회사, 전시회 참가기업</p>
+            <p class="mini-card-methodology">제품 설명 → 가격 협상 → 파트너십</p>
+          </div>
+          <div class="mini-card global" onclick="location.href='roleplay-global-pitch.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">🌐</span></div>
+            <h3 class="mini-card-title">33. 영어 피칭·글로벌 투자</h3>
+            <p class="mini-card-target">글로벌 진출 스타트업, 해외 투자유치</p>
+            <p class="mini-card-methodology">영어 피칭 + 글로벌 투자자 관점</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11. 프랜차이즈·창업 (2개) -->
+      <div class="super-category">
+        <div class="super-category-header" style="border-color: #f43f5e; border-left: 5px solid #f43f5e;">
+          <div class="super-category-icon">🏪</div>
+          <h2 class="super-category-title">프랜차이즈·창업 (2개)</h2>
+          <p class="super-category-desc">가맹상담, 창업상담, 소상공인</p>
+        </div>
+        <div class="category-grid">
+          <div class="mini-card franchise" onclick="location.href='roleplay-doctor-explanation.html'">
+            <div class="mini-card-icon">🏪</div>
+            <h3 class="mini-card-title">34. 프랜차이즈 가맹상담</h3>
+            <p class="mini-card-target">프랜차이즈 본사, 가맹개발팀, 가맹상담자</p>
+            <p class="mini-card-methodology">창업 니즈 → 시스템 설명 → 계약 전환</p>
+          </div>
+          <div class="mini-card franchise" onclick="location.href='roleplay-startup.html'">
+            <div class="mini-card-icon"><span class="emoji-3d">💼</span></div>
+            <h3 class="mini-card-title">35. 소상공인·창업 컨설팅</h3>
+            <p class="mini-card-target">창업컨설턴트, 소상공인 지원기관</p>
+            <p class="mini-card-methodology">창업 진단 → 수익구조 → 실행 계획</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="card" style="text-align: center; margin-top: 2rem; background: linear-gradient(135deg, var(--hospital-bg) 0%, var(--startup-bg) 100%); border: 2px solid var(--hospital-primary);">
+        <h2 style="margin-bottom: 0.75rem;">당신의 분야를 찾으셨나요?</h2>
+        <p style="color: var(--slate-700); margin-bottom: 1.25rem; opacity: 1;">
+          지금 바로 AI 코치와 실전 롤플레이를 시작하세요.
+        </p>
+        <a href="index.html#categories" class="btn btn-primary" style="display: inline-block;">5대 핵심 분야부터 시작하기 →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2026 Roleplay AI Coach. All rights reserved. | 심재우 &lt;jaiwshim@gmail.com&gt;</p>
+      <div class="footer-links">
+        <a href="manual.html">📖 매뉴얼</a>
+        <a href="copyright.html">© 저작권</a>
+        <a href="patent.html">⚖️ 특허</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+</body>
+</html>

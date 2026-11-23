@@ -1,0 +1,179 @@
+{
+  "platform": {
+    "name": "RoleCoach AI",
+    "version": "1.0.0",
+    "description": "AI-powered roleplay and coaching platform for communication skills",
+    "benchmark": "Yoodli AI",
+    "methodology": ["SPIN Selling", "Insight Selling", "5-Step Patient Counseling"]
+  },
+  "structure": {
+    "phases": [
+      {
+        "id": "select",
+        "name": "분야 선택",
+        "description": "사용자가 롤플레이 할 산업 분야 선택",
+        "page": "index.html"
+      },
+      {
+        "id": "practice",
+        "name": "롤플레이 실습",
+        "description": "AI와 실전 시뮬레이션 수행",
+        "pages": [
+          "roleplay-hospital.html",
+          "roleplay-sales.html",
+          "roleplay-politics.html",
+          "roleplay-interview.html",
+          "roleplay-startup.html"
+        ]
+      },
+      {
+        "id": "analyze",
+        "name": "AI 분석",
+        "description": "스피치 메트릭 분석 및 피드백",
+        "page": "feedback.html"
+      },
+      {
+        "id": "coaching",
+        "name": "AI 코칭",
+        "description": "분야별 전문가 AI 페르소나 코칭",
+        "page": "coaching.html"
+      },
+      {
+        "id": "dashboard",
+        "name": "대시보드",
+        "description": "진도 추적 및 성과 분석",
+        "page": "dashboard.html"
+      }
+    ],
+    "categories": [
+      {
+        "id": "hospital",
+        "name": "병원 상담",
+        "icon": "🏥",
+        "color": "#2563eb",
+        "target": "상담실장, 코디네이터",
+        "methodology": "치과병원 환자상담 5단계 설득 로드맵",
+        "roleplayPage": "roleplay-hospital.html",
+        "scenarios": [
+          "신규 환자 상담",
+          "치료 계획 설명",
+          "비용 상담 및 설득",
+          "재내원 환자 관리",
+          "클레임 대응"
+        ]
+      },
+      {
+        "id": "sales",
+        "name": "영업 & 세일즈",
+        "icon": "💼",
+        "color": "#ea580c",
+        "target": "영업사원, 세일즈 매니저",
+        "methodology": "SPIN Selling + Insight Selling",
+        "roleplayPage": "roleplay-sales.html",
+        "scenarios": [
+          "신규 고객 발굴",
+          "니즈 파악 질문",
+          "가치 제안",
+          "반론 처리",
+          "클로징"
+        ]
+      },
+      {
+        "id": "politics",
+        "name": "정치 & 선거",
+        "icon": "🎤",
+        "color": "#9333ea",
+        "target": "정치인, 선거캠프",
+        "methodology": "설득 커뮤니케이션 프레임워크",
+        "roleplayPage": "roleplay-politics.html",
+        "scenarios": [
+          "유세 연설",
+          "공약 발표",
+          "토론회 대응",
+          "기자회견",
+          "유권자 소통"
+        ]
+      },
+      {
+        "id": "interview",
+        "name": "취업 & 입시 면접",
+        "icon": "📝",
+        "color": "#16a34a",
+        "target": "구직자, 수험생",
+        "methodology": "STAR 프레임워크",
+        "roleplayPage": "roleplay-interview.html",
+        "scenarios": [
+          "자기소개",
+          "경험 설명 (STAR)",
+          "강점/약점 질문",
+          "상황 질문 대응",
+          "역질문"
+        ]
+      },
+      {
+        "id": "startup",
+        "name": "스타트업 피칭",
+        "icon": "🚀",
+        "color": "#0d9488",
+        "target": "창업가, CEO",
+        "methodology": "Pitch Deck 스토리텔링",
+        "roleplayPage": "roleplay-startup.html",
+        "scenarios": [
+          "엘리베이터 피치 (30초)",
+          "투자자 피칭 (5분)",
+          "데모데이 발표",
+          "Q&A 세션",
+          "비전 제시"
+        ]
+      }
+    ],
+    "features": [
+      {
+        "id": "realtime-feedback",
+        "name": "실시간 피드백",
+        "description": "AI가 발화를 실시간 분석하고 즉각 피드백 제공"
+      },
+      {
+        "id": "speech-metrics",
+        "name": "스피치 메트릭",
+        "description": "말하기 속도, 필러 워드, 휴지, 톤, 존댓말 일관성 분석"
+      },
+      {
+        "id": "framework-analysis",
+        "name": "프레임워크 분석",
+        "description": "SPIN, STAR, PREP 등 커뮤니케이션 프레임워크 준수도 평가"
+      },
+      {
+        "id": "ai-persona",
+        "name": "AI 코치 페르소나",
+        "description": "분야별 세계적 전문가를 모델로 한 AI 코치"
+      },
+      {
+        "id": "recording",
+        "name": "녹음 & 재생",
+        "description": "세션 녹음 후 반복 청취 및 자가 평가"
+      },
+      {
+        "id": "progress-tracking",
+        "name": "진도 추적",
+        "description": "개인별 학습 이력, 성과 지표, 개선 추이 시각화"
+      }
+    ]
+  },
+  "menu": {
+    "main": [
+      { "label": "홈", "url": "index.html", "icon": "🏠" },
+      { "label": "병원 상담", "url": "roleplay-hospital.html", "icon": "🏥" },
+      { "label": "영업 세일즈", "url": "roleplay-sales.html", "icon": "💼" },
+      { "label": "정치 선거", "url": "roleplay-politics.html", "icon": "🎤" },
+      { "label": "취업 면접", "url": "roleplay-interview.html", "icon": "📝" },
+      { "label": "스타트업 피칭", "url": "roleplay-startup.html", "icon": "🚀" },
+      { "label": "대시보드", "url": "dashboard.html", "icon": "📊" }
+    ],
+    "footer": [
+      { "label": "매뉴얼", "url": "manual.html", "icon": "📖" },
+      { "label": "저작권", "url": "copyright.html", "icon": "©" },
+      { "label": "특허", "url": "patent.html", "icon": "⚖️" }
+    ]
+  }
+}

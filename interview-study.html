@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>취업 면접 연습 비교 실험 · Roleplay AI Coach</title>
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/interview-study.js" defer></script>
+</head>
+<body>
+  <main class="container" style="max-width:760px;padding-block:3rem;">
+    <a href="roleplay-interview.html">← 취업 면접</a>
+    <h1 style="margin-block:1rem;">취업 면접 연습 비교 실험</h1>
+    <section class="card" id="study-intro">
+      <h2>참가 안내</h2>
+      <p>이 실험에서 지정한 연습 방식 중 하나에 무작위로 배정됩니다. 사전 질문, 면접 연습, 연습에서 공개되지 않은 새 질문에 텍스트로 답합니다. 한 사람당 한 번만 참여해 주세요.</p>
+      <p>실명, 회사명, 연락처 대신 일반적인 표현을 써 주세요. AI 방식에 배정되면 연습 답변만 Claude에 전달됩니다. 사전·사후 답변과 72시간 뒤 음성 평가의 전사문은 이 브라우저에 보관합니다. 내려받은 파일은 직접 전달합니다. 음성 인식은 브라우저 제공 서비스에서 처리될 수 있습니다.</p>
+      <label><input type="checkbox" id="study-consent"> 실험 절차와 답변 처리 방식에 동의합니다.</label>
+      <p id="study-storage-error" role="status"></p>
+      <p style="margin-top:1rem;"><button class="btn btn-primary" id="study-start" disabled>실험 시작</button></p>
+    </section>
+    <section class="card" id="study-round" hidden>
+      <p id="study-step"></p>
+      <h2 id="study-question" tabindex="-1"></h2>
+      <div id="study-help" style="white-space:pre-wrap;overflow-wrap:anywhere;margin-block:1rem;"></div>
+      <form id="study-form">
+        <label for="study-answer"><strong>내 답변</strong></label>
+        <textarea id="study-answer" rows="6" maxlength="3000" required style="display:block;width:100%;margin-block:0.5rem;font:inherit;"></textarea>
+        <button class="btn btn-primary" id="study-submit" type="submit">답변 제출</button>
+      </form>
+      <button class="btn btn-secondary" id="study-voice" hidden>음성 입력 시작</button>
+      <button class="btn btn-secondary" id="study-progress-active">진행 기록 다운로드</button>
+      <button class="btn btn-secondary" id="study-stop" hidden>참여 중단 및 진행 기록 받기</button>
+      <p id="study-status" role="status" style="margin-top:0.75rem;"></p>
+    </section>
+    <section class="card" id="study-done" tabindex="-1" hidden>
+      <h2>응답을 모두 제출했습니다</h2>
+      <p>평가자에게는 블라인드 답변 파일만 전달해 주세요. 운영자는 별도 배정표를 보관했다가 채점이 끝난 뒤 평가 결과와 연결합니다.</p>
+      <button class="btn btn-primary" id="study-blind">블라인드 답변 다운로드</button>
+      <button class="btn btn-secondary" id="study-key">운영자용 배정표 다운로드</button>
+      <button class="btn btn-secondary" id="study-delayed" hidden>지연 음성 평가 시작</button>
+      <p id="study-delayed-info" role="status"></p>
+      <button class="btn btn-secondary" id="study-progress">진행 기록 다운로드</button>
+    </section>
+  </main>
+</body>
+</html>

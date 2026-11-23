@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700">
+  <defs>
+    <style>
+      .section-box { fill: #ffffff; stroke: #2563eb; stroke-width: 3; }
+      .section-box.hospital { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+      .section-box.sales { fill: #fff7ed; stroke: #ea580c; stroke-width: 3; }
+      .section-box.politics { fill: #faf5ff; stroke: #9333ea; stroke-width: 3; }
+      .section-box.interview { fill: #f0fdf4; stroke: #16a34a; stroke-width: 3; }
+      .section-box.startup { fill: #f0fdfa; stroke: #0d9488; stroke-width: 3; }
+      .step-circle { fill: #2563eb; stroke: #1d4ed8; stroke-width: 2; }
+      .step-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #ffffff; font-weight: 700; opacity: 1; }
+      .section-title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; fill: #0f172a; font-weight: 700; opacity: 1; }
+      .section-desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #334155; opacity: 1; }
+      .flow-arrow { stroke: #2563eb; stroke-width: 3; fill: none; marker-end: url(#arrow-blue); }
+      .title-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 24px; fill: #0f172a; font-weight: 700; opacity: 1; }
+      .subtitle-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #334155; opacity: 1; }
+      .icon-text { font-size: 28px; opacity: 1; }
+    </style>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#2563eb" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="500" y="35" text-anchor="middle" class="title-text">RoleCoach AI 메뉴 구조 및 사용자 흐름도</text>
+  <text x="500" y="55" text-anchor="middle" class="subtitle-text">5개 분야별 학습 프로세스 시각화</text>
+
+  <!-- Step 1: 홈 (분야 선택) -->
+  <g id="step1">
+    <circle cx="100" cy="120" r="30" class="step-circle"/>
+    <text x="100" y="128" text-anchor="middle" class="step-text">1</text>
+    <text x="100" y="165" text-anchor="middle" class="section-title">홈페이지</text>
+    <text x="100" y="182" text-anchor="middle" class="section-desc">분야 선택</text>
+  </g>
+
+  <!-- Arrow 1 -> 2 -->
+  <path d="M 130 120 L 180 120" class="flow-arrow"/>
+
+  <!-- Step 2: 5개 분야 -->
+  <g id="step2">
+    <rect x="200" y="80" width="600" height="350" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="500" y="110" text-anchor="middle" style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; fill: #0f172a; font-weight: 700; opacity: 1;">5개 분야 카테고리</text>
+
+    <!-- Category 1: 병원 상담 -->
+    <g id="cat-hospital">
+      <rect x="220" y="130" width="160" height="80" rx="8" class="section-box hospital"/>
+      <text x="300" y="155" text-anchor="middle" class="icon-text">🏥</text>
+      <text x="300" y="178" text-anchor="middle" class="section-title">병원 상담</text>
+      <text x="300" y="193" text-anchor="middle" class="section-desc">5단계 설득 로드맵</text>
+      <text x="300" y="205" text-anchor="middle" class="section-desc">신규 환자, 치료 계획</text>
+    </g>
+
+    <!-- Category 2: 영업 세일즈 -->
+    <g id="cat-sales">
+      <rect x="420" y="130" width="160" height="80" rx="8" class="section-box sales"/>
+      <text x="500" y="155" text-anchor="middle" class="icon-text">💼</text>
+      <text x="500" y="178" text-anchor="middle" class="section-title">영업 세일즈</text>
+      <text x="500" y="193" text-anchor="middle" class="section-desc">SPIN + Insight Selling</text>
+      <text x="500" y="205" text-anchor="middle" class="section-desc">B2B/B2C 영업</text>
+    </g>
+
+    <!-- Category 3: 정치 선거 -->
+    <g id="cat-politics">
+      <rect x="620" y="130" width="160" height="80" rx="8" class="section-box politics"/>
+      <text x="700" y="155" text-anchor="middle" class="icon-text">🎤</text>
+      <text x="700" y="178" text-anchor="middle" class="section-title">정치 선거</text>
+      <text x="700" y="193" text-anchor="middle" class="section-desc">유세 연설, 공약 발표</text>
+      <text x="700" y="205" text-anchor="middle" class="section-desc">토론회, 유권자 소통</text>
+    </g>
+
+    <!-- Category 4: 취업 면접 -->
+    <g id="cat-interview">
+      <rect x="220" y="240" width="160" height="80" rx="8" class="section-box interview"/>
+      <text x="300" y="265" text-anchor="middle" class="icon-text">📝</text>
+      <text x="300" y="288" text-anchor="middle" class="section-title">취업 면접</text>
+      <text x="300" y="303" text-anchor="middle" class="section-desc">STAR 프레임워크</text>
+      <text x="300" y="315" text-anchor="middle" class="section-desc">자기소개, 경험 설명</text>
+    </g>
+
+    <!-- Category 5: 스타트업 피칭 -->
+    <g id="cat-startup">
+      <rect x="420" y="240" width="160" height="80" rx="8" class="section-box startup"/>
+      <text x="500" y="265" text-anchor="middle" class="icon-text">🚀</text>
+      <text x="500" y="288" text-anchor="middle" class="section-title">스타트업 피칭</text>
+      <text x="500" y="303" text-anchor="middle" class="section-desc">투자자 피칭</text>
+      <text x="500" y="315" text-anchor="middle" class="section-desc">엘리베이터 피치</text>
+    </g>
+
+    <!-- Step 3 Circle inside -->
+    <g id="step3-icon">
+      <circle cx="700" cy="280" r="30" class="step-circle"/>
+      <text x="700" y="288" text-anchor="middle" class="step-text">3</text>
+    </g>
+
+    <text x="700" y="325" text-anchor="middle" class="section-title">시나리오 선택</text>
+    <text x="700" y="342" text-anchor="middle" class="section-desc">10+ 세부 시나리오</text>
+    <text x="700" y="357" text-anchor="middle" class="section-desc">난이도 설정</text>
+  </g>
+
+  <!-- Arrow 2 -> 4 -->
+  <path d="M 500 430 L 500 470" class="flow-arrow"/>
+
+  <!-- Step 4: AI 롤플레이 -->
+  <g id="step4">
+    <rect x="350" y="480" width="300" height="80" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
+    <circle cx="400" cy="520" r="30" class="step-circle"/>
+    <text x="400" y="528" text-anchor="middle" class="step-text">4</text>
+    <text x="530" y="510" text-anchor="middle" class="section-title">AI 롤플레이 세션</text>
+    <text x="530" y="527" text-anchor="middle" class="section-desc">실시간 대화 + 음성 인식</text>
+    <text x="530" y="542" text-anchor="middle" class="section-desc">스피치 메트릭 실시간 분석</text>
+    <text x="530" y="557" text-anchor="middle" class="section-desc">대화 녹음 + AI 페르소나 대응</text>
+  </g>
+
+  <!-- Arrow 4 -> 5 -->
+  <path d="M 500 560 L 500 600" class="flow-arrow"/>
+
+  <!-- Step 5: 피드백 -->
+  <g id="step5">
+    <rect x="200" y="610" width="220" height="70" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="3"/>
+    <circle cx="250" cy="645" r="25" class="step-circle" fill="#16a34a" stroke="#15803d"/>
+    <text x="250" y="652" text-anchor="middle" class="step-text">5</text>
+    <text x="340" y="635" text-anchor="middle" class="section-title">피드백 확인</text>
+    <text x="340" y="650" text-anchor="middle" class="section-desc">15가지 메트릭 분석</text>
+    <text x="340" y="665" text-anchor="middle" class="section-desc">강점 + 개선 사항</text>
+  </g>
+
+  <!-- Step 6: 대시보드 -->
+  <g id="step6">
+    <rect x="480" y="610" width="220" height="70" rx="10" fill="#faf5ff" stroke="#9333ea" stroke-width="3"/>
+    <circle cx="530" cy="645" r="25" class="step-circle" fill="#9333ea" stroke="#7e22ce"/>
+    <text x="530" y="652" text-anchor="middle" class="step-text">6</text>
+    <text x="620" y="635" text-anchor="middle" class="section-title">대시보드</text>
+    <text x="620" y="650" text-anchor="middle" class="section-desc">진도 추적 + 통계</text>
+    <text x="620" y="665" text-anchor="middle" class="section-desc">성과 추이 시각화</text>
+  </g>
+
+  <!-- Arrow 5 -> 6 -->
+  <path d="M 420 645 L 480 645" class="flow-arrow"/>
+
+  <!-- Loop Arrow: 6 -> 2 -->
+  <path d="M 620 610 Q 850 500 800 300" class="flow-arrow" stroke-dasharray="5,3"/>
+  <text x="830" y="450" style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #2563eb; font-weight: 600; opacity: 1;">반복 학습</text>
+
+  <!-- Footer -->
+  <text x="500" y="695" text-anchor="middle" style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #64748b; opacity: 1;">© 2026 RoleCoach AI. 발명자: 심재우 | 특허출원용 도면 2</text>
+</svg>

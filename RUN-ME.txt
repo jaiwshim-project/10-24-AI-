@@ -1,0 +1,130 @@
+========================================
+ RoleCoach AI - 실행 가이드
+========================================
+
+🚀 3단계로 간단하게 실행하세요!
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 1단계: 터미널 열기
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+방법 A) Win + R 키 → cmd 입력 → Enter
+방법 B) VSCode 열고 Ctrl + ` (백틱)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 2단계: 아래 명령어 복사 & 붙여넣기
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+cd "C:\01 클로드코드\10-24 롤코치AI - RoleCoach AI"
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 3단계: Vercel Dev 실행
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+npx vercel dev
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 질문에 답변하기
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+질문 1: ? Set up and develop "..."? [Y/n]
+답변 → Y 입력 후 Enter
+
+질문 2: ? Which scope should contain your project?
+       ❯ dentalclinicfonder
+답변 → Enter (그냥 Enter만 누르면 됨)
+
+질문 3: ? Link to existing project? [y/N]
+답변 → N 입력 후 Enter
+
+질문 4: ? What's your project's name? (10-24-...)
+답변 → rolecoach-ai 입력 후 Enter
+
+질문 5: ? In which directory is your code located? ./
+답변 → Enter (그냥 Enter만 누르면 됨)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 성공 메시지 확인
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ Linked to dentalclinicfonder/rolecoach-ai
+> Ready! Available at http://localhost:3000
+
+이 메시지가 보이면 성공!
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ Chrome에서 접속
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+http://localhost:3000/roleplay-hospital-counselor.html
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ ⚠️ 중요: API 키 설정
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. API 키 발급:
+   https://console.anthropic.com/settings/keys
+   → "Create Key" 클릭
+   → sk-ant-api03-xxxxx 형식의 키 복사
+
+2. .env.local 파일 수정:
+   notepad .env.local
+
+   내용:
+   ANTHROPIC_API_KEY=sk-ant-api03-xxxxx
+   (your-api-key-here를 실제 키로 교체)
+
+3. Vercel Dev 재시작:
+   Ctrl + C (서버 중지)
+   npx vercel dev (다시 실행)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 문제 해결
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ "vercel: command not found"
+→ npm install -g vercel
+
+❌ "Port 3000 is already in use"
+→ npx vercel dev --listen 3001
+
+❌ "Failed to fetch"
+→ .env.local에 API 키 확인 → Vercel Dev 재시작
+
+❌ 마이크 권한 오류
+→ Chrome 주소창 왼쪽 자물쇠 → 사이트 설정 → 마이크 허용
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 테스트 방법
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. 시나리오 선택 (사례 1, 2, 3)
+2. "다음 단계 →" 버튼 클릭
+3. 🎤 버튼 클릭
+4. 마이크 권한 "허용"
+5. AI가 먼저 환자 역할로 인사 (음성)
+6. 음성으로 응답
+7. 턴제 대화 자동 전환
+8. 대화 내역 실시간 표시
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 서버 중지
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+터미널에서 Ctrl + C
+
+
+========================================
+© 2026 RoleCoach AI
+심재우 <jaiwshim@gmail.com>
+========================================

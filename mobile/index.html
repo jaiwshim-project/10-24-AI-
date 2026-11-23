@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101926">
+  <meta name="description" content="취업 면접과 대학 입학 면접을 음성으로 연습하세요. AI 꼬리질문과 답변 근거를 인용하는 PROVE 피드백을 받습니다.">
+  <link rel="canonical" href="https://roleplay-ai-coach.vercel.app/mobile/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Roleplay AI Coach">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="Roleplay AI Coach · 실전처럼 말하는 AI 음성 면접">
+  <meta property="og:description" content="취업·대학 입학 면접을 목소리로 연습하세요. 내 답변에 맞춘 AI 꼬리질문과 PROVE 피드백을 받습니다.">
+  <meta property="og:url" content="https://roleplay-ai-coach.vercel.app/mobile/">
+  <meta property="og:image" content="https://roleplay-ai-coach.vercel.app/mobile/og-cover.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Roleplay AI Coach, 실전처럼 말하는 AI 음성 면접">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Roleplay AI Coach · 음성 면접</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="favicon.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="brand-icon-192.png">
+  <link rel="stylesheet" href="mobile.css">
+  <script src="interview-overview.js" defer></script>
+  <script src="feedback-history.js" defer></script>
+  <script src="member-account.bundle.js" defer></script>
+  <script src="mobile.js" defer></script>
+</head>
+<body>
+  <header class="site-header shell" id="top">
+    <a class="brand" href="./" aria-label="Roleplay AI Coach 홈"><img src="brand-icon-192.png" width="40" height="40" alt=""><span class="wordmark">Roleplay <span>AI Coach</span></span></a>
+    <nav id="landing-nav" aria-label="주 메뉴">
+      <a href="#interviews">면접 유형</a>
+      <a href="#prove">PROVE 코칭</a>
+    </nav>
+    <button id="install" class="quiet" hidden>앱 설치</button>
+  </header>
+  <main class="shell">
+    <div id="home">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <h1 id="hero-title">실전처럼 말하고,<br><em>내 답변을</em><br><em>더 선명하게.</em></h1>
+          <p>AI 면접관의 질문을 듣고 목소리로 답하세요. 내 답변에 맞춘 꼬리질문과 PROVE 피드백으로 다음 면접을 준비합니다.</p>
+          <a class="primary hero-cta" href="#interviews">면접/상담 연습 시작 <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="hero-visual">
+          <img src="interview-hero.jpg" alt="이어폰을 끼고 면접을 연습하는 지원자" width="1050" height="1312" fetchpriority="high">
+          <div class="voice-card" aria-label="음성 면접에서 나오는 질문 예시">
+            <div class="waveform" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+            <div><strong>AI 면접관</strong><p>“그 방법을 선택한 이유는 무엇인가요?”</p></div>
+          </div>
+        </div>
+      </section>
+      <section class="landing-section" id="interviews" aria-labelledby="interviews-title">
+        <h2 id="interviews-title">A. 면접 롤플레이</h2>
+        <div class="choices">
+          <button data-type="job"><span class="choice-icon" aria-hidden="true">💼</span><strong>A1. 취업면접</strong><span>지원 직무를 고르고 문제 해결 경험을 말해 보세요.</span><span class="choice-arrow" aria-hidden="true">↗</span></button>
+          <button data-type="college"><span class="choice-icon" aria-hidden="true">🎓</span><strong>A2. 대학입학 면접</strong><span>탐구 경험, 전공 지원동기, 제시문 중에서 연습하세요.</span><span class="choice-arrow" aria-hidden="true">↗</span></button>
+        </div>
+      </section>
+      <section class="landing-section" id="counseling" aria-labelledby="counseling-title">
+        <h2 id="counseling-title">B. 상담 롤플레이</h2>
+        <p class="muted">상담자가 되어 AI 학생과 대화하고, 상담 피드백을 받아 보세요.</p>
+        <div class="choices">
+          <button type="button" data-type="counseling" data-topic="school"><span class="choice-icon" aria-hidden="true">🧭</span><strong>B1. 진학상담교사(학교)</strong><span>희망 전공을 고민하는 학생의 선택 기준을 함께 탐색합니다.</span><span class="choice-arrow" aria-hidden="true">↗</span></button>
+          <button type="button" data-type="counseling" data-topic="career"><span class="choice-icon" aria-hidden="true">🤝</span><strong>B2. 취업상담코치(대학)</strong><span>서류 탈락을 겪은 대학생과 강점과 다음 지원 계획을 찾습니다.</span><span class="choice-arrow" aria-hidden="true">↗</span></button>
+          <button type="button" data-type="counseling" data-topic="nutrition"><span class="choice-icon" aria-hidden="true">🥗</span><strong>B3. 영양상담사(학교)</strong><span>아침과 급식 습관을 살펴보고 학생과 작은 실천 목표를 정합니다.</span><span class="choice-arrow" aria-hidden="true">↗</span></button>
+        </div>
+      </section>
+      <section class="landing-section coaching" id="prove" aria-labelledby="prove-title">
+        <div>
+          <h2 id="prove-title">내가 한 말에서<br>다음 연습의 방향을 찾습니다.</h2>
+          <p>면접이 끝나면 내 답변에서 근거가 되는 문장을 인용해 잘한 점과 보완할 점을 알려줍니다. 입학 면접에서는 질문 유형에 맞는 항목만 평가합니다.</p>
+        </div>
+        <dl class="prove-list" aria-label="PROVE 평가 기준">
+          <div><dt>P</dt><dd>문제 정의</dd></div>
+          <div><dt>R</dt><dd>판단 근거</dd></div>
+          <div><dt>O</dt><dd>본인 기여</dd></div>
+          <div><dt>V</dt><dd>결과 확인</dd></div>
+          <div><dt>E</dt><dd>다음 직무·전공에 적용</dd></div>
+        </dl>
+      </section>
+    </div>
+    <section class="app-step" id="coach" hidden>
+      <h1 id="coach-title" tabindex="-1">AI코치 소개</h1>
+      <p class="muted">Roleplay AI Coach는 취업과 대학 입학 면접을 목소리로 연습하는 AI 코치입니다. 답변에서 더 설명할 부분을 찾아 꼬리질문을 하고, 면접을 마치면 실제로 말한 문장을 인용해 피드백을 줍니다.</p>
+      <section class="info-card">
+        <h2>PROVE가 중요한 이유</h2>
+        <p>면접관은 성과뿐 아니라 어떤 근거로 판단했고, 그 과정에서 지원자가 직접 무엇을 했는지 알고 싶어 합니다. PROVE는 그 근거를 다섯 가지로 나눠, 답변을 다시 들었을 때 빠진 부분을 찾기 쉽게 합니다.</p>
+        <dl class="prove-list">
+          <div><dt>P</dt><dd><strong>Problem</strong> · 해결할 문제나 탐구의 출발점은 무엇이었나요?</dd></div>
+          <div><dt>R</dt><dd><strong>Reasoning</strong> · 어떤 단서를 보고 그 방법이나 입장을 선택했나요?</dd></div>
+          <div><dt>O</dt><dd><strong>Ownership</strong> · 내가 직접 결정하거나 실행한 일은 무엇인가요?</dd></div>
+          <div><dt>V</dt><dd><strong>Verification</strong> · 무엇이 달라졌고, 어떤 기록이나 관찰로 확인했나요?</dd></div>
+          <div><dt>E</dt><dd><strong>Extension</strong> · 그 경험을 다음 직무나 전공 공부에 어떻게 연결하나요?</dd></div>
+        </dl>
+      </section>
+      <section class="info-card">
+        <h2>답변의 빈틈을 꼬리질문으로 확인합니다</h2>
+        <p>예를 들어 “출고 지연이 주당 12건에서 4건으로 줄었습니다”라고 답하면, AI는 “어떤 기록을 비교해 그 변화를 확인했나요?”라고 물을 수 있습니다. 수치가 없다면 직접 관찰한 변화나 동료가 알려준 구체적인 변화도 근거가 됩니다. 입학 면접에서는 질문에 따라 탐구 과정, 자료 근거 또는 전공과의 연결을 살펴봅니다.</p>
+      </section>
+      <section class="info-card">
+        <h2>다시 말해 보고, 달라진 점을 확인합니다</h2>
+        <p>종료 후에는 100점 만점 점수와 함께 잘한 답변, 보완할 답변, 그 이유를 봅니다. 같은 질문에 다시 답하면 두 점수와 원문을 나란히 비교할 수 있어, 빠졌던 판단 근거나 본인 기여를 실제로 덧붙였는지 확인할 수 있습니다. 점수는 이번 연습의 답변을 돌아보는 기준입니다.</p>
+      </section>
+      <details class="info-card"><summary>음성 처리 안내</summary><p>브라우저가 음성을 텍스트로 바꾸고, 질문과 피드백을 생성하기 위해 제출된 전사문을 Claude에 전달합니다. 실명과 연락처, 학교나 회사의 비공개 정보는 말하지 마세요.</p></details>
+      <a class="quiet admin-link" href="./admin.html">관리자 대시보드</a>
+    </section>
+    <section class="app-step" id="account" hidden>
+      <h1 id="account-title" tabindex="-1">내 정보</h1>
+      <section class="info-card" id="member-auth">
+        <h2>로그인 또는 회원가입</h2>
+        <p class="muted">로그인한 상태에서 완료한 면접·상담 실습과 평가를 계정에 저장합니다. 평가에는 답변 일부가 인용될 수 있습니다.</p>
+        <form id="member-form">
+          <label for="member-email">이메일</label>
+          <input type="email" id="member-email" autocomplete="email" required>
+          <label for="member-password">비밀번호</label>
+          <input type="password" id="member-password" autocomplete="current-password" required>
+          <div class="actions">
+            <button class="primary" type="submit" value="login">로그인</button>
+            <button class="quiet" type="submit" value="signup">회원가입</button>
+          </div>
+        </form>
+        <p id="member-auth-status" role="status"></p>
+      </section>
+      <section class="info-card" id="member-private" hidden>
+        <p id="member-email-display"></p>
+        <div class="actions">
+          <button type="button" class="quiet" id="member-refresh">기록 새로고침</button>
+          <button type="button" class="quiet" id="member-signout">로그아웃</button>
+        </div>
+        <h2>내 실습 기록</h2>
+        <p id="member-record-status" role="status"></p>
+        <div id="member-records"></div>
+        <section id="member-report" hidden>
+          <section id="member-overall" class="overall-review" hidden></section>
+          <section id="member-comparison" class="overall-review" hidden></section>
+          <div id="member-rubric" class="rubric-panels"></div>
+          <p id="member-exercise"></p>
+        </section>
+      </section>
+    </section>
+    <section class="app-step" id="examples" hidden>
+      <h1 id="examples-title" tabindex="-1">피드백 사례</h1>
+      <section id="feedback-progress" class="info-card" aria-labelledby="feedback-progress-title" hidden>
+        <h2 id="feedback-progress-title">내 실습 성장</h2>
+        <p id="feedback-progress-count"></p>
+        <p class="muted">같은 직무나 입학 질문 유형끼리 비교합니다. 서로 다른 질문과 재답변이 포함될 수 있습니다.</p>
+        <div id="feedback-progress-list"></div>
+      </section>
+      <section id="feedback-history" class="info-card" aria-labelledby="feedback-history-title">
+        <h2 id="feedback-history-title">지난 실습 기록</h2>
+        <p class="muted" id="feedback-history-note">면접을 마치면 점수와 피드백이 이 기기에 저장됩니다.</p>
+        <div id="feedback-history-list"></div>
+      </section>
+      <div class="example-options" role="tablist" aria-label="피드백 사례 유형">
+        <button type="button" class="quiet" id="interview-examples-tab" role="tab" aria-selected="true" aria-controls="interview-examples-options">A.면접</button>
+        <button type="button" class="quiet" id="counseling-examples-tab" role="tab" aria-selected="false" aria-controls="counseling-examples-options" tabindex="-1">B.상담</button>
+      </div>
+      <div id="interview-examples-options" class="example-options" role="tabpanel" aria-labelledby="interview-examples-tab">
+        <button type="button" class="quiet" data-example="latest" hidden>내 최근 피드백</button>
+        <button type="button" class="quiet" data-example="job">1.취업 면접 사례</button>
+        <button type="button" class="quiet" data-example="college">2.입학 면접 사례</button>
+      </div>
+      <div id="counseling-examples-options" class="example-options" role="tabpanel" aria-labelledby="counseling-examples-tab" hidden></div>
+      <p class="muted" id="example-note" role="status"></p>
+      <div id="example-content" hidden>
+        <section id="example-dialogue" class="info-card" hidden>
+          <h2 id="example-dialogue-title">실습 대화</h2>
+          <div class="example-audio">
+            <button type="button" class="quiet" id="example-dialogue-play" aria-controls="example-dialogue-messages">롤플레이 대화 듣기</button>
+            <span id="example-dialogue-status" class="muted" role="status"></span>
+          </div>
+          <ol class="conversation-log" id="example-dialogue-messages"></ol>
+        </section>
+        <section id="example-comparison" class="overall-review" hidden></section>
+        <section id="example-overall" tabindex="-1" class="overall-review" hidden></section>
+        <h2 id="example-rubric-title">PROVE 항목별 피드백</h2>
+        <div id="example-rubric" class="rubric-panels"></div>
+        <p class="muted" id="example-exercise"></p>
+        <details class="info-card" id="example-coach-dialogue" hidden>
+          <summary>사용자와 AI코치 대화 예시</summary>
+          <p class="muted">이 실습의 평가를 바탕으로 다음 연습을 준비하는 가상 대화입니다.</p>
+          <div class="example-audio">
+            <button type="button" class="quiet" id="example-coach-play" aria-controls="example-coach-messages">사용자·AI코치 대화 듣기</button>
+            <span id="example-coach-status" class="muted" role="status"></span>
+          </div>
+          <ol class="conversation-log" id="example-coach-messages"></ol>
+        </details>
+      </div>
+    </section>
+    <section class="app-step" id="setup" hidden>
+      <button id="setup-back" class="quiet">← 실습 선택</button>
+      <h1 id="setup-title" tabindex="-1"></h1>
+      <form id="setup-form">
+        <label for="topic" id="topic-label"></label>
+        <select id="topic" required></select>
+        <p class="muted" id="setup-intro">한국어 음성 면접입니다. 브라우저가 음성을 텍스트로 변환하며, 제출된 전사문이 AI 면접관에 전달됩니다. 실명과 연락처는 말하지 마세요.</p>
+        <div id="analytics-option" hidden>
+          <p class="muted">연습 효과를 기본으로 집계합니다. 익명 기기 ID, 실습 유형, 시작·완료, 점수와 항목별 평가를 약 90일간 저장합니다. 관리자에게는 집계만 제공되며 녹음·답변 원문은 집계에 포함되지 않습니다.</p>
+        </div>
+        <button id="start" class="primary">음성 면접 시작</button>
+      </form>
+      <p id="setup-status" role="status"></p>
+    </section>
+    <section class="app-step" id="session" hidden>
+      <div class="session-head"><p id="session-title"></p><button id="finish" class="quiet" disabled>면접 종료</button></div>
+      <div class="conversation" id="conversation" tabindex="0" aria-label="면접 대화">
+        <ol id="transcript" class="conversation-log" role="log" aria-label="면접 대화 기록"></ol>
+        <div class="message message--candidate" id="live-caption" aria-labelledby="live-caption-label" hidden>
+          <strong id="live-caption-label">나 · 말하는 중</strong>
+          <p><span id="live-caption-final"></span><span id="live-caption-draft" class="caption-draft"></span></p>
+        </div>
+      </div>
+      <div class="controls conversation-controls">
+        <p id="status" role="status"></p>
+        <div class="conversation-actions">
+          <button id="replay" class="quiet">질문 다시 듣기</button>
+          <button id="mic" class="primary" disabled>마이크로 답하기</button>
+          <button id="retry" class="primary" hidden>AI 응답 다시 요청</button>
+          <button id="mic-check" class="quiet" hidden>마이크 권한 확인</button>
+        </div>
+        <details class="mic-help" id="mic-help" hidden>
+          <summary>Android 마이크 차단 해제</summary>
+          <ol>
+            <li>홈 화면 앱에서 열었다면 아이콘을 길게 눌러 <strong>앱 정보 → 권한 → 마이크</strong>를 확인하세요. 마이크 항목이 있으면 <strong>앱 사용 중에만 허용</strong>을 선택하세요.</li>
+            <li>항목이 없거나 계속 차단되면 Chrome 일반 탭에서 이 앱을 열고, 주소창 왼쪽 <strong>사이트 정보 → 권한 → 마이크</strong>를 허용하세요. Android <strong>설정 → 앱 → Chrome → 권한</strong>에서도 마이크를 확인하세요.</li>
+            <li>빠른 설정에서 마이크 액세스를 켜고, 화면 위에 떠 있는 다른 앱의 버튼이나 팝업을 닫은 뒤 앱을 다시 여세요.</li>
+          </ol>
+        </details>
+      </div>
+    </section>
+    <section class="app-step" id="result" hidden>
+      <h1 id="result-title" tabindex="-1">PROVE 면접 피드백</h1>
+      <p id="feedback-save-note" class="muted" role="status" hidden></p>
+      <section id="retake-comparison" class="overall-review" hidden></section>
+      <section id="overall" class="overall-review" hidden></section>
+      <h2>PROVE 항목별 피드백</h2>
+      <div id="rubric" class="rubric-panels"></div>
+      <p class="muted" id="exercise"></p>
+      <div class="result-actions">
+        <button class="primary" id="retake" hidden>같은 질문에 다시 답하기</button>
+        <button class="quiet" id="again">다른 면접 시작</button>
+      </div>
+    </section>
+  </main>
+  <nav class="bottom-nav" id="bottom-nav" aria-label="앱 메뉴">
+    <div class="bottom-nav-inner">
+      <button type="button" data-page="coach"><span class="menu-icon" aria-hidden="true">🎙️</span><span>AI코치 소개</span></button>
+      <button type="button" data-type="job"><span class="menu-icon" aria-hidden="true">💼</span><span>취업면접연습</span></button>
+      <button type="button" data-type="college"><span class="menu-icon" aria-hidden="true">🎓</span><span>입학면접연습</span></button>
+      <button type="button" data-page="examples"><span class="menu-icon" aria-hidden="true">📋</span><span>피드백 사례</span></button>
+      <button type="button" data-page="account"><span class="menu-icon" aria-hidden="true">👤</span><span>내 정보</span></button>
+    </div>
+  </nav>
+</body>
+</html>

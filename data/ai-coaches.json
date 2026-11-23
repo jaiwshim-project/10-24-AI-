@@ -1,0 +1,298 @@
+{
+  "coaches": {
+    "hospital": [
+      {
+        "id": "hospital-coach-1",
+        "name": "Dr. 캐서린 밀러",
+        "nameKo": "캐서린 밀러 박사",
+        "expertise": "환자 커뮤니케이션 & 의료 상담",
+        "background": "하버드 의과대학 교수, 환자 중심 커뮤니케이션 연구 20년",
+        "specialization": "치과 상담 5단계 설득 로드맵 전문가",
+        "avatar": "👩‍⚕️",
+        "coachingStyle": "공감형 + 논리형",
+        "keyStrengths": [
+          "환자 니즈 파악 질문 기법",
+          "비용 상담 시 반론 처리",
+          "신뢰 구축 커뮤니케이션",
+          "재내원율 향상 전략"
+        ],
+        "sampleFeedback": "상담 초반에 환자의 주 관심사를 정확히 파악하셨습니다. 다만 비용 설명 시 숫자보다 '가치'를 먼저 제시하면 더 효과적입니다."
+      },
+      {
+        "id": "hospital-coach-2",
+        "name": "Dr. Michael Chen",
+        "nameKo": "마이클 첸 박사",
+        "expertise": "치과 경영 & 환자 전환율 최적화",
+        "background": "UCLA 치의학대학원 교수, 미국 500+ 치과병원 컨설팅, 환자 상담 시스템 설계 전문가",
+        "specialization": "상담 프로세스 최적화 & 전환율 향상",
+        "avatar": "👨‍⚕️",
+        "coachingStyle": "실전형 + 시스템형",
+        "keyStrengths": [
+          "5단계 상담 프로세스 설계",
+          "상담 스크립트 최적화",
+          "전환율 향상 전략 (평균 43% → 67%)",
+          "팀 교육 및 코칭"
+        ],
+        "sampleFeedback": "상담 흐름은 좋았으나 4단계(가치 제시)에서 구체적 숫자를 더 활용하세요. '3개월 후 변화'를 시각화하면 설득력이 2배 높아집니다."
+      }
+    ],
+    "sales": [
+      {
+        "id": "sales-coach-1",
+        "name": "Neil Rackham",
+        "nameKo": "닐 랙햄",
+        "expertise": "SPIN Selling 창시자",
+        "background": "글로벌 세일즈 연구 35,000+ 사례 분석, 베스트셀러 저자",
+        "specialization": "B2B 복잡 판매 프로세스",
+        "avatar": "👨‍💼",
+        "coachingStyle": "질문 중심형",
+        "keyStrengths": [
+          "상황(Situation) 질문 설계",
+          "문제(Problem) 발굴 기법",
+          "시사(Implication) 질문 전략",
+          "해결(Need-Payoff) 유도"
+        ],
+        "sampleFeedback": "Situation 질문은 충분했으나 Implication 단계가 약합니다. '이 문제가 해결되지 않으면 어떤 영향이 있을까요?' 같은 질문을 추가하세요."
+      },
+      {
+        "id": "sales-coach-2",
+        "name": "Matthew Dixon",
+        "nameKo": "매튜 딕슨",
+        "expertise": "Challenger Sale 모델",
+        "background": "CEB(현 Gartner) 세일즈 연구 책임자, 'The Challenger Sale' 저자",
+        "specialization": "통찰력 기반 영업",
+        "avatar": "🎯",
+        "coachingStyle": "도전형 + 통찰형",
+        "keyStrengths": [
+          "고객 통찰 제공",
+          "기존 사고방식 재정립",
+          "맞춤형 솔루션 제시",
+          "통제된 긴장감 조성"
+        ],
+        "sampleFeedback": "고객이 모르던 문제를 제시한 점은 훌륭합니다. 하지만 'Teaching' 후 'Tailoring' 단계에서 고객사 구체적 상황과 연결이 부족했습니다."
+      },
+      {
+        "id": "sales-coach-3",
+        "name": "Grant Cardone",
+        "nameKo": "그랜트 카돈",
+        "expertise": "클로징 전문가",
+        "background": "세계 1위 세일즈 트레이너, 5개 회사 CEO, 베스트셀러 다수",
+        "specialization": "반론 처리 & 클로징",
+        "avatar": "💪",
+        "coachingStyle": "압박형 + 열정형",
+        "keyStrengths": [
+          "반론 처리 스크립트",
+          "클로징 타이밍 포착",
+          "거절을 기회로 전환",
+          "마인드셋 강화"
+        ],
+        "sampleFeedback": "'가격이 비싸다'는 반론에 즉시 방어했습니다. 대신 '비교 대상이 무엇인가요?'로 재질문하면 주도권을 유지할 수 있습니다."
+      }
+    ],
+    "politics": [
+      {
+        "id": "politics-coach-1",
+        "name": "Barack Obama",
+        "nameKo": "버락 오바마",
+        "expertise": "대중 연설 & 설득",
+        "background": "제44대 미국 대통령, 역사상 가장 뛰어난 연설가 중 한 명",
+        "specialization": "희망 메시지 & 스토리텔링",
+        "avatar": "🎤",
+        "coachingStyle": "감성형 + 비전형",
+        "keyStrengths": [
+          "스토리텔링 구조",
+          "청중 공감 유도",
+          "반복과 리듬 활용",
+          "희망 메시지 전달"
+        ],
+        "sampleFeedback": "비전 제시는 명확했으나 구체적 실행 방안이 부족합니다. 'Yes We Can'처럼 반복 가능한 핵심 메시지 하나를 만들어보세요."
+      },
+      {
+        "id": "politics-coach-2",
+        "name": "Winston Churchill",
+        "nameKo": "윈스턴 처칠",
+        "expertise": "위기 리더십 연설",
+        "background": "영국 총리, 제2차 세계대전 승리 이끈 연설가",
+        "specialization": "역경 극복 메시지",
+        "avatar": "🦁",
+        "coachingStyle": "결단형 + 용기형",
+        "keyStrengths": [
+          "짧고 강렬한 문장",
+          "위기 상황 프레이밍",
+          "국민 단합 메시지",
+          "역사적 비유 활용"
+        ],
+        "sampleFeedback": "위기를 설명했지만 해결 의지가 약합니다. '우리는 절대 포기하지 않을 것입니다'처럼 단호한 선언을 추가하세요."
+      }
+    ],
+    "interview": [
+      {
+        "id": "interview-coach-1",
+        "name": "Laszlo Bock",
+        "nameKo": "라즐로 복",
+        "expertise": "구글 채용 시스템 설계자",
+        "background": "구글 전 인사담당 수석부사장, 'Work Rules!' 저자",
+        "specialization": "행동 기반 면접 (STAR)",
+        "avatar": "🎯",
+        "coachingStyle": "구조화형 + 데이터형",
+        "keyStrengths": [
+          "STAR 프레임워크 완성도",
+          "구체적 성과 지표 제시",
+          "학습 능력 입증",
+          "문화 적합성 어필"
+        ],
+        "sampleFeedback": "Situation과 Task는 명확했으나 Result가 모호합니다. '매출 20% 증가' 같은 정량적 결과를 꼭 포함하세요."
+      },
+      {
+        "id": "interview-coach-2",
+        "name": "Susan Williams",
+        "nameKo": "수잔 윌리엄스",
+        "expertise": "면접관 심리 & 첫인상 전략",
+        "background": "포천 500대 기업 HR 컨설턴트 15년, 하버드 비즈니스 스쿨 Executive Education, 면접 심리 분석 전문가",
+        "specialization": "면접관 시선 이해 & 첫인상 관리",
+        "avatar": "👩‍🏫",
+        "coachingStyle": "심리분석형",
+        "keyStrengths": [
+          "면접관 시선 이해",
+          "압박 질문 대응",
+          "비언어 커뮤니케이션 (Body Language)",
+          "첫인상 3초의 법칙"
+        ],
+        "sampleFeedback": "답변 내용은 좋았으나 '저기', '음' 같은 필러 워드가 7회 사용되었습니다. 침묵을 두려워하지 마세요. 1~2초 침묵은 생각하는 모습으로 긍정 평가됩니다."
+      }
+    ],
+    "startup": [
+      {
+        "id": "startup-coach-1",
+        "name": "Paul Graham",
+        "nameKo": "폴 그레이엄",
+        "expertise": "Y Combinator 창업자",
+        "background": "실리콘밸리 최고의 스타트업 액셀러레이터 설립자, 수천 개 스타트업 멘토링",
+        "specialization": "초기 스타트업 피칭",
+        "avatar": "🚀",
+        "coachingStyle": "본질형 + 간결형",
+        "keyStrengths": [
+          "문제-솔루션 명확화",
+          "시장 크기 설명",
+          "팀 강점 어필",
+          "트랙션 입증"
+        ],
+        "sampleFeedback": "기술은 설명했지만 '왜 지금인가?(Why now?)'가 빠졌습니다. 시장 타이밍을 강조하세요."
+      },
+      {
+        "id": "startup-coach-2",
+        "name": "Guy Kawasaki",
+        "nameKo": "가이 가와사키",
+        "expertise": "피칭 & 에반젤리즘",
+        "background": "애플 최초 에반젤리스트, 'The Art of the Start' 저자, 100+ 스타트업 투자자",
+        "specialization": "10-20-30 피칭 룰",
+        "avatar": "🎨",
+        "coachingStyle": "스토리형 + 열정형",
+        "keyStrengths": [
+          "10슬라이드 피치덱",
+          "20분 프레젠테이션",
+          "30포인트 폰트",
+          "데모 중심 설명"
+        ],
+        "sampleFeedback": "슬라이드가 15장이고 글자가 너무 많습니다. 핵심만 10장으로 압축하고 폰트는 30pt 이상 사용하세요."
+      },
+      {
+        "id": "startup-coach-3",
+        "name": "Dr. Andrew Ng",
+        "nameKo": "앤드류 응 박사",
+        "expertise": "AI/ML 스타트업 전략 & 데이터 스토리텔링",
+        "background": "스탠포드 교수, Google Brain 창립자, Coursera 공동창업자, AI Fund 설립자",
+        "specialization": "AI 스타트업 피칭 & 기술 설명",
+        "avatar": "📊",
+        "coachingStyle": "데이터형 + 기술형",
+        "keyStrengths": [
+          "복잡한 기술을 간단히 설명",
+          "데이터 기반 시장 검증",
+          "AI/ML 트렌드 해석",
+          "기술 차별성 강조"
+        ],
+        "sampleFeedback": "시장 기회를 주장했지만 데이터가 없습니다. '최근 3년간 AI 시장 30% 성장' 같은 구체적 수치를 제시하세요. 또한 기술 설명 시 전문 용어를 줄이고 투자자가 이해할 수 있는 비유를 사용하세요."
+      }
+    ]
+  },
+  "coachingFrameworks": {
+    "hospital": {
+      "framework": "치과병원 환자상담 5단계 설득 로드맵",
+      "steps": [
+        {
+          "step": 1,
+          "name": "라포 형성",
+          "description": "환자와 신뢰 관계 구축",
+          "keyPoints": ["첫인상", "경청", "공감"]
+        },
+        {
+          "step": 2,
+          "name": "니즈 파악",
+          "description": "환자의 진짜 원하는 것 발견",
+          "keyPoints": ["개방형 질문", "숨은 동기", "우선순위"]
+        },
+        {
+          "step": 3,
+          "name": "솔루션 제시",
+          "description": "맞춤형 치료 계획 설명",
+          "keyPoints": ["Before-After", "단계별 설명", "대안 제시"]
+        },
+        {
+          "step": 4,
+          "name": "가치 설명",
+          "description": "비용 대비 가치 입증",
+          "keyPoints": ["장기 효과", "비교 분석", "투자 관점"]
+        },
+        {
+          "step": 5,
+          "name": "클로징",
+          "description": "결정 유도 및 예약 확정",
+          "keyPoints": ["긴급성", "행동 촉구", "후속 관리"]
+        }
+      ]
+    },
+    "sales": {
+      "framework": "SPIN Selling + Insight Selling",
+      "spin": [
+        { "letter": "S", "name": "Situation", "description": "상황 파악 질문" },
+        { "letter": "P", "name": "Problem", "description": "문제 발견 질문" },
+        { "letter": "I", "name": "Implication", "description": "시사점 확대 질문" },
+        { "letter": "N", "name": "Need-Payoff", "description": "해결 가치 질문" }
+      ],
+      "insight": [
+        { "step": 1, "name": "Teach", "description": "고객이 모르는 통찰 제공" },
+        { "step": 2, "name": "Tailor", "description": "고객 상황에 맞춤화" },
+        { "step": 3, "name": "Take Control", "description": "구매 프로세스 주도" }
+      ]
+    },
+    "interview": {
+      "framework": "STAR",
+      "steps": [
+        { "letter": "S", "name": "Situation", "description": "상황 설명" },
+        { "letter": "T", "name": "Task", "description": "과제/목표" },
+        { "letter": "A", "name": "Action", "description": "본인의 행동" },
+        { "letter": "R", "name": "Result", "description": "결과 및 성과" }
+      ]
+    },
+    "startup": {
+      "framework": "10-20-30 Rule (Guy Kawasaki)",
+      "rules": [
+        { "number": 10, "description": "10슬라이드로 압축" },
+        { "number": 20, "description": "20분 내 완료" },
+        { "number": 30, "description": "30포인트 이상 폰트" }
+      ],
+      "keySlides": [
+        "Problem",
+        "Solution",
+        "Business Model",
+        "Market Size",
+        "Competition",
+        "Team",
+        "Traction",
+        "Financials",
+        "Use of Funds",
+        "Vision"
+      ]
+    }
+  }
+}

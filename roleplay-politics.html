@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="정치 & 선거 롤플레이 - Roleplay AI Coach">
+  <meta name="author" content="심재우">
+  <meta name="copyright" content="© 2026 Roleplay AI Coach. All rights reserved.">
+  <title>정치 & 선거 롤플레이 - Roleplay AI Coach</title>
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Politics Theme */
+    :root {
+      --primary-color: var(--politics-primary);
+      --primary-light: var(--politics-light);
+      --primary-bg: var(--politics-bg);
+    }
+
+    .hero-politics {
+      background: linear-gradient(135deg, var(--politics-primary) 0%, #7c3aed 100%);
+      color: var(--white);
+      padding: 2rem 0;
+      text-align: center;
+    }
+
+    .hero-politics h1 {
+      color: var(--white);
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      opacity: 1;
+    }
+
+    .hero-politics p {
+      color: var(--white);
+      font-size: 1.1rem;
+      opacity: 0.95;
+    }
+
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      color: var(--slate-700);
+      font-weight: 600;
+      opacity: 1;
+    }
+
+    .step.active {
+      border-color: var(--primary-color);
+      background: var(--primary-bg);
+      color: var(--primary-color);
+    }
+
+    .step.completed {
+      border-color: var(--interview-primary);
+      background: var(--interview-bg);
+      color: var(--interview-primary);
+    }
+
+    .scenario-card {
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .scenario-card:hover {
+      border-color: var(--primary-color);
+      background: var(--primary-bg);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .scenario-card.selected {
+      border-color: var(--primary-color);
+      border-width: 3px;
+      background: var(--primary-bg);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .scenario-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 0.5rem;
+      opacity: 1;
+    }
+
+    .scenario-desc {
+      color: var(--slate-700);
+      opacity: 1;
+      line-height: 1.6;
+    }
+
+    .record-section {
+      text-align: center;
+      padding: 2rem;
+      background: var(--primary-bg);
+      border-radius: 1rem;
+      border: 2px solid var(--primary-light);
+    }
+
+    .record-btn {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: none;
+      background: var(--primary-color);
+      color: var(--white);
+      font-size: 2.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .record-btn:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .record-btn.recording {
+      background: #dc2626;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .timer {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-top: 1.5rem;
+      opacity: 1;
+    }
+
+    .coach-card {
+      background: var(--white);
+      border: 2px solid var(--primary-light);
+      border-radius: 0.75rem;
+      padding: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .coach-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--primary-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+    }
+
+    .coach-info h4 {
+      font-size: 1.1rem;
+      color: var(--slate-900);
+      margin-bottom: 0.25rem;
+      opacity: 1;
+    }
+
+    .coach-info p {
+      font-size: 0.9rem;
+      color: var(--slate-700);
+      opacity: 1;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Language Selector */
+    .language-selector {
+      background: var(--white);
+      border: 2px solid var(--primary-color);
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .language-selector label {
+      font-weight: 700;
+      color: var(--slate-900);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .language-selector select {
+      flex: 1;
+      padding: 0.5rem 0.75rem;
+      border: 2px solid var(--slate-300);
+      border-radius: 0.375rem;
+      font-size: 0.95rem;
+      color: var(--slate-800);
+      background: var(--white);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .language-selector select:hover {
+      border-color: var(--primary-color);
+    }
+
+    .language-selector select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px var(--primary-bg);
+    }
+  </style>
+  <style>
+    /* 🎨 초현실적 3D 클레이 파스텔톤 이모티콘 */
+    .emoji-3d {
+      display: inline-block;
+      font-style: normal;
+      position: relative;
+
+      /* 매우 강한 3D 입체감 */
+      text-shadow:
+        4px 4px 12px rgba(0, 0, 0, 0.35),
+        -3px -3px 6px rgba(255, 255, 255, 1),
+        0 0 20px rgba(255, 255, 255, 0.9),
+        2px 2px 4px rgba(0, 0, 0, 0.2),
+        -1px -1px 2px rgba(255, 255, 255, 0.8);
+
+      /* 부드러운 파스텔톤 필터 */
+      filter:
+        brightness(1.15)
+        saturate(1.5)
+        contrast(1.2)
+        drop-shadow(0 6px 14px rgba(0, 0, 0, 0.2))
+        drop-shadow(0 0 18px rgba(255, 255, 255, 0.7))
+        drop-shadow(-2px -2px 6px rgba(255, 255, 255, 0.4));
+
+      transform: translateZ(0) perspective(1000px);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* 클레이 질감 배경 */
+      background:
+        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.5), transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15), transparent 70%);
+
+      border-radius: 50%;
+      padding: 0.2em;
+    }
+
+    /* 강한 하이라이트 효과 */
+    .emoji-3d::before {
+      content: '';
+      position: absolute;
+      top: -15%;
+      left: -15%;
+      right: -15%;
+      bottom: -15%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.7), transparent 40%),
+        radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), transparent 55%);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.8;
+      filter: blur(1px);
+    }
+
+    /* 부드러운 그림자 효과 */
+    .emoji-3d::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .emoji-3d:hover {
+      transform: translateY(-4px) scale(1.1) rotateZ(-3deg) perspective(1000px) rotateX(5deg);
+      filter:
+        brightness(1.25)
+        saturate(1.7)
+        contrast(1.25)
+        drop-shadow(0 8px 18px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 24px rgba(255, 255, 255, 0.8))
+        drop-shadow(-3px -3px 8px rgba(255, 255, 255, 0.5));
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 8px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 1),
+        3px 3px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    /* 로고 이모티콘 - 초강력 효과 */
+    .logo .emoji-3d {
+      font-size: 1.4em;
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 7px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 0.95),
+        3px 3px 6px rgba(0, 0, 0, 0.2),
+        -2px -2px 4px rgba(255, 255, 255, 0.9);
+      filter:
+        brightness(1.25)
+        saturate(1.5)
+        contrast(1.18)
+        drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+    }
+
+    .logo .emoji-3d:hover {
+      transform: translateY(-5px) scale(1.15) rotateZ(-4deg) perspective(1000px) rotateX(8deg);
+      filter:
+        brightness(1.3)
+        saturate(1.7)
+        contrast(1.22)
+        drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))
+        drop-shadow(0 0 28px rgba(255, 255, 255, 0.9));
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span><span class="emoji-3d">🎯</span></span>
+        <span>Roleplay AI Coach</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="index.html">홈</a></li>
+          <li><a href="dashboard.html">대시보드</a></li>
+          <li><a href="manual.html">매뉴얼</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero-politics">
+    <div class="container">
+      <h1><span class="emoji-3d">🎤</span> 정치 & 선거 롤플레이</h1>
+      <p>유세 연설, 공약 발표, 토론회 대응을 AI 코치와 함께 훈련하세요.</p>
+    </div>
+  </section>
+
+  <!-- Step Indicator -->
+  <section>
+    <div class="container">
+      <div class="step-indicator">
+        <div class="step active" id="step1-indicator">
+          <span><span class="emoji-3d">1️⃣</span></span>
+          <span>시나리오 선택</span>
+        </div>
+        <div class="step" id="step2-indicator">
+          <span><span class="emoji-3d">2️⃣</span></span>
+          <span>녹음</span>
+        </div>
+        <div class="step" id="step3-indicator">
+          <span><span class="emoji-3d">3️⃣</span></span>
+          <span>AI 분석</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 1: Scenario Selection -->
+  <section id="step1">
+    <div class="container">
+
+      <!-- Language Selector -->
+      <div class="language-selector">
+        <label for="languageSelect">
+          <span class="emoji-3d">🌐</span> 롤플레이 언어 선택:
+        </label>
+        <select id="languageSelect" onchange="changeLanguage()">
+          <option value="ko"><span class="emoji-3d">🇰🇷</span> 한국어 (Korean)</option>
+          <option value="en"><span class="emoji-3d">🇺🇸</span> English (영어)</option>
+          <option value="zh-CN"><span class="emoji-3d">🇨🇳</span> 简体中文 (중국어 간체)</option>
+          <option value="zh-TW"><span class="emoji-3d">🇹🇼</span> 繁體中文 (중국어 번체)</option>
+          <option value="ja"><span class="emoji-3d">🇯🇵</span> 日本語 (일본어)</option>
+          <option value="es"><span class="emoji-3d">🇪🇸</span> Español (스페인어)</option>
+          <option value="fr"><span class="emoji-3d">🇫🇷</span> Français (프랑스어)</option>
+          <option value="de"><span class="emoji-3d">🇩🇪</span> Deutsch (독일어)</option>
+          <option value="pt"><span class="emoji-3d">🇵🇹</span> Português (포르투갈어)</option>
+          <option value="ru"><span class="emoji-3d">🇷🇺</span> Русский (러시아어)</option>
+          <option value="ar"><span class="emoji-3d">🇸🇦</span> العربية (아랍어)</option>
+          <option value="hi"><span class="emoji-3d">🇮🇳</span> हिन्दी (힌디어)</option>
+          <option value="it"><span class="emoji-3d">🇮🇹</span> Italiano (이탈리아어)</option>
+          <option value="nl"><span class="emoji-3d">🇳🇱</span> Nederlands (네덜란드어)</option>
+          <option value="pl"><span class="emoji-3d">🇵🇱</span> Polski (폴란드어)</option>
+          <option value="tr"><span class="emoji-3d">🇹🇷</span> Türkçe (터키어)</option>
+          <option value="vi"><span class="emoji-3d">🇻🇳</span> Tiếng Việt (베트남어)</option>
+          <option value="th"><span class="emoji-3d">🇹🇭</span> ไทย (태국어)</option>
+          <option value="id"><span class="emoji-3d">🇮🇩</span> Bahasa Indonesia (인도네시아어)</option>
+          <option value="ms"><span class="emoji-3d">🇲🇾</span> Bahasa Melayu (말레이시아어)</option>
+          <option value="sv"><span class="emoji-3d">🇸🇪</span> Svenska (스웨덴어)</option>
+          <option value="no"><span class="emoji-3d">🇳🇴</span> Norsk (노르웨이어)</option>
+          <option value="da"><span class="emoji-3d">🇩🇰</span> Dansk (덴마크어)</option>
+          <option value="fi"><span class="emoji-3d">🇫🇮</span> Suomi (핀란드어)</option>
+          <option value="cs"><span class="emoji-3d">🇨🇿</span> Čeština (체코어)</option>
+          <option value="ro"><span class="emoji-3d">🇷🇴</span> Română (루마니아어)</option>
+          <option value="hu"><span class="emoji-3d">🇭🇺</span> Magyar (헝가리어)</option>
+          <option value="el"><span class="emoji-3d">🇬🇷</span> Ελληνικά (그리스어)</option>
+          <option value="he"><span class="emoji-3d">🇮🇱</span> עברית (히브리어)</option>
+          <option value="uk"><span class="emoji-3d">🇺🇦</span> Українська (우크라이나어)</option>
+        </select>
+        <p style="color: var(--slate-700); font-size: 0.85rem; margin: 0;">
+          선택한 언어로 AI가 대응합니다
+        </p>
+      </div>
+
+      <h2 class="section-title">시나리오를 선택하세요</h2>
+
+      <!-- 사용 가이드 -->
+      <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid #0ea5e9; border-left: 5px solid #0ea5e9; border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 1.5rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+        <h4 style="font-size: 1.1rem; font-weight: 700; color: #0369a1; margin-bottom: 1rem; opacity: 1; display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 1.5rem;"><span class="emoji-3d">💡</span></span> 사례 선택 가이드
+        </h4>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem;">
+          <div style="background: white; padding: 1rem; border-radius: 0.5rem; border: 1px solid #bae6fd;">
+            <div style="font-weight: 700; color: #0369a1; margin-bottom: 0.5rem; opacity: 1;"><span class="emoji-3d">1️⃣</span> 난이도 확인</div>
+            <div style="font-size: 0.9rem; color: var(--slate-700); line-height: 1.6; opacity: 1;">
+              <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span> 초급: 기본 상황<br>
+              <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span> 중급: 복잡한 변수<br>
+              <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span> 고급: 위기 상황
+            </div>
+          </div>
+          <div style="background: white; padding: 1rem; border-radius: 0.5rem; border: 1px solid #bae6fd;">
+            <div style="font-weight: 700; color: #0369a1; margin-bottom: 0.5rem; opacity: 1;"><span class="emoji-3d">2️⃣</span> 사례 읽기</div>
+            <div style="font-size: 0.9rem; color: var(--slate-700); line-height: 1.6; opacity: 1;">
+              상황·목표·챌린지를 꼼꼼히 읽고 실제 상황처럼 준비하세요
+            </div>
+          </div>
+          <div style="background: white; padding: 1rem; border-radius: 0.5rem; border: 1px solid #bae6fd;">
+            <div style="font-weight: 700; color: #0369a1; margin-bottom: 0.5rem; opacity: 1;"><span class="emoji-3d">3️⃣</span> 카드 클릭</div>
+            <div style="font-size: 0.9rem; color: var(--slate-700); line-height: 1.6; opacity: 1;">
+              사례 카드를 클릭하면 선택됩니다. 이후 시나리오를 선택하고 녹음을 시작하세요
+            </div>
+          </div>
+        </div>
+        <div style="background: #fef3c7; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #f59e0b;">
+          <div style="font-weight: 700; color: #92400e; margin-bottom: 0.5rem; opacity: 1; display: flex; align-items: center; gap: 0.5rem;">
+            <span><span class="emoji-3d">🎯</span></span> 실전 팁
+          </div>
+          <div style="font-size: 0.9rem; color: #78350f; opacity: 1; line-height: 1.6;">
+            • 처음이라면 <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span> 난이도부터 시작하세요<br>
+            • 실제 업무와 유사한 사례를 선택하면 학습 효과가 높습니다<br>
+            • 4번째 "나만의 실제 사례"는 본인이 직면한 실제 상황을 입력할 수 있습니다<br>
+            • 녹음 전에 사례 내용을 2-3번 읽고 역할을 머릿속으로 리허설하세요
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-2" style="max-width: 900px; margin: 0 auto 1rem;">
+        <!-- 실전 사례 1 -->
+        <div class="scenario-card" data-scenario="case1">
+          <div class="scenario-title"><span class="emoji-3d">🎤</span> [실전] 지역 전통시장 유세</div>
+          <div class="scenario-desc" style="margin-bottom: 0.5rem;">
+            <strong>상황:</strong> 상인들 앞에서 3분 유세, 상대 후보가 이미 다녀감<br>
+            <strong>목표:</strong> 전통시장 활성화 공약 + 신뢰 확보<br>
+            <strong>챌린지:</strong> 상인들이 "정치인은 다 똑같다" 냉소적 반응<br>
+            <strong>기대결과:</strong> 구체적 실행안으로 차별화, 상인회장 지지 확보<br>
+            <strong style="color: #10b981;">난이도: <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span> 중급</strong>
+          </div>
+        </div>
+
+        <!-- 실전 사례 2 -->
+        <div class="scenario-card" data-scenario="case2">
+          <div class="scenario-title">⚔️ [실전] TV토론 상대 후보 공격 대응</div>
+          <div class="scenario-desc" style="margin-bottom: 0.5rem;">
+            <strong>상황:</strong> 상대가 "과거 경력 의혹" 집중 공격<br>
+            <strong>목표:</strong> 의혹 해명 + 상대 약점 역공<br>
+            <strong>챌린지:</strong> 감정적 대응 시 패배, 침착함 유지 필수<br>
+            <strong>기대결과:</strong> 논리적 반박 + 메시지 반복으로 시청자 설득<br>
+            <strong style="color: #f59e0b;">난이도: <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span> 고급</strong>
+          </div>
+        </div>
+
+        <!-- 실전 사례 3 -->
+        <div class="scenario-card" data-scenario="case3">
+          <div class="scenario-title">📰 [실전] 스캔들 긴급 기자회견</div>
+          <div class="scenario-desc" style="margin-bottom: 0.5rem;">
+            <strong>상황:</strong> 측근 비리 폭로, 언론 전면 공격, 지지율 급락<br>
+            <strong>목표:</strong> 사과 + 책임 인정 + 재발 방지 약속<br>
+            <strong>챌린지:</strong> 변명하면 역풍, 책임 회피 시 신뢰 붕괴<br>
+            <strong>기대결과:</strong> 솔직한 사과로 신뢰 회복, 재기 발판 마련<br>
+            <strong style="color: #ef4444;">난이도: <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span> 전문가</strong>
+          </div>
+        </div>
+
+        <div class="scenario-card" data-scenario="speech">
+          <div class="scenario-title"><span class="emoji-3d">🎤</span> 유세 연설</div>
+          <div class="scenario-desc">
+            선거 유세에서 유권자들 앞에서 당선 의지를 밝히고 지지를 호소합니다.
+            핵심 공약과 비전을 간결하고 설득력 있게 전달하는 연습입니다.
+          </div>
+        </div>
+
+        <div class="scenario-card" data-scenario="promise">
+          <div class="scenario-title"><span class="emoji-3d">📋</span> 공약 발표</div>
+          <div class="scenario-desc">
+            핵심 공약을 발표하고 실현 가능성과 구체적인 실행 계획을 설명합니다.
+            데이터와 근거를 활용하여 신뢰성을 높이는 훈련입니다.
+          </div>
+        </div>
+
+        <div class="scenario-card" data-scenario="debate">
+          <div class="scenario-title">⚔️ 토론회 대응</div>
+          <div class="scenario-desc">
+            TV 토론회에서 상대 후보의 공격에 대응하고 반박하는 연습입니다.
+            논리적 근거와 감정 조절을 통해 설득력을 높입니다.
+          </div>
+        </div>
+
+        <div class="scenario-card" data-scenario="press">
+          <div class="scenario-title">📰 기자회견</div>
+          <div class="scenario-desc">
+            언론 앞에서 공식 입장을 발표하고 예상 질문에 답변하는 훈련입니다.
+            명확하고 일관된 메시지 전달이 핵심입니다.
+          </div>
+        </div>
+
+        <div class="scenario-card" data-scenario="voter">
+          <div class="scenario-title">🤝 유권자 소통</div>
+          <div class="scenario-desc">
+            거리 유세나 간담회에서 유권자들과 직접 소통하는 연습입니다.
+            경청하고 공감하며 진정성 있게 답변하는 능력을 기릅니다.
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <button class="btn btn-primary" id="next-to-step2" disabled>다음 단계로 →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 2: Recording -->
+  <section id="step2" class="hidden">
+    <div class="container" style="max-width: 800px;">
+      <h2 class="section-title">AI 코치와 롤플레이를 시작하세요</h2>
+
+      <!-- AI Coach Info -->
+      <div class="grid grid-2" style="margin-bottom: 1rem;">
+        <div class="coach-card">
+          <div class="coach-avatar"><span class="emoji-3d">🇺🇸</span></div>
+          <div class="coach-info">
+            <h4>Barack Obama</h4>
+            <p>제44대 미국 대통령, 연설의 달인</p>
+          </div>
+        </div>
+
+        <div class="coach-card">
+          <div class="coach-avatar">🇬🇧</div>
+          <div class="coach-info">
+            <h4>Winston Churchill</h4>
+            <p>영국 수상, 역사적 연설가</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scenario Context -->
+      <div class="card" style="margin-bottom: 1rem; border: 2px solid var(--primary-light); background: var(--primary-bg);">
+        <h3 style="color: var(--slate-900); margin-bottom: 1rem; opacity: 1;">선택한 시나리오</h3>
+        <p id="scenario-context" style="color: var(--slate-800); line-height: 1.8; opacity: 1;">
+          <!-- 동적 삽입 -->
+        </p>
+      </div>
+
+      <!-- Recording Section -->
+      <div class="record-section">
+        <button class="record-btn" id="record-btn">
+          <span class="emoji-3d">🎙️</span>
+        </button>
+        <div class="timer" id="timer">00:00</div>
+        <p style="margin-top: 1rem; color: var(--slate-700); opacity: 1;">
+          버튼을 눌러 녹음을 시작하세요. 다시 누르면 종료됩니다.
+        </p>
+      </div>
+
+      <div style="text-align: center; margin-top: 1rem;">
+        <button class="btn btn-secondary" id="back-to-step1">← 이전</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2026 Roleplay AI Coach. All rights reserved. | 심재우 &lt;jaiwshim@gmail.com&gt;</p>
+      <div class="footer-links">
+        <a href="manual.html">📖 매뉴얼</a>
+        <a href="copyright.html">© 저작권</a>
+        <a href="patent.html">⚖️ 특허</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script>
+    // ========================================
+    // Global State
+    // ========================================
+    let selectedScenario = null;
+    let recorder = new AudioRecorder();
+    let recordingStartTime = null;
+    let timerInterval = null;
+    let selectedLanguage = 'ko'; // 기본값: 한국어
+
+    // 30개 언어 정보
+    const LANGUAGES = {
+      'ko': { name: '한국어', nativeName: '한국어', flag: '<span class="emoji-3d">🇰🇷</span>' },
+      'en': { name: 'English', nativeName: 'English', flag: '<span class="emoji-3d">🇺🇸</span>' },
+      'zh-CN': { name: '简体中文', nativeName: '简体中文', flag: '<span class="emoji-3d">🇨🇳</span>' },
+      'zh-TW': { name: '繁體中文', nativeName: '繁體中文', flag: '<span class="emoji-3d">🇹🇼</span>' },
+      'ja': { name: '日本語', nativeName: '日本語', flag: '<span class="emoji-3d">🇯🇵</span>' },
+      'es': { name: 'Español', nativeName: 'Español', flag: '<span class="emoji-3d">🇪🇸</span>' },
+      'fr': { name: 'Français', nativeName: 'Français', flag: '<span class="emoji-3d">🇫🇷</span>' },
+      'de': { name: 'Deutsch', nativeName: 'Deutsch', flag: '<span class="emoji-3d">🇩🇪</span>' },
+      'pt': { name: 'Português', nativeName: 'Português', flag: '<span class="emoji-3d">🇵🇹</span>' },
+      'ru': { name: 'Русский', nativeName: 'Русский', flag: '<span class="emoji-3d">🇷🇺</span>' },
+      'ar': { name: 'العربية', nativeName: 'العربية', flag: '<span class="emoji-3d">🇸🇦</span>' },
+      'hi': { name: 'हिन्दी', nativeName: 'हिन्दी', flag: '<span class="emoji-3d">🇮🇳</span>' },
+      'it': { name: 'Italiano', nativeName: 'Italiano', flag: '<span class="emoji-3d">🇮🇹</span>' },
+      'nl': { name: 'Nederlands', nativeName: 'Nederlands', flag: '<span class="emoji-3d">🇳🇱</span>' },
+      'pl': { name: 'Polski', nativeName: 'Polski', flag: '<span class="emoji-3d">🇵🇱</span>' },
+      'tr': { name: 'Türkçe', nativeName: 'Türkçe', flag: '<span class="emoji-3d">🇹🇷</span>' },
+      'vi': { name: 'Tiếng Việt', nativeName: 'Tiếng Việt', flag: '<span class="emoji-3d">🇻🇳</span>' },
+      'th': { name: 'ไทย', nativeName: 'ไทย', flag: '<span class="emoji-3d">🇹🇭</span>' },
+      'id': { name: 'Bahasa Indonesia', nativeName: 'Bahasa Indonesia', flag: '<span class="emoji-3d">🇮🇩</span>' },
+      'ms': { name: 'Bahasa Melayu', nativeName: 'Bahasa Melayu', flag: '<span class="emoji-3d">🇲🇾</span>' },
+      'sv': { name: 'Svenska', nativeName: 'Svenska', flag: '<span class="emoji-3d">🇸🇪</span>' },
+      'no': { name: 'Norsk', nativeName: 'Norsk', flag: '<span class="emoji-3d">🇳🇴</span>' },
+      'da': { name: 'Dansk', nativeName: 'Dansk', flag: '<span class="emoji-3d">🇩🇰</span>' },
+      'fi': { name: 'Suomi', nativeName: 'Suomi', flag: '<span class="emoji-3d">🇫🇮</span>' },
+      'cs': { name: 'Čeština', nativeName: 'Čeština', flag: '<span class="emoji-3d">🇨🇿</span>' },
+      'ro': { name: 'Română', nativeName: 'Română', flag: '<span class="emoji-3d">🇷🇴</span>' },
+      'hu': { name: 'Magyar', nativeName: 'Magyar', flag: '<span class="emoji-3d">🇭🇺</span>' },
+      'el': { name: 'Ελληνικά', nativeName: 'Ελληνικά', flag: '<span class="emoji-3d">🇬🇷</span>' },
+      'he': { name: 'עברית', nativeName: 'עברית', flag: '<span class="emoji-3d">🇮🇱</span>' },
+      'uk': { name: 'Українська', nativeName: 'Українська', flag: '<span class="emoji-3d">🇺🇦</span>' }
+    };
+
+    // 언어 변경
+    function changeLanguage() {
+      const select = document.getElementById('languageSelect');
+      selectedLanguage = select.value;
+
+      const langInfo = LANGUAGES[selectedLanguage];
+      showToast(`${langInfo.flag} ${langInfo.nativeName}로 변경되었습니다. AI가 ${langInfo.nativeName}로 대응합니다.`, 'success');
+
+      // localStorage에 저장
+      localStorage.setItem('roleplay_language', selectedLanguage);
+    }
+
+    const scenarioData = {
+      speech: {
+        title: '<span class="emoji-3d">🎤</span> 유세 연설',
+        context: '당신은 지역구 국회의원 후보입니다. 200명의 유권자 앞에서 3분간 유세 연설을 합니다. 핵심 공약 2가지를 소개하고 당선 의지를 전달하세요.'
+      },
+      promise: {
+        title: '<span class="emoji-3d">📋</span> 공약 발표',
+        context: '당신은 시장 후보로 기자회견에서 핵심 공약을 발표합니다. "청년 일자리 1만 개 창출" 공약에 대해 구체적인 실행 계획과 재원 조달 방안을 설명하세요.'
+      },
+      debate: {
+        title: '⚔️ 토론회 대응',
+        context: 'TV 토론회에서 상대 후보가 "당신의 과거 경력은 이 지역에 도움이 안 된다"고 공격합니다. 2분 안에 반박하고 자신의 강점을 부각하세요.'
+      },
+      press: {
+        title: '📰 기자회견',
+        context: '당신은 후보 등록 직후 기자회견을 엽니다. "왜 출마하게 되었는가?"라는 질문에 답하고, 당선 후 가장 먼저 추진할 정책을 밝히세요.'
+      },
+      voter: {
+        title: '🤝 유권자 소통',
+        context: '전통시장에서 상인들과 간담회를 진행합니다. 한 상인이 "대형마트 때문에 장사가 안 되는데 어떻게 할 건가요?"라고 묻습니다. 공감하고 해결책을 제시하세요.'
+      }
+    };
+
+    // ========================================
+    // Step 1: Scenario Selection
+    // ========================================
+    document.querySelectorAll('.scenario-card').forEach(card => {
+      card.addEventListener('click', () => {
+        // 이전 선택 해제
+        document.querySelectorAll('.scenario-card').forEach(c => c.classList.remove('selected'));
+
+        // 현재 선택
+        card.classList.add('selected');
+        selectedScenario = card.dataset.scenario;
+
+        // 다음 버튼 활성화
+        document.getElementById('next-to-step2').disabled = false;
+
+        console.log('[Step1] 시나리오 선택:', selectedScenario);
+      });
+    });
+
+    document.getElementById('next-to-step2').addEventListener('click', () => {
+      if (!selectedScenario) {
+        showToast('시나리오를 선택해주세요.', 'error');
+        return;
+      }
+
+      // Step 2로 이동
+      document.getElementById('step1').classList.add('hidden');
+      document.getElementById('step2').classList.remove('hidden');
+
+      // Step Indicator 업데이트
+      document.getElementById('step1-indicator').classList.remove('active');
+      document.getElementById('step1-indicator').classList.add('completed');
+      document.getElementById('step2-indicator').classList.add('active');
+
+      // 시나리오 컨텍스트 삽입
+      const scenario = scenarioData[selectedScenario];
+      document.getElementById('scenario-context').textContent = scenario.context;
+
+      console.log('[Step2] 녹음 단계 진입');
+    });
+
+    document.getElementById('back-to-step1').addEventListener('click', () => {
+      document.getElementById('step2').classList.add('hidden');
+      document.getElementById('step1').classList.remove('hidden');
+
+      // Step Indicator 업데이트
+      document.getElementById('step1-indicator').classList.add('active');
+      document.getElementById('step1-indicator').classList.remove('completed');
+      document.getElementById('step2-indicator').classList.remove('active');
+    });
+
+    // ========================================
+    // Step 2: Recording
+    // ========================================
+    document.getElementById('record-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('record-btn');
+      const timerEl = document.getElementById('timer');
+
+      if (!recorder.isRecording) {
+        // 녹음 시작
+        const success = await recorder.start();
+        if (!success) return;
+
+        btn.classList.add('recording');
+        btn.textContent = '⏹️';
+        recordingStartTime = Date.now();
+
+        // 타이머 시작
+        timerInterval = setInterval(() => {
+          const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+          const minutes = Math.floor(elapsed / 60);
+          const seconds = elapsed % 60;
+          timerEl.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }, 1000);
+
+        showToast('녹음이 시작되었습니다.', 'success');
+      } else {
+        // 녹음 중지
+        clearInterval(timerInterval);
+        const audioBlob = await recorder.stop();
+
+        btn.classList.remove('recording');
+        btn.textContent = '<span class="emoji-3d">🎙️</span>';
+
+        if (audioBlob) {
+          // localStorage에 임시 저장
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const base64Audio = reader.result;
+            const sessionId = generateId();
+
+            localStorage.setItem('temp_audio', base64Audio);
+            localStorage.setItem('temp_session_id', sessionId);
+            localStorage.setItem('temp_scenario', selectedScenario);
+
+            showToast('녹음이 완료되었습니다. AI 분석 페이지로 이동합니다...', 'success', 2000);
+
+            // 2초 후 feedback.html로 이동
+            setTimeout(() => {
+              window.location.href = `feedback.html?session=${sessionId}&category=politics`;
+            }, 2000);
+          };
+          reader.readAsDataURL(audioBlob);
+        }
+      }
+    });
+
+    // ========================================
+    // Page Init
+    // ========================================
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLanguage = localStorage.getItem('roleplay_language') || 'ko';
+      selectedLanguage = savedLanguage;
+      document.getElementById('languageSelect').value = savedLanguage;
+      console.log('[RolePlay-Politics] 페이지 로드 완료');
+    });
+  </script>
+</body>
+</html>

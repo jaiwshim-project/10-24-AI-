@@ -1,0 +1,517 @@
+{
+  "hospital": {
+    "scenarios": [
+      {
+        "id": "hospital-1",
+        "title": "신규 환자 상담",
+        "description": "처음 방문한 환자와 신뢰 형성하고 치료 계획 설명",
+        "cases": [
+          {
+            "id": "case-1",
+            "title": "20대 여성, 치아 미백 상담",
+            "situation": "결혼 예정인 28세 여성, 3개월 후 결혼식을 앞두고 치아 미백을 원함. 예산 100만원 이내 희망.",
+            "patientProfile": {
+              "age": 28,
+              "gender": "여성",
+              "concern": "치아 착색 (커피 애호가)",
+              "budget": "100만원 이내",
+              "urgency": "3개월 후 결혼식"
+            },
+            "expectedDuration": "5분"
+          },
+          {
+            "id": "case-2",
+            "title": "40대 남성, 임플란트 상담",
+            "situation": "45세 남성, 어금니 2개 상실 상태. 저작 불편함 호소. 임플란트 vs 브릿지 고민 중.",
+            "patientProfile": {
+              "age": 45,
+              "gender": "남성",
+              "concern": "어금니 2개 상실",
+              "budget": "미정 (비용 부담 우려)",
+              "urgency": "저작 불편"
+            },
+            "expectedDuration": "7분"
+          },
+          {
+            "id": "case-3",
+            "title": "30대 여성, 교정 상담",
+            "situation": "32세 여성, 덧니와 돌출입 고민. 직장인이라 눈에 띄지 않는 교정 희망. 투명 교정 vs 설측 교정 비교 원함.",
+            "patientProfile": {
+              "age": 32,
+              "gender": "여성",
+              "concern": "덧니, 돌출입",
+              "budget": "500만원 이내",
+              "urgency": "직장 생활 고려 (눈에 안 띄게)"
+            },
+            "expectedDuration": "6분"
+          },
+          {
+            "id": "case-4",
+            "title": "50대 남성, 잇몸 치료 상담",
+            "situation": "55세 남성, 잇몸 출혈과 치아 흔들림 증상. 스케일링만 받다가 처음 치주 치료 권유 받음. 불안감 큼.",
+            "patientProfile": {
+              "age": 55,
+              "gender": "남성",
+              "concern": "잇몸 출혈, 치아 흔들림",
+              "budget": "미정",
+              "urgency": "증상 악화 우려"
+            },
+            "expectedDuration": "8분"
+          },
+          {
+            "id": "case-5",
+            "title": "10대 청소년 부모, 자녀 교정 상담",
+            "situation": "14세 자녀 부모, 자녀 부정교합 상담. 성장기 교정 시기 적절성 문의. 비용과 기간 궁금. 보험 적용 여부 확인 원함.",
+            "patientProfile": {
+              "age": "14세 (자녀)",
+              "gender": "남성",
+              "concern": "부정교합, 성장기 교정",
+              "budget": "보험 적용 희망",
+              "urgency": "성장기 타이밍"
+            },
+            "expectedDuration": "7분"
+          }
+        ]
+      },
+      {
+        "id": "hospital-2",
+        "title": "치료 계획 설명",
+        "description": "복잡한 치료 과정을 이해하기 쉽게 설명하고 환자 동의 얻기",
+        "cases": [
+          {
+            "id": "case-1",
+            "title": "임플란트 수술 과정 설명",
+            "situation": "임플란트 결정한 환자에게 수술 3단계 (발치→뼈이식→임플란트 식립) 상세 설명. 총 6개월 소요.",
+            "expectedDuration": "6분"
+          },
+          {
+            "id": "case-2",
+            "title": "교정 치료 로드맵 제시",
+            "situation": "투명교정 선택한 환자에게 18개월 치료 계획 설명. 매 2주마다 교체, 6주마다 내원.",
+            "expectedDuration": "5분"
+          },
+          {
+            "id": "case-3",
+            "title": "신경치료 + 크라운 설명",
+            "situation": "신경치료 필요한 어금니, 치료 후 크라운 씌우기 필수. 총 3회 내원 필요. 통증 우려 환자.",
+            "expectedDuration": "6분"
+          },
+          {
+            "id": "case-4",
+            "title": "치주 치료 단계 안내",
+            "situation": "중증 잇몸병 환자, 스케일링→치근활택술→치주수술 3단계 필요. 보험 적용 가능.",
+            "expectedDuration": "7분"
+          },
+          {
+            "id": "case-5",
+            "title": "전체 틀니 제작 과정",
+            "situation": "전체 무치악 환자, 틀니 제작 5단계 (인상→교합→시적→완성→조정) 설명. 적응 기간 필요.",
+            "expectedDuration": "8분"
+          }
+        ]
+      },
+      {
+        "id": "hospital-3",
+        "title": "비용 상담 및 설득",
+        "description": "치료 비용 안내하고 가격 부담 완화, 가치 설명",
+        "cases": [
+          {
+            "id": "case-1",
+            "title": "고액 임플란트 비용 설명",
+            "situation": "임플란트 1개 200만원. '비싸다'는 반응. 10년 이상 사용 가능한 투자임을 설명 필요.",
+            "expectedDuration": "5분"
+          },
+          {
+            "id": "case-2",
+            "title": "교정 분할 납부 제안",
+            "situation": "교정 총 비용 600만원. 일시불 부담. 무이자 할부 12개월 또는 월 50만원 분할 제안.",
+            "expectedDuration": "6분"
+          },
+          {
+            "id": "case-3",
+            "title": "보험 vs 비보험 설명",
+            "situation": "스케일링(보험) vs 잇몸치료(비보험) 차이 설명. 비보험이 왜 필요한지 이해시키기.",
+            "expectedDuration": "6분"
+          },
+          {
+            "id": "case-4",
+            "title": "프리미엄 재료 선택 설명",
+            "situation": "지르코니아(150만원) vs 골드(120만원) 크라운. 프리미엄 재료의 장점 설명.",
+            "expectedDuration": "5분"
+          },
+          {
+            "id": "case-5",
+            "title": "가족 패키지 할인 제안",
+            "situation": "부부 + 자녀 2명 스케일링. 개별 40만원 → 패키지 120만원 (25% 할인) 제안.",
+            "expectedDuration": "4분"
+          }
+        ]
+      }
+    ]
+  },
+  "sales": {
+    "scenarios": [
+      {
+        "id": "sales-1",
+        "title": "신규 고객 발굴",
+        "description": "첫 미팅에서 관계 구축하고 다음 단계 약속 받기",
+        "cases": [
+          {
+            "id": "case-1",
+            "title": "B2B SaaS 소프트웨어 첫 미팅",
+            "situation": "IT 기업 CTO와 첫 미팅. 협업 도구 제안. 현재 Slack + Notion 사용 중. 우리 제품은 통합 솔루션.",
+            "customerProfile": {
+              "company": "IT 스타트업 (직원 50명)",
+              "decision_maker": "CTO",
+              "current_solution": "Slack + Notion",
+              "pain_point": "도구 분산, 정보 파편화"
+            },
+            "expectedDuration": "7분"
+          },
+          {
+            "id": "case-2",
+            "title": "제조업 ERP 시스템 영업",
+            "situation": "중소 제조업체 CEO 미팅. 수기 재고 관리 → ERP 전환 제안. 비용 부담 우려.",
+            "customerProfile": {
+              "company": "중소 제조업 (직원 30명)",
+              "decision_maker": "CEO",
+              "current_solution": "엑셀 수기 관리",
+              "pain_point": "재고 오류, 수작업 시간 소모"
+            },
+            "expectedDuration": "8분"
+          },
+          {
+            "id": "case-3",
+            "title": "B2C 보험 상품 상담",
+            "situation": "30대 부부, 자녀 2명. 종신보험 가입 고려. 타사 3개 상품 비교 중. 보장 범위 vs 보험료 고민.",
+            "customerProfile": {
+              "age": "30대 부부",
+              "family": "자녀 2명 (5세, 3세)",
+              "current_solution": "없음",
+              "pain_point": "자녀 교육비 + 노후 준비"
+            },
+            "expectedDuration": "10분"
+          },
+          {
+            "id": "case-4",
+            "title": "기업 교육 서비스 제안",
+            "situation": "대기업 인사팀장 미팅. 신입사원 온보딩 교육 제안. 현재 외부 강사 섭외 방식. 효율화 필요.",
+            "customerProfile": {
+              "company": "대기업 (직원 1,000명)",
+              "decision_maker": "인사팀장",
+              "current_solution": "외부 강사 섭외",
+              "pain_point": "일관성 부족, 비용 증가"
+            },
+            "expectedDuration": "8분"
+          },
+          {
+            "id": "case-5",
+            "title": "부동산 중개 첫 상담",
+            "situation": "신혼부부, 첫 집 구매. 예산 4억, 강남권 희망. 전세 vs 매매 고민. 대출 한도 확인 필요.",
+            "customerProfile": {
+              "age": "30대 신혼부부",
+              "budget": "4억원",
+              "location": "강남권",
+              "pain_point": "전세 vs 매매 결정"
+            },
+            "expectedDuration": "9분"
+          }
+        ]
+      },
+      {
+        "id": "sales-2",
+        "title": "니즈 파악 (SPIN 질문)",
+        "description": "SPIN 프레임워크로 고객의 진짜 문제 발견하기",
+        "cases": [
+          {
+            "id": "case-1",
+            "title": "CRM 시스템 도입 니즈 파악",
+            "situation": "영업팀 20명 기업. 엑셀로 고객 관리. SPIN 질문으로 불편함과 손실 규모 확인.",
+            "expectedDuration": "6분"
+          },
+          {
+            "id": "case-2",
+            "title": "마케팅 자동화 필요성 발굴",
+            "situation": "이커머스 기업. 이메일 마케팅 수작업. SPIN으로 시간 낭비와 기회 손실 파악.",
+            "expectedDuration": "7분"
+          },
+          {
+            "id": "case-3",
+            "title": "회계 소프트웨어 도입 설득",
+            "situation": "세무사 사무소. 종이 장부 + 수기 입력. SPIN으로 오류율과 연장 근무 문제 확인.",
+            "expectedDuration": "6분"
+          },
+          {
+            "id": "case-4",
+            "title": "물류 관리 시스템 필요성",
+            "situation": "온라인 쇼핑몰. 재고 파악 어려움. SPIN으로 품절 손실과 과잉 재고 비용 계산.",
+            "expectedDuration": "7 분"
+          },
+          {
+            "id": "case-5",
+            "title": "HR 솔루션 니즈 발굴",
+            "situation": "직원 100명 기업. 근태/급여 수작업. SPIN으로 인사팀 업무 과부하와 오류 문제 확인.",
+            "expectedDuration": "6분"
+          }
+        ]
+      }
+    ]
+  },
+  "politics": {
+    "scenarios": [
+      {
+        "id": "politics-1",
+        "title": "유세 연설",
+        "description": "유권자 200명 앞에서 3분 유세 연설",
+        "cases": [
+          {
+            "id": "case-1",
+            "title": "청년 일자리 공약 발표",
+            "situation": "시장 후보, 청년 실업률 12% 지역. 청년 일자리 5,000개 창출 공약. 구체적 실행 방안 제시.",
+            "audienceProfile": {
+              "size": "200명",
+              "demographic": "20~30대 청년 중심",
+              "location": "대학가 광장",
+              "key_concern": "일자리, 주거비"
+            },
+            "expectedDuration": "3분"
+          },
+          {
+            "id": "case-2",
+            "title": "교육 개혁 유세",
+            "situation": "교육감 후보, 학부모 대상. 사교육비 절감 + 공교육 정상화 공약. 반대 진영 비판 대응.",
+            "audienceProfile": {
+              "size": "300명",
+              "demographic": "40~50대 학부모",
+              "location": "초등학교 강당",
+              "key_concern": "사교육비, 입시 경쟁"
+            },
+            "expectedDuration": "4분"
+          },
+          {
+            "id": "case-3",
+            "title": "복지 확대 공약",
+            "situation": "국회의원 후보, 노인 복지 강화. 기초연금 30% 인상 공약. 재원 마련 방안 명확히 제시.",
+            "audienceProfile": {
+              "size": "150명",
+              "demographic": "60대 이상 노인",
+              "location": "경로당 앞 광장",
+              "key_concern": "연금, 의료비"
+            },
+            "expectedDuration": "3분"
+          },
+          {
+            "id": "case-4",
+            "title": "경제 활성화 공약",
+            "situation": "시장 후보, 소상공인 대상. 상권 활성화 + 임대료 규제 공약. 대기업 vs 골목상권 균형.",
+            "audienceProfile": {
+              "size": "250명",
+              "demographic": "자영업자, 소상공인",
+              "location": "전통시장",
+              "key_concern": "임대료, 매출 감소"
+            },
+            "expectedDuration": "4분"
+          },
+          {
+            "id": "case-5",
+            "title": "환경 정책 발표",
+            "situation": "시장 후보, 미세먼지 대책. 친환경 버스 + 도심 녹지 확대. 예산 vs 실효성 설명.",
+            "audienceProfile": {
+              "size": "180명",
+              "demographic": "30~40대 학부모",
+              "location": "아파트 단지",
+              "key_concern": "미세먼지, 자녀 건강"
+            },
+            "expectedDuration": "3분"
+          }
+        ]
+      }
+    ]
+  },
+  "interview": {
+    "scenarios": [
+      {
+        "id": "interview-1",
+        "title": "자기소개 (1분)",
+        "description": "1분 자기소개로 강한 첫인상 만들기",
+        "cases": [
+          {
+            "id": "case-1",
+            "title": "IT 개발자 자기소개",
+            "situation": "5년차 백엔드 개발자, 스타트업 → 대기업 이직. 빠른 성장 환경에서 쌓은 실전 경험 강조.",
+            "jobPosition": "백엔드 개발자 (시니어)",
+            "company": "네이버",
+            "keyStrength": "AWS 인프라, 대용량 트래픽 처리",
+            "expectedDuration": "1분"
+          },
+          {
+            "id": "case-2",
+            "title": "마케터 자기소개",
+            "situation": "3년차 퍼포먼스 마케터, 광고 대행사 → 인하우스 전환 희망. ROI 200% 달성 경험 강조.",
+            "jobPosition": "퍼포먼스 마케터",
+            "company": "쿠팡",
+            "keyStrength": "데이터 분석, 광고 최적화",
+            "expectedDuration": "1분"
+          },
+          {
+            "id": "case-3",
+            "title": "신입 회계사 자기소개",
+            "situation": "회계학과 졸업, CPA 합격. 회계법인 취업 희망. 성실함과 학습 능력 어필.",
+            "jobPosition": "회계사 (신입)",
+            "company": "삼일회계법인",
+            "keyStrength": "CPA 합격, 회계 실습 경험",
+            "expectedDuration": "1분"
+          },
+          {
+            "id": "case-4",
+            "title": "디자이너 자기소개",
+            "situation": "UX 디자이너 4년차, 앱 리디자인으로 전환율 30% 상승 성과. 사용자 중심 설계 강조.",
+            "jobPosition": "UX 디자이너",
+            "company": "카카오",
+            "keyStrength": "사용자 리서치, A/B 테스트",
+            "expectedDuration": "1분"
+          },
+          {
+            "id": "case-5",
+            "title": "영업 사원 자기소개",
+            "situation": "B2B 영업 7년차, 대형 거래 10건 이상 성사. 관계 구축 능력과 끈기 강조.",
+            "jobPosition": "영업 매니저",
+            "company": "삼성전자",
+            "keyStrength": "대형 거래 성사, 장기 관계 구축",
+            "expectedDuration": "1분"
+          }
+        ]
+      },
+      {
+        "id": "interview-2",
+        "title": "경험 설명 (STAR)",
+        "description": "STAR 프레임워크로 성취 경험 구조화",
+        "cases": [
+          {
+            "id": "case-1",
+            "title": "프로젝트 리드 경험",
+            "situation": "5명 팀 리드, 3개월 프로젝트. 일정 지연 위기 → 우선순위 조정 + 야근 독려 → 정시 완료.",
+            "expectedDuration": "2분"
+          },
+          {
+            "id": "case-2",
+            "title": "매출 목표 초과 달성",
+            "situation": "분기 목표 1억 → 실제 1.5억 달성. 신규 고객 20개 확보. 어떻게 달성했는지 STAR로 설명.",
+            "expectedDuration": "2분"
+          },
+          {
+            "id": "case-3",
+            "title": "고객 클레임 해결",
+            "situation": "제품 불량 클레임, 고객 분노. 즉시 방문 + 교체 + 보상 → 재구매 + 추천 고객 5명 확보.",
+            "expectedDuration": "2분"
+          },
+          {
+            "id": "case-4",
+            "title": "프로세스 개선 제안",
+            "situation": "반복 업무 자동화 제안. 엑셀 매크로 개발 → 팀 업무 시간 주 10시간 절감.",
+            "expectedDuration": "2분"
+          },
+          {
+            "id": "case-5",
+            "title": "신제품 출시 성공",
+            "situation": "신제품 론칭 프로젝트. 시장 조사 → 타겟 설정 → 마케팅 → 첫 달 매출 3억.",
+            "expectedDuration": "2분"
+          }
+        ]
+      }
+    ]
+  },
+  "startup": {
+    "scenarios": [
+      {
+        "id": "startup-1",
+        "title": "엘리베이터 피치 (30초)",
+        "description": "30초 안에 핵심만 전달하는 초단축 피칭",
+        "cases": [
+          {
+            "id": "case-1",
+            "title": "AI 챗봇 SaaS",
+            "situation": "고객 문의 응답 자동화 AI 챗봇. 인건비 70% 절감. 월 구독 모델. 현재 고객 50개사.",
+            "productCategory": "B2B SaaS",
+            "problemSolving": "고객 응대 인건비 절감",
+            "traction": "50개 기업 고객",
+            "expectedDuration": "30초"
+          },
+          {
+            "id": "case-2",
+            "title": "배달 통합 플랫폼",
+            "situation": "배달앱 3개 통합 주문 관리. 식당 사장님 전용. 수수료 5% (배달앱 15% vs). 300개 식당 가입.",
+            "productCategory": "B2B 플랫폼",
+            "problemSolving": "배달앱 수수료 절감",
+            "traction": "300개 식당",
+            "expectedDuration": "30초"
+          },
+          {
+            "id": "case-3",
+            "title": "중고차 거래 플랫폼",
+            "situation": "개인 간 중고차 직거래. 중개 수수료 없음. AI 가격 산정. 월 거래 500대.",
+            "productCategory": "C2C 플랫폼",
+            "problemSolving": "중개 수수료 제거",
+            "traction": "월 500대 거래",
+            "expectedDuration": "30초"
+          },
+          {
+            "id": "case-4",
+            "title": "헬스케어 IoT",
+            "situation": "웨어러블 혈압계. 실시간 모니터링 + 병원 연동. 고령자 타겟. 5,000개 판매.",
+            "productCategory": "IoT 하드웨어",
+            "problemSolving": "고령자 건강 관리",
+            "traction": "5,000개 판매",
+            "expectedDuration": "30초"
+          },
+          {
+            "id": "case-5",
+            "title": "AI 교육 콘텐츠",
+            "situation": "초등 수학 AI 과외. 개인 맞춤 학습. 학원비 1/10. 1만명 사용자. 월 매출 5천만원.",
+            "productCategory": "에듀테크",
+            "problemSolving": "사교육비 절감",
+            "traction": "1만명 사용자",
+            "expectedDuration": "30초"
+          }
+        ]
+      },
+      {
+        "id": "startup-2",
+        "title": "투자자 피칭 (5분)",
+        "description": "VC 앞에서 정식 피칭 (Problem-Solution-Market-Team-Traction)",
+        "cases": [
+          {
+            "id": "case-1",
+            "title": "핀테크 스타트업",
+            "situation": "중소기업 자금 관리 SaaS. 은행 송금 + 회계 + 급여 통합. 시장 10조원. 팀 4명 (전 카카오뱅크).",
+            "expectedDuration": "5분"
+          },
+          {
+            "id": "case-2",
+            "title": "물류 테크",
+            "situation": "라스트마일 배송 최적화 AI. 배송 시간 30% 단축. 시장 5조원. 파일럿 3개 물류사 진행.",
+            "expectedDuration": "5분"
+          },
+          {
+            "id": "case-3",
+            "title": "HR 테크",
+            "situation": "채용 자동화 플랫폼. AI 이력서 스크리닝 + 면접 스케줄링. 시장 8조원. 50개 기업 유료 전환.",
+            "expectedDuration": "5분"
+          },
+          {
+            "id": "case-4",
+            "title": "푸드 테크",
+            "situation": "식자재 B2B 유통. 식당 → 산지 직거래. 중간 마진 제거. 시장 20조원. 월 거래액 10억.",
+            "expectedDuration": "5분"
+          },
+          {
+            "id": "case-5",
+            "title": "모빌리티",
+            "situation": "전기 킥보드 공유. 대학가 특화. 100대 운영. 월 이용 5,000회. 확장 계획 5개 대학.",
+            "expectedDuration": "5분"
+          }
+        ]
+      }
+    ]
+  }
+}

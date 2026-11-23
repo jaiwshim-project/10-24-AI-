@@ -1,0 +1,14 @@
+.admin { max-width: 920px; margin: auto; padding: 32px 20px 48px; }
+.admin form, .admin dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); gap: 12px; align-items: end; }
+.admin label { display: grid; gap: 6px; min-width: 0; }
+.admin input, .admin select { border: 1px solid var(--line); border-radius: 10px; min-height: 44px; padding: 8px; color: inherit; background: var(--bg); font: inherit; min-width: 0; }
+.admin dl > div { border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+.admin dt { color: var(--muted); }
+.admin dd { margin: 3px 0 0; font-size: 1.25rem; font-weight: 700; }
+.admin table { width: 100%; border-collapse: collapse; }
+.admin :is(th, td) { text-align: left; padding: 8px; border-bottom: 1px solid var(--line); }
+
+.counseling-metrics-card { border: 1px solid var(--line); border-radius: 14px; padding: 14px; margin-bottom: 12px; }
+.counseling-metrics-card h3 { margin: 0; }
+.counseling-metrics-card summary { cursor: pointer; color: var(--accent); }
+.counseling-metrics-card small { display: block; color: var(--muted); }

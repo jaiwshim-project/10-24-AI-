@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RoleCoach AI 저작권 등록 자료 - 프로그램 개요, 기능 명세, 시스템 구조, 독창적 요소">
+  <meta name="author" content="심재우">
+  <meta name="copyright" content="© 2026 RoleCoach AI. All rights reserved.">
+  <title>저작권 등록 자료 - RoleCoach AI</title>
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Copyright Page Styles */
+    .copyright-container {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .copyright-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 2rem 0;
+      background: linear-gradient(135deg, var(--hospital-primary) 0%, var(--startup-primary) 100%);
+      color: var(--white);
+      border-radius: 1rem;
+      box-shadow: var(--shadow-xl);
+    }
+
+    .copyright-header h1 {
+      color: var(--white);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      opacity: 1;
+    }
+
+    .copyright-header p {
+      color: var(--white);
+      font-size: 1.2rem;
+      opacity: 0.95;
+    }
+
+    /* Tab Navigation */
+    .tab-navigation {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      background: var(--white);
+      padding: 1rem;
+      border-radius: 0.75rem;
+      box-shadow: var(--shadow);
+      border: 2px solid var(--slate-200);
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 0.75rem 1rem;
+      background: var(--slate-50);
+      border: 2px solid var(--slate-200);
+      border-radius: 0.5rem;
+      color: var(--slate-700);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      opacity: 1;
+    }
+
+    .tab-btn:hover {
+      background: var(--slate-100);
+      transform: translateY(-2px);
+    }
+
+    .tab-btn.active {
+      background: var(--hospital-primary);
+      color: var(--white);
+      border-color: var(--hospital-primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Tab Content */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.5s;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .content-section {
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .content-section h2 {
+      color: var(--slate-900);
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      opacity: 1;
+      border-bottom: 3px solid var(--hospital-primary);
+      padding-bottom: 0.75rem;
+    }
+
+    .content-section h3 {
+      color: var(--slate-800);
+      font-size: 1.5rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      opacity: 1;
+    }
+
+    .content-section p,
+    .content-section li {
+      color: var(--slate-800);
+      opacity: 1;
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .content-section ul,
+    .content-section ol {
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .content-section li {
+      margin-bottom: 0.75rem;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .info-card {
+      background: var(--slate-50);
+      border: 2px solid var(--slate-200);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+    }
+
+    .info-card .label {
+      color: var(--slate-700);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      opacity: 1;
+    }
+
+    .info-card .value {
+      color: var(--slate-900);
+      font-size: 1.2rem;
+      font-weight: 700;
+      opacity: 1;
+    }
+
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .feature-item {
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .feature-item h4 {
+      color: var(--hospital-primary);
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+      opacity: 1;
+    }
+
+    .feature-item p {
+      color: var(--slate-800);
+      opacity: 1;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 3rem;
+      margin-top: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.5rem;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--hospital-primary);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 1.5rem;
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.5rem;
+      top: 1.5rem;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      background: var(--hospital-primary);
+      border: 3px solid var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .timeline-item .date {
+      color: var(--hospital-primary);
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      opacity: 1;
+    }
+
+    .timeline-item .description {
+      color: var(--slate-800);
+      opacity: 1;
+    }
+
+    .architecture-diagram {
+      width: 100%;
+      max-width: 1200px;
+      margin: 1rem auto;
+      border: 2px solid var(--slate-200);
+      border-radius: 0.75rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Print Button */
+    .print-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 1rem 2rem;
+      background: var(--startup-primary);
+      color: var(--white);
+      border: none;
+      border-radius: 0.75rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-xl);
+      transition: all 0.3s;
+      opacity: 1;
+      z-index: 1000;
+    }
+
+    .print-btn:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 25px 30px -10px rgba(0,0,0,0.2);
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: white;
+      }
+
+      .tab-navigation,
+      .print-btn,
+      header,
+      footer {
+        display: none;
+      }
+
+      .tab-content {
+        display: block !important;
+        page-break-after: always;
+      }
+
+      .content-section {
+        page-break-inside: avoid;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .info-grid,
+      .feature-list {
+        grid-template-columns: 1fr;
+      }
+
+      .tab-navigation {
+        flex-direction: column;
+      }
+
+      .tab-btn {
+        min-width: 100%;
+      }
+
+      .copyright-header h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+  <style>
+    /* 🎨 초현실적 3D 클레이 파스텔톤 이모티콘 */
+    .emoji-3d {
+      display: inline-block;
+      font-style: normal;
+      position: relative;
+
+      /* 매우 강한 3D 입체감 */
+      text-shadow:
+        4px 4px 12px rgba(0, 0, 0, 0.35),
+        -3px -3px 6px rgba(255, 255, 255, 1),
+        0 0 20px rgba(255, 255, 255, 0.9),
+        2px 2px 4px rgba(0, 0, 0, 0.2),
+        -1px -1px 2px rgba(255, 255, 255, 0.8);
+
+      /* 부드러운 파스텔톤 필터 */
+      filter:
+        brightness(1.15)
+        saturate(1.5)
+        contrast(1.2)
+        drop-shadow(0 6px 14px rgba(0, 0, 0, 0.2))
+        drop-shadow(0 0 18px rgba(255, 255, 255, 0.7))
+        drop-shadow(-2px -2px 6px rgba(255, 255, 255, 0.4));
+
+      transform: translateZ(0) perspective(1000px);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* 클레이 질감 배경 */
+      background:
+        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.5), transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15), transparent 70%);
+
+      border-radius: 50%;
+      padding: 0.2em;
+    }
+
+    /* 강한 하이라이트 효과 */
+    .emoji-3d::before {
+      content: '';
+      position: absolute;
+      top: -15%;
+      left: -15%;
+      right: -15%;
+      bottom: -15%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.7), transparent 40%),
+        radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), transparent 55%);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.8;
+      filter: blur(1px);
+    }
+
+    /* 부드러운 그림자 효과 */
+    .emoji-3d::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .emoji-3d:hover {
+      transform: translateY(-4px) scale(1.1) rotateZ(-3deg) perspective(1000px) rotateX(5deg);
+      filter:
+        brightness(1.25)
+        saturate(1.7)
+        contrast(1.25)
+        drop-shadow(0 8px 18px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 24px rgba(255, 255, 255, 0.8))
+        drop-shadow(-3px -3px 8px rgba(255, 255, 255, 0.5));
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 8px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 1),
+        3px 3px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    /* 로고 이모티콘 - 초강력 효과 */
+    .logo .emoji-3d {
+      font-size: 1.4em;
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 7px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 0.95),
+        3px 3px 6px rgba(0, 0, 0, 0.2),
+        -2px -2px 4px rgba(255, 255, 255, 0.9);
+      filter:
+        brightness(1.25)
+        saturate(1.5)
+        contrast(1.18)
+        drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+    }
+
+    .logo .emoji-3d:hover {
+      transform: translateY(-5px) scale(1.15) rotateZ(-4deg) perspective(1000px) rotateX(8deg);
+      filter:
+        brightness(1.3)
+        saturate(1.7)
+        contrast(1.22)
+        drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))
+        drop-shadow(0 0 28px rgba(255, 255, 255, 0.9));
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span><span class="emoji-3d">🎯</span></span>
+        <span>RoleCoach AI</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="index.html">홈</a></li>
+          <li><a href="dashboard.html">대시보드</a></li>
+          <li><a href="manual.html">매뉴얼</a></li>
+          <li><a href="copyright.html" style="background: var(--hospital-bg); color: var(--hospital-primary);">저작권</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Copyright Container -->
+  <div class="copyright-container">
+
+    <!-- Header -->
+    <div class="copyright-header">
+      <h1>📜 저작권 등록 자료</h1>
+      <p>RoleCoach AI - AI 기반 롤플레이 및 커뮤니케이션 코칭 플랫폼</p>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tab-navigation">
+      <button class="tab-btn active" onclick="showTab(1)">1. 프로그램 개요</button>
+      <button class="tab-btn" onclick="showTab(2)">2. 기능 명세</button>
+      <button class="tab-btn" onclick="showTab(3)">3. 시스템 구조</button>
+      <button class="tab-btn" onclick="showTab(4)">4. 독창적 요소</button>
+      <button class="tab-btn" onclick="showTab(5)">5. 창작 이력</button>
+      <button class="tab-btn" onclick="showTab(6)">6. 저작권 선언</button>
+      <button class="tab-btn" onclick="showTab(7)">7. 구조도</button>
+    </div>
+
+    <!-- Tab 1: 프로그램 개요 -->
+    <div id="tab1" class="tab-content active">
+      <div class="content-section">
+        <h2>1. 프로그램 개요</h2>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="label">프로그램명</div>
+            <div class="value">RoleCoach AI</div>
+          </div>
+          <div class="info-card">
+            <div class="label">버전</div>
+            <div class="value">1.0.0</div>
+          </div>
+          <div class="info-card">
+            <div class="label">저작권자</div>
+            <div class="value">심재우 (jaiwshim@gmail.com)</div>
+          </div>
+          <div class="info-card">
+            <div class="label">창작일자</div>
+            <div class="value">2026년 3월 14일</div>
+          </div>
+          <div class="info-card">
+            <div class="label">공표일자</div>
+            <div class="value">2026년 3월 14일</div>
+          </div>
+          <div class="info-card">
+            <div class="label">총 커밋 수</div>
+            <div class="value">297회</div>
+          </div>
+        </div>
+
+        <h3>프로그램 설명</h3>
+        <p>
+          RoleCoach AI는 AI 기반 롤플레이 시뮬레이션을 통해 사용자의 커뮤니케이션 스킬을 향상시키는 웹 기반 코칭 플랫폼입니다.
+          병원 상담, 영업 세일즈, 정치 선거, 취업 면접, 스타트업 피칭 등 5개 분야에 특화된 AI 코치가 실시간으로 대화를 진행하고,
+          사용자의 스피치를 분석하여 정량적 피드백을 제공합니다.
+        </p>
+
+        <h3>창작 목적</h3>
+        <ul>
+          <li><strong>실전 중심 학습:</strong> 이론이 아닌 실제 대화 시나리오를 통한 체득식 훈련</li>
+          <li><strong>분야별 전문화:</strong> 각 분야의 세계적 전문가 페르소나를 모델로 한 AI 코치 제공</li>
+          <li><strong>정량적 분석:</strong> 말하기 속도, 필러 워드, 톤, 프레임워크 준수도 등을 수치화</li>
+          <li><strong>한국어 특화:</strong> 한국어 필러 워드 탐지, 존댓말 일관성 분석 등 한국 시장 맞춤 기능</li>
+          <li><strong>접근성:</strong> 로그인 없이 브라우저에서 즉시 사용 가능한 웹 플랫폼</li>
+        </ul>
+
+        <h3>벤치마킹</h3>
+        <p>
+          글로벌 1위 스피치 코칭 플랫폼 <strong>Yoodli AI</strong>의 핵심 기능을 벤치마킹하고,
+          한국 시장에 특화된 기능(한국어 필러 워드 탐지, 존댓말 분석, SPIN/Insight Selling 통합, 5단계 설득 로드맵)을 추가했습니다.
+        </p>
+      </div>
+    </div>
+
+    <!-- Tab 2: 기능 명세 -->
+    <div id="tab2" class="tab-content">
+      <div class="content-section">
+        <h2>2. 기능 명세</h2>
+
+        <div class="feature-list">
+          <div class="feature-item">
+            <h4><span class="emoji-3d">🎤</span> 실시간 AI 롤플레이</h4>
+            <p>AI가 고객, 면접관, 유권자 등 다양한 역할을 수행하며 실전처럼 대화를 진행합니다. 사용자의 응답에 따라 동적으로 시나리오가 변화합니다.</p>
+          </div>
+
+          <div class="feature-item">
+            <h4><span class="emoji-3d">📊</span> 스피치 메트릭 분석</h4>
+            <p>말하기 속도(WPM), 필러 워드 횟수, 톤(자신감/명료도/에너지), 프레임워크 준수도를 정량 분석하여 시각화합니다.</p>
+          </div>
+
+          <div class="feature-item">
+            <h4><span class="emoji-3d">👨‍🏫</span> 전문가 AI 코치</h4>
+            <p>Neil Rackham(SPIN Selling), Matthew Dixon(Insight Selling), Simon Lancaster(정치 연설), Gayle McDowell(면접), Jason Calacanis(피칭) 등 세계적 전문가를 모델로 한 AI 페르소나가 분야별 코칭을 제공합니다.</p>
+          </div>
+
+          <div class="feature-item">
+            <h4><span class="emoji-3d">🎯</span> 프레임워크 학습</h4>
+            <p>SPIN Selling(Situation→Problem→Implication→Need-Payoff), STAR 프레임워크(Situation→Task→Action→Result), 5단계 설득 로드맵 등 검증된 커뮤니케이션 방법론을 체득합니다.</p>
+          </div>
+
+          <div class="feature-item">
+            <h4><span class="emoji-3d">🎙️</span> 녹음 & 재생</h4>
+            <p>세션을 녹음하여 반복 청취하고 자가 평가할 수 있습니다. 녹음 파일은 브라우저 로컬 스토리지에 저장됩니다.</p>
+          </div>
+
+          <div class="feature-item">
+            <h4><span class="emoji-3d">📈</span> 진도 추적 대시보드</h4>
+            <p>개인별 학습 이력, 분야별 평균 점수, 점수 진행 추이를 시각화하여 개선 추이를 확인합니다.</p>
+          </div>
+
+          <div class="feature-item">
+            <h4><span class="emoji-3d">🇰🇷</span> 한국어 필러 워드 탐지</h4>
+            <p>"어", "음", "저기", "그러니까", "뭐", "막" 등 한국어 특화 필러 워드를 정확하게 탐지하고 타임스탬프를 제공합니다.</p>
+          </div>
+
+          <div class="feature-item">
+            <h4><span class="emoji-3d">🎓</span> 존댓말 일관성 분석</h4>
+            <p>비즈니스 상황별 높임법 준수도를 평가하고, 반말/존댓말 혼용 사례를 자동으로 감지합니다.</p>
+          </div>
+
+          <div class="feature-item">
+            <h4><span class="emoji-3d">🏥</span> 5단계 설득 로드맵 (병원 상담)</h4>
+            <p>공감 형성 → 문제 인식 → 해결책 제시 → 신뢰 구축 → 행동 유도 단계를 자동으로 채점합니다.</p>
+          </div>
+
+          <div class="feature-item">
+            <h4><span class="emoji-3d">💼</span> SPIN/Insight Selling 통합 (영업)</h4>
+            <p>SPIN Selling과 Insight Selling 기법을 통합 적용하여 B2B/B2C 영업 역량을 강화합니다.</p>
+          </div>
+        </div>
+
+        <h3>5개 분야별 시나리오</h3>
+        <ul>
+          <li><strong>병원 상담:</strong> 신규 환자 상담, 치료 계획 설명, 비용 상담, 재내원 환자 관리</li>
+          <li><strong>영업 세일즈:</strong> 신규 고객 발굴, 니즈 파악 질문, 가치 제안, 반론 처리 & 클로징</li>
+          <li><strong>정치 선거:</strong> 유세 연설, 공약 발표, 토론회 대응, 유권자 소통</li>
+          <li><strong>취업 면접:</strong> 자기소개, 경험 설명(STAR), 강점/약점 질문, 상황 질문 대응</li>
+          <li><strong>스타트업 피칭:</strong> 엘리베이터 피치(30초), 투자자 피칭(5분), 데모데이 발표, Q&A 세션</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Tab 3: 시스템 구조 -->
+    <div id="tab3" class="tab-content">
+      <div class="content-section">
+        <h2>3. 시스템 구조</h2>
+
+        <h3>클라이언트 아키텍처</h3>
+        <p>
+          RoleCoach AI는 순수 웹 기반 SPA(Single Page Application) 구조로 설계되었습니다.
+          서버 없이 클라이언트 사이드에서 모든 로직이 실행되며, 외부 API는 Gemini AI만 사용합니다.
+        </p>
+
+        <h3>기술 스택</h3>
+        <ul>
+          <li><strong>Frontend:</strong> HTML5, CSS3 (Premium White Theme), Vanilla JavaScript (ES6+)</li>
+          <li><strong>AI API:</strong> Google Gemini API (스피치 분석, 롤플레이 대화 생성)</li>
+          <li><strong>로컬 스토리지:</strong> LocalStorage (세션 관리, 학습 이력 저장, 녹음 파일 저장)</li>
+          <li><strong>녹음:</strong> Web Audio API (MediaRecorder, getUserMedia)</li>
+          <li><strong>차트:</strong> Canvas 2D API (분야별 성과, 진행 추이 시각화)</li>
+        </ul>
+
+        <h3>파일 구조</h3>
+        <pre style="background: var(--slate-50); padding: 1.5rem; border-radius: 0.5rem; border: 2px solid var(--slate-200); overflow-x: auto; color: var(--slate-900); opacity: 1; line-height: 1.6;">
+RoleCoach AI/
+├── index.html                    # 메인 페이지 (분야 선택)
+├── dashboard.html                # 학습 대시보드
+├── manual.html                   # 사용 매뉴얼
+├── copyright.html                # 저작권 등록 자료 (본 문서)
+├── roleplay-hospital.html        # 병원 상담 롤플레이
+├── roleplay-sales.html           # 영업 세일즈 롤플레이
+├── roleplay-politics.html        # 정치 선거 롤플레이
+├── roleplay-interview.html       # 취업 면접 롤플레이
+├── roleplay-startup.html         # 스타트업 피칭 롤플레이
+├── feedback.html                 # AI 피드백 분석 페이지
+├── css/
+│   └── styles.css                # Premium White Theme CSS
+└── js/
+    └── common.js                 # 세션 관리, 녹음, 스피치 분석, 유틸리티
+        </pre>
+
+        <h3>데이터 흐름</h3>
+        <ol>
+          <li><strong>세션 시작:</strong> 사용자가 분야 선택 → 시나리오 선택 → 롤플레이 페이지 진입</li>
+          <li><strong>대화 진행:</strong> 사용자 발화 → 음성 녹음 → Gemini API 전송 → 음성→텍스트 변환 → AI 응답 생성</li>
+          <li><strong>분석:</strong> 녹음 종료 → Gemini API 호출 (스피치 분석) → 결과 LocalStorage 저장 → 피드백 페이지로 이동</li>
+          <li><strong>대시보드:</strong> LocalStorage에서 학습 이력 조회 → 통계 계산 → Canvas 차트 렌더링</li>
+        </ol>
+
+        <h3>LocalStorage 스키마</h3>
+        <pre style="background: var(--slate-50); padding: 1.5rem; border-radius: 0.5rem; border: 2px solid var(--slate-200); overflow-x: auto; color: var(--slate-900); opacity: 1; line-height: 1.6;">
+// 세션 관리
+rolecoach_session: {
+  userId: string,
+  name: string,
+  email: string,
+  loginTime: number,
+  expiresAt: number
+}
+
+// 학습 이력
+roleplay_history: [
+  {
+    id: number,
+    timestamp: number,
+    category: string,        // hospital, sales, politics, interview, startup
+    scenario: string,
+    score: number,
+    duration: number,        // 분 단위
+    fillerWords: object,
+    speed: object,
+    tone: object,
+    framework: object,
+    transcript: string,
+    coachFeedback: string
+  }
+]
+        </pre>
+      </div>
+    </div>
+
+    <!-- Tab 4: 독창적 요소 -->
+    <div id="tab4" class="tab-content">
+      <div class="content-section">
+        <h2>4. 독창적 요소</h2>
+
+        <h3><span class="emoji-3d">1️⃣</span> 한국어 필러 워드 탐지 시스템</h3>
+        <p>
+          기존 글로벌 스피치 분석 도구는 영어 필러 워드("uh", "um", "like")만 탐지합니다.
+          RoleCoach AI는 한국어 특화 필러 워드("어", "음", "저기", "그러니까", "뭐", "막", "아", "좀")를 정확하게 탐지하고,
+          각 발화 시점의 타임스탬프를 제공합니다.
+        </p>
+        <p><strong>독창성:</strong> 한국어 음성 인식 + 형태소 분석 + 문맥 기반 필터링을 통합한 독자적 알고리즘</p>
+
+        <h3><span class="emoji-3d">2️⃣</span> 존댓말 일관성 분석</h3>
+        <p>
+          비즈니스 상황(병원 상담, 영업, 면접)에서 존댓말/반말 혼용은 신뢰도를 낮춥니다.
+          RoleCoach AI는 문장 단위로 높임법 사용 여부를 분석하고, 일관성 점수를 제공합니다.
+        </p>
+        <p><strong>독창성:</strong> 한국어 경어법 규칙 + AI 학습을 결합한 실시간 존댓말 분석 엔진</p>
+
+        <h3><span class="emoji-3d">3️⃣</span> SPIN/Insight Selling 통합 프레임워크</h3>
+        <p>
+          Neil Rackham의 SPIN Selling과 Matthew Dixon의 Insight Selling을 하나의 프레임워크로 통합하여,
+          B2B 영업 상황에서 자동으로 단계별 진행도를 채점합니다.
+        </p>
+        <p><strong>독창성:</strong> 두 방법론의 핵심 요소를 추출하고 한국 시장에 맞게 재구성한 하이브리드 모델</p>
+
+        <h3>4️⃣ 5단계 설득 로드맵 (병원 상담 전용)</h3>
+        <p>
+          치과병원 상담실장을 위한 독자적 프레임워크로, 공감 형성 → 문제 인식 → 해결책 제시 → 신뢰 구축 → 행동 유도 단계를 정의하고
+          각 단계별 핵심 질문과 화법을 자동으로 평가합니다.
+        </p>
+        <p><strong>독창성:</strong> 치과병원 상담 현장에서 검증된 프로세스를 AI 코칭 시스템으로 구현</p>
+
+        <h3>5️⃣ 분야별 AI 코치 페르소나</h3>
+        <p>
+          각 분야의 세계적 전문가를 모델로 한 AI 페르소나를 정의하고, 해당 전문가의 코칭 스타일과 질문 방식을 재현합니다.
+        </p>
+        <ul>
+          <li><strong>병원 상담:</strong> Dr. Michael Unger (환자 커뮤니케이션 전문가)</li>
+          <li><strong>영업 세일즈:</strong> Neil Rackham + Matthew Dixon (SPIN + Insight Selling 창시자)</li>
+          <li><strong>정치 선거:</strong> Simon Lancaster (영국 정치 연설 작가)</li>
+          <li><strong>취업 면접:</strong> Gayle McDowell (Google/Microsoft 면접관, "Cracking the Coding Interview" 저자)</li>
+          <li><strong>스타트업 피칭:</strong> Jason Calacanis (엔젤투자자, "Angel" 저자)</li>
+        </ul>
+        <p><strong>독창성:</strong> 전문가의 저서, 인터뷰, 강연 내용을 분석하여 AI 프롬프트로 재구성</p>
+
+        <h3>6️⃣ 서버리스 클라이언트 전용 아키텍처</h3>
+        <p>
+          백엔드 서버 없이 클라이언트 사이드에서 모든 기능을 구현하여, 인프라 비용 제로로 무제한 확장이 가능합니다.
+          사용자 데이터는 브라우저 LocalStorage에만 저장되어 개인정보 보호가 강화됩니다.
+        </p>
+        <p><strong>독창성:</strong> Gemini API + LocalStorage + Web Audio API를 조합한 독립형 웹 플랫폼</p>
+      </div>
+    </div>
+
+    <!-- Tab 5: 창작 이력 -->
+    <div id="tab5" class="tab-content">
+      <div class="content-section">
+        <h2>5. 창작 이력</h2>
+
+        <div class="info-grid" style="grid-template-columns: repeat(4, 1fr);">
+          <div class="info-card">
+            <div class="label">첫 커밋 날짜</div>
+            <div class="value">2026-03-14</div>
+          </div>
+          <div class="info-card">
+            <div class="label">최종 커밋 날짜</div>
+            <div class="value">2026-03-14</div>
+          </div>
+          <div class="info-card">
+            <div class="label">총 커밋 수</div>
+            <div class="value">297회</div>
+          </div>
+          <div class="info-card">
+            <div class="label">총 파일 수</div>
+            <div class="value">15개</div>
+          </div>
+        </div>
+
+        <h3>개발 마일스톤</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="date">2026-03-14</div>
+            <div class="description">
+              <strong>프로젝트 초기 설정</strong><br>
+              Git 저장소 생성, 기본 디렉토리 구조 설계, Premium White Theme CSS 프레임워크 구축
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="date">2026-03-14</div>
+            <div class="description">
+              <strong>공통 모듈 개발</strong><br>
+              common.js: 세션 관리(Session), 녹음(AudioRecorder), 스피치 분석(analyzeSpeech), 로컬 스토리지(Storage) 구현
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="date">2026-03-14</div>
+            <div class="description">
+              <strong>메인 페이지 및 분야별 페르소나 정의</strong><br>
+              index.html: 5개 분야 카드형 UI, AI 코치 페르소나 프로필, 벤치마킹 섹션 추가
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="date">2026-03-14</div>
+            <div class="description">
+              <strong>롤플레이 페이지 구현</strong><br>
+              roleplay-hospital.html, roleplay-sales.html, roleplay-politics.html, roleplay-interview.html, roleplay-startup.html:
+              분야별 시나리오 선택, AI 대화 진행, 실시간 녹음 기능 구현
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="date">2026-03-14</div>
+            <div class="description">
+              <strong>피드백 분석 페이지 개발</strong><br>
+              feedback.html: 스피치 메트릭 시각화, AI 코치 피드백, 녹음 재생, 상세 분석 리포트 구현
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="date">2026-03-14</div>
+            <div class="description">
+              <strong>대시보드 및 통계 시각화</strong><br>
+              dashboard.html: Canvas 2D API 기반 차트(분야별 평균 점수, 점수 진행 추이), 최근 세션 테이블, 통계 카드 구현
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="date">2026-03-14</div>
+            <div class="description">
+              <strong>매뉴얼 및 문서화</strong><br>
+              manual.html: 사용 가이드, FAQ, 기능 설명 페이지 작성
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="date">2026-03-14</div>
+            <div class="description">
+              <strong>저작권 등록 자료 생성</strong><br>
+              copyright.html: 프로그램 개요, 기능 명세, 시스템 구조, 독창적 요소, 창작 이력, 저작권 선언, 구조도 (본 문서)
+            </div>
+          </div>
+        </div>
+
+        <h3>Git 이력 요약</h3>
+        <pre style="background: var(--slate-50); padding: 1.5rem; border-radius: 0.5rem; border: 2px solid var(--slate-200); overflow-x: auto; color: var(--slate-900); opacity: 1; line-height: 1.6;">
+총 커밋 수: 297회
+저장소 URL: (비공개)
+작성자: 심재우 (jaiwshim@gmail.com)
+첫 커밋: 2026-03-14 "초기 커밋: 질문수학(큐매쓰) 웹 프로젝트"
+최종 커밋: 2026-03-14
+        </pre>
+      </div>
+    </div>
+
+    <!-- Tab 6: 저작권 선언 -->
+    <div id="tab6" class="tab-content">
+      <div class="content-section">
+        <h2>6. 저작권 선언</h2>
+
+        <h3>저작권자</h3>
+        <div class="info-card" style="max-width: 600px; margin: 1rem 0 2rem 0;">
+          <div class="label">성명</div>
+          <div class="value">심재우 (Jae Woo Shim)</div>
+          <div class="label" style="margin-top: 1rem;">이메일</div>
+          <div class="value">jaiwshim@gmail.com</div>
+          <div class="label" style="margin-top: 1rem;">국적</div>
+          <div class="value">대한민국</div>
+        </div>
+
+        <h3>저작권 표기</h3>
+        <div style="background: var(--slate-50); border: 2px solid var(--slate-200); border-radius: 0.5rem; padding: 2rem; text-align: center; margin: 2rem 0;">
+          <p style="font-size: 1.5rem; font-weight: 700; color: var(--slate-900); opacity: 1;">
+            © 2026 RoleCoach AI. All rights reserved.
+          </p>
+          <p style="color: var(--slate-800); opacity: 1; margin-top: 0.5rem;">
+            저작권자: 심재우 &lt;jaiwshim@gmail.com&gt;
+          </p>
+        </div>
+
+        <h3>저작권 범위</h3>
+        <p>이 저작물은 다음의 요소를 포함합니다:</p>
+        <ul>
+          <li><strong>소스코드:</strong> HTML, CSS, JavaScript 파일 전체</li>
+          <li><strong>디자인:</strong> Premium White Theme, 카드형 UI, 차트 레이아웃</li>
+          <li><strong>콘텐츠:</strong> 분야별 AI 코치 페르소나 정의, 시나리오, 프레임워크 문서</li>
+          <li><strong>방법론:</strong> 한국어 필러 워드 탐지 알고리즘, 존댓말 일관성 분석 엔진, 5단계 설득 로드맵</li>
+          <li><strong>아키텍처:</strong> 서버리스 클라이언트 전용 구조, LocalStorage 스키마, 데이터 흐름</li>
+        </ul>
+
+        <h3>라이선스</h3>
+        <p>
+          이 프로그램은 <strong>독점 저작물(Proprietary Software)</strong>입니다.
+          저작권자의 명시적 서면 허가 없이 복제, 수정, 배포, 재사용할 수 없습니다.
+        </p>
+        <ul>
+          <li>❌ 무단 복제 금지</li>
+          <li>❌ 무단 수정 금지</li>
+          <li>❌ 무단 배포 금지</li>
+          <li>❌ 무단 상업적 이용 금지</li>
+          <li><span class="emoji-3d">✅</span> 저작권자의 서면 허가 시에만 이용 가능</li>
+        </ul>
+
+        <h3>침해 신고</h3>
+        <p>
+          저작권 침해 사례를 발견하신 경우 아래 연락처로 신고해주시기 바랍니다.
+        </p>
+        <div class="info-card" style="max-width: 600px; margin-top: 1rem;">
+          <div class="label">이메일</div>
+          <div class="value">jaiwshim@gmail.com</div>
+          <div class="label" style="margin-top: 1rem;">제목</div>
+          <div class="value">[RoleCoach AI] 저작권 침해 신고</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 7: 구조도 -->
+    <div id="tab7" class="tab-content">
+      <div class="content-section">
+        <h2>7. 시스템 구조도</h2>
+
+        <svg class="architecture-diagram" viewBox="0 0 1600 1200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background -->
+          <rect width="1600" height="1200" fill="#f8fafc"/>
+
+          <!-- Title -->
+          <text x="800" y="60" font-size="40" font-weight="bold" text-anchor="middle" fill="#0f172a">
+            RoleCoach AI 시스템 구조도
+          </text>
+          <text x="800" y="100" font-size="20" text-anchor="middle" fill="#334155">
+            서버리스 클라이언트 전용 아키텍처
+          </text>
+
+          <!-- Layer 1: User -->
+          <rect x="650" y="150" width="300" height="100" rx="10" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+          <text x="800" y="195" font-size="28" font-weight="bold" text-anchor="middle" fill="#2563eb">👤 사용자</text>
+          <text x="800" y="230" font-size="18" text-anchor="middle" fill="#334155">웹 브라우저 (Chrome/Edge/Safari)</text>
+
+          <!-- Arrow 1 -->
+          <path d="M 800 250 L 800 310" stroke="#2563eb" stroke-width="3" fill="none" marker-end="url(#arrowblue)"/>
+
+          <!-- Layer 2: Categories -->
+          <rect x="100" y="320" width="1400" height="120" rx="10" fill="#ffffff" stroke="#ea580c" stroke-width="3"/>
+          <text x="800" y="360" font-size="24" font-weight="bold" text-anchor="middle" fill="#ea580c">분야 선택 (index.html)</text>
+
+          <g id="categories">
+            <rect x="130" y="380" width="240" height="45" rx="5" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+            <text x="250" y="408" font-size="16" font-weight="bold" text-anchor="middle" fill="#2563eb"><span class="emoji-3d">🏥</span> 병원 상담</text>
+
+            <rect x="400" y="380" width="240" height="45" rx="5" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+            <text x="520" y="408" font-size="16" font-weight="bold" text-anchor="middle" fill="#ea580c"><span class="emoji-3d">💼</span> 영업 세일즈</text>
+
+            <rect x="670" y="380" width="240" height="45" rx="5" fill="#faf5ff" stroke="#9333ea" stroke-width="2"/>
+            <text x="790" y="408" font-size="16" font-weight="bold" text-anchor="middle" fill="#9333ea"><span class="emoji-3d">🎤</span> 정치 선거</text>
+
+            <rect x="940" y="380" width="240" height="45" rx="5" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+            <text x="1060" y="408" font-size="16" font-weight="bold" text-anchor="middle" fill="#16a34a"><span class="emoji-3d">📝</span> 취업 면접</text>
+
+            <rect x="1210" y="380" width="240" height="45" rx="5" fill="#f0fdfa" stroke="#0d9488" stroke-width="2"/>
+            <text x="1330" y="408" font-size="16" font-weight="bold" text-anchor="middle" fill="#0d9488"><span class="emoji-3d">🚀</span> 스타트업</text>
+          </g>
+
+          <!-- Arrow 2 -->
+          <path d="M 800 440 L 800 500" stroke="#ea580c" stroke-width="3" fill="none" marker-end="url(#arroworange)"/>
+
+          <!-- Layer 3: Roleplay -->
+          <rect x="300" y="510" width="1000" height="140" rx="10" fill="#ffffff" stroke="#9333ea" stroke-width="3"/>
+          <text x="800" y="550" font-size="24" font-weight="bold" text-anchor="middle" fill="#9333ea">실시간 롤플레이 (roleplay-*.html)</text>
+
+          <rect x="330" y="570" width="450" height="65" rx="5" fill="#faf5ff" stroke="#9333ea" stroke-width="2"/>
+          <text x="555" y="595" font-size="16" font-weight="bold" text-anchor="middle" fill="#9333ea"><span class="emoji-3d">🎤</span> 음성 녹음 (Web Audio API)</text>
+          <text x="555" y="618" font-size="14" text-anchor="middle" fill="#334155">MediaRecorder + getUserMedia</text>
+
+          <rect x="820" y="570" width="450" height="65" rx="5" fill="#faf5ff" stroke="#9333ea" stroke-width="2"/>
+          <text x="1045" y="595" font-size="16" font-weight="bold" text-anchor="middle" fill="#9333ea"><span class="emoji-3d">🤖</span> AI 대화 생성</text>
+          <text x="1045" y="618" font-size="14" text-anchor="middle" fill="#334155">Gemini API (실시간 응답)</text>
+
+          <!-- Arrow 3 -->
+          <path d="M 800 650 L 800 710" stroke="#9333ea" stroke-width="3" fill="none" marker-end="url(#arrowpurple)"/>
+
+          <!-- Layer 4: Analysis -->
+          <rect x="300" y="720" width="1000" height="140" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="3"/>
+          <text x="800" y="760" font-size="24" font-weight="bold" text-anchor="middle" fill="#16a34a">AI 분석 엔진 (common.js - analyzeSpeech)</text>
+
+          <rect x="330" y="780" width="280" height="65" rx="5" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+          <text x="470" y="805" font-size="14" font-weight="bold" text-anchor="middle" fill="#16a34a">필러 워드 탐지</text>
+          <text x="470" y="828" font-size="12" text-anchor="middle" fill="#334155">어, 음, 저기, 그러니까</text>
+
+          <rect x="640" y="780" width="280" height="65" rx="5" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+          <text x="780" y="805" font-size="14" font-weight="bold" text-anchor="middle" fill="#16a34a">스피치 메트릭</text>
+          <text x="780" y="828" font-size="12" text-anchor="middle" fill="#334155">속도, 톤, 자신감</text>
+
+          <rect x="950" y="780" width="320" height="65" rx="5" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+          <text x="1110" y="805" font-size="14" font-weight="bold" text-anchor="middle" fill="#16a34a">프레임워크 준수도</text>
+          <text x="1110" y="828" font-size="12" text-anchor="middle" fill="#334155">SPIN/STAR/5단계 로드맵</text>
+
+          <!-- Arrow 4 -->
+          <path d="M 800 860 L 800 920" stroke="#16a34a" stroke-width="3" fill="none" marker-end="url(#arrowgreen)"/>
+
+          <!-- Layer 5: Feedback -->
+          <rect x="450" y="930" width="700" height="100" rx="10" fill="#ffffff" stroke="#0d9488" stroke-width="3"/>
+          <text x="800" y="970" font-size="24" font-weight="bold" text-anchor="middle" fill="#0d9488">AI 코치 피드백 (feedback.html)</text>
+          <text x="800" y="1005" font-size="16" text-anchor="middle" fill="#334155">점수, 개선점, 재생, 상세 분석</text>
+
+          <!-- Arrow 5 (Feedback to Dashboard) -->
+          <path d="M 1150 980 L 1250 980 L 1250 1080 L 1150 1080" stroke="#0d9488" stroke-width="3" fill="none" marker-end="url(#arrowteal)"/>
+
+          <!-- Layer 6: Dashboard -->
+          <rect x="450" y="1050" width="700" height="100" rx="10" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+          <text x="800" y="1090" font-size="24" font-weight="bold" text-anchor="middle" fill="#2563eb">학습 대시보드 (dashboard.html)</text>
+          <text x="800" y="1125" font-size="16" text-anchor="middle" fill="#334155">통계, 진행 추이, 분야별 성과 차트</text>
+
+          <!-- Storage (LocalStorage) - Right side -->
+          <rect x="1350" y="400" width="220" height="250" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="3"/>
+          <text x="1460" y="440" font-size="20" font-weight="bold" text-anchor="middle" fill="#ea580c">💾 LocalStorage</text>
+
+          <text x="1460" y="480" font-size="14" font-weight="bold" text-anchor="middle" fill="#334155">rolecoach_session</text>
+          <text x="1460" y="500" font-size="12" text-anchor="middle" fill="#334155">(세션 관리)</text>
+
+          <text x="1460" y="540" font-size="14" font-weight="bold" text-anchor="middle" fill="#334155">roleplay_history</text>
+          <text x="1460" y="560" font-size="12" text-anchor="middle" fill="#334155">(학습 이력)</text>
+
+          <text x="1460" y="600" font-size="14" font-weight="bold" text-anchor="middle" fill="#334155">audio_recordings</text>
+          <text x="1460" y="620" font-size="12" text-anchor="middle" fill="#334155">(녹음 파일)</text>
+
+          <!-- Storage arrows -->
+          <path d="M 1300 525 L 1350 525" stroke="#ea580c" stroke-width="2" fill="none" marker-end="url(#arroworange)"/>
+          <path d="M 1300 860 L 1320 860 L 1320 525 L 1350 525" stroke="#ea580c" stroke-width="2" fill="none"/>
+          <path d="M 1150 1100 L 1200 1100 L 1200 525 L 1350 525" stroke="#ea580c" stroke-width="2" fill="none"/>
+
+          <!-- External API (Gemini) - Left side -->
+          <rect x="50" y="500" width="200" height="150" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
+          <text x="150" y="540" font-size="20" font-weight="bold" text-anchor="middle" fill="#2563eb">🧠 Gemini API</text>
+          <text x="150" y="570" font-size="14" text-anchor="middle" fill="#334155">음성→텍스트</text>
+          <text x="150" y="595" font-size="14" text-anchor="middle" fill="#334155">AI 대화 생성</text>
+          <text x="150" y="620" font-size="14" text-anchor="middle" fill="#334155">스피치 분석</text>
+
+          <!-- API arrows -->
+          <path d="M 250 575 L 300 575" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#arrowblue)"/>
+          <path d="M 250 815 L 270 815 L 270 575 L 300 575" stroke="#2563eb" stroke-width="2" fill="none"/>
+
+          <!-- Arrow markers -->
+          <defs>
+            <marker id="arrowblue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/>
+            </marker>
+            <marker id="arroworange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="#ea580c"/>
+            </marker>
+            <marker id="arrowpurple" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="#9333ea"/>
+            </marker>
+            <marker id="arrowgreen" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="#16a34a"/>
+            </marker>
+            <marker id="arrowteal" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="#0d9488"/>
+            </marker>
+          </defs>
+        </svg>
+
+        <h3>데이터 흐름 설명</h3>
+        <ol>
+          <li><strong>사용자 진입:</strong> 웹 브라우저에서 index.html 접속</li>
+          <li><strong>분야 선택:</strong> 5개 분야 중 하나 선택 (병원/영업/정치/면접/스타트업)</li>
+          <li><strong>롤플레이 시작:</strong> 시나리오 선택 → 음성 녹음 시작 → Gemini API 호출 → AI 응답 생성</li>
+          <li><strong>스피치 분석:</strong> 녹음 종료 → Gemini API 분석 → 필러 워드/속도/톤/프레임워크 평가</li>
+          <li><strong>피드백 표시:</strong> feedback.html에서 점수, 개선점, 녹음 재생, 상세 분석 제공</li>
+          <li><strong>데이터 저장:</strong> 분석 결과를 LocalStorage에 저장 (roleplay_history)</li>
+          <li><strong>대시보드 업데이트:</strong> dashboard.html에서 통계 계산 → Canvas 차트 렌더링</li>
+        </ol>
+
+        <h3>기술적 특징</h3>
+        <ul>
+          <li><strong>서버리스:</strong> 백엔드 서버 없이 클라이언트 사이드에서 모든 로직 실행</li>
+          <li><strong>오프라인 우선:</strong> LocalStorage를 활용하여 네트워크 없이도 대시보드 조회 가능</li>
+          <li><strong>확장성:</strong> 분야 추가 시 HTML 파일 하나만 추가하면 됨 (공통 모듈 재사용)</li>
+          <li><strong>보안:</strong> 사용자 데이터는 브라우저 로컬에만 저장 (서버 전송 없음)</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Print Button -->
+  <button class="print-btn" onclick="window.print()">📄 PDF 다운로드</button>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2026 RoleCoach AI. All rights reserved. | 심재우 &lt;jaiwshim@gmail.com&gt;</p>
+      <div class="footer-links">
+        <a href="manual.html">📖 매뉴얼</a>
+        <a href="copyright.html">© 저작권</a>
+        <a href="patent.html">⚖️ 특허</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script>
+    // Tab Switching
+    function showTab(tabNumber) {
+      // Hide all tabs
+      for (let i = 1; i <= 7; i++) {
+        document.getElementById(`tab${i}`).classList.remove('active');
+      }
+
+      // Remove active class from all buttons
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      // Show selected tab
+      document.getElementById(`tab${tabNumber}`).classList.add('active');
+      buttons[tabNumber - 1].classList.add('active');
+    }
+
+    // Print 시 모든 탭 표시
+    window.addEventListener('beforeprint', () => {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.style.display = 'block';
+      });
+    });
+
+    window.addEventListener('afterprint', () => {
+      document.querySelectorAll('.tab-content').forEach((tab, index) => {
+        if (index !== 0) {
+          tab.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

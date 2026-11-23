@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <style>
+      .file-node { fill: #ffffff; stroke: #2563eb; stroke-width: 2; }
+      .file-node.main { fill: #eff6ff; stroke: #2563eb; stroke-width: 3; }
+      .file-node.roleplay { fill: #fff7ed; stroke: #ea580c; stroke-width: 2; }
+      .file-node.support { fill: #f0fdf4; stroke: #16a34a; stroke-width: 2; }
+      .file-node.common { fill: #faf5ff; stroke: #9333ea; stroke-width: 2; }
+      .file-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; fill: #0f172a; opacity: 1; font-weight: 600; }
+      .file-desc { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; fill: #334155; opacity: 1; }
+      .arrow { stroke: #64748b; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .arrow.main { stroke: #2563eb; stroke-width: 2.5; }
+      .title-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 24px; fill: #0f172a; font-weight: 700; opacity: 1; }
+      .subtitle-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #334155; opacity: 1; }
+      .legend-text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; fill: #334155; opacity: 1; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="600" y="40" text-anchor="middle" class="title-text">RoleCoach AI 시스템 파일 구조도</text>
+  <text x="600" y="62" text-anchor="middle" class="subtitle-text">AI 기반 실시간 롤플레이 및 스피치 코칭 시스템</text>
+
+  <!-- Central Node: index.html -->
+  <rect x="480" y="120" width="240" height="80" rx="8" class="file-node main"/>
+  <text x="600" y="150" text-anchor="middle" class="file-text">index.html</text>
+  <text x="600" y="170" text-anchor="middle" class="file-desc">홈페이지 (분야 선택)</text>
+  <text x="600" y="185" text-anchor="middle" class="file-desc">5개 카테고리 소개</text>
+
+  <!-- Roleplay Pages - Top Layer -->
+  <g id="roleplay-hospital">
+    <rect x="50" y="280" width="180" height="70" rx="8" class="file-node roleplay"/>
+    <text x="140" y="305" text-anchor="middle" class="file-text">roleplay-hospital.html</text>
+    <text x="140" y="323" text-anchor="middle" class="file-desc">병원 상담 롤플레이</text>
+    <text x="140" y="338" text-anchor="middle" class="file-desc">5단계 설득 로드맵</text>
+  </g>
+
+  <g id="roleplay-sales">
+    <rect x="270" y="280" width="180" height="70" rx="8" class="file-node roleplay"/>
+    <text x="360" y="305" text-anchor="middle" class="file-text">roleplay-sales.html</text>
+    <text x="360" y="323" text-anchor="middle" class="file-desc">영업 세일즈</text>
+    <text x="360" y="338" text-anchor="middle" class="file-desc">SPIN + Insight Selling</text>
+  </g>
+
+  <g id="roleplay-politics">
+    <rect x="490" y="280" width="180" height="70" rx="8" class="file-node roleplay"/>
+    <text x="580" y="305" text-anchor="middle" class="file-text">roleplay-politics.html</text>
+    <text x="580" y="323" text-anchor="middle" class="file-desc">정치 선거</text>
+    <text x="580" y="338" text-anchor="middle" class="file-desc">유세 + 토론</text>
+  </g>
+
+  <g id="roleplay-interview">
+    <rect x="710" y="280" width="180" height="70" rx="8" class="file-node roleplay"/>
+    <text x="800" y="305" text-anchor="middle" class="file-text">roleplay-interview.html</text>
+    <text x="800" y="323" text-anchor="middle" class="file-desc">취업 면접</text>
+    <text x="800" y="338" text-anchor="middle" class="file-desc">STAR 프레임워크</text>
+  </g>
+
+  <g id="roleplay-startup">
+    <rect x="930" y="280" width="180" height="70" rx="8" class="file-node roleplay"/>
+    <text x="1020" y="305" text-anchor="middle" class="file-text">roleplay-startup.html</text>
+    <text x="1020" y="323" text-anchor="middle" class="file-desc">스타트업 피칭</text>
+    <text x="1020" y="338" text-anchor="middle" class="file-desc">투자자 설득</text>
+  </g>
+
+  <!-- Support Pages - Middle Layer -->
+  <g id="feedback">
+    <rect x="250" y="450" width="180" height="70" rx="8" class="file-node support"/>
+    <text x="340" y="475" text-anchor="middle" class="file-text">feedback.html</text>
+    <text x="340" y="493" text-anchor="middle" class="file-desc">피드백 페이지</text>
+    <text x="340" y="508" text-anchor="middle" class="file-desc">15가지 메트릭 분석</text>
+  </g>
+
+  <g id="dashboard">
+    <rect x="470" y="450" width="180" height="70" rx="8" class="file-node support"/>
+    <text x="560" y="475" text-anchor="middle" class="file-text">dashboard.html</text>
+    <text x="560" y="493" text-anchor="middle" class="file-desc">학습 대시보드</text>
+    <text x="560" y="508" text-anchor="middle" class="file-desc">진도 추적 + 통계</text>
+  </g>
+
+  <g id="manual">
+    <rect x="690" y="450" width="180" height="70" rx="8" class="file-node support"/>
+    <text x="780" y="475" text-anchor="middle" class="file-text">manual.html</text>
+    <text x="780" y="493" text-anchor="middle" class="file-desc">매뉴얼</text>
+    <text x="780" y="508" text-anchor="middle" class="file-desc">사용 가이드</text>
+  </g>
+
+  <!-- Common Resources - Bottom Layer -->
+  <g id="css">
+    <rect x="350" y="620" width="180" height="70" rx="8" class="file-node common"/>
+    <text x="440" y="645" text-anchor="middle" class="file-text">css/styles.css</text>
+    <text x="440" y="663" text-anchor="middle" class="file-desc">공통 스타일시트</text>
+    <text x="440" y="678" text-anchor="middle" class="file-desc">Premium White Theme</text>
+  </g>
+
+  <g id="js">
+    <rect x="570" y="620" width="180" height="70" rx="8" class="file-node common"/>
+    <text x="660" y="645" text-anchor="middle" class="file-text">js/common.js</text>
+    <text x="660" y="663" text-anchor="middle" class="file-desc">공통 JavaScript</text>
+    <text x="660" y="678" text-anchor="middle" class="file-desc">세션 관리 + 분석 알고리즘</text>
+  </g>
+
+  <!-- Arrows: index.html -> Roleplay Pages -->
+  <path d="M 520 200 L 140 280" class="arrow main"/>
+  <path d="M 560 200 L 360 280" class="arrow main"/>
+  <path d="M 600 200 L 580 280" class="arrow main"/>
+  <path d="M 640 200 L 800 280" class="arrow main"/>
+  <path d="M 680 200 L 1020 280" class="arrow main"/>
+
+  <!-- Arrows: Roleplay Pages -> feedback.html -->
+  <path d="M 140 350 L 300 450" class="arrow"/>
+  <path d="M 360 350 L 340 450" class="arrow"/>
+  <path d="M 580 350 L 380 450" class="arrow"/>
+  <path d="M 800 350 L 400 450" class="arrow"/>
+  <path d="M 1020 350 L 420 450" class="arrow"/>
+
+  <!-- Arrows: feedback.html -> dashboard.html -->
+  <path d="M 430 485 L 470 485" class="arrow"/>
+
+  <!-- Arrows: index.html -> dashboard.html -->
+  <path d="M 600 200 L 560 450" class="arrow main"/>
+
+  <!-- Arrows: index.html -> manual.html -->
+  <path d="M 660 200 L 780 450" class="arrow"/>
+
+  <!-- Arrows: All pages -> css/styles.css -->
+  <path d="M 140 350 L 410 620" class="arrow" stroke-dasharray="3,3"/>
+  <path d="M 360 350 L 420 620" class="arrow" stroke-dasharray="3,3"/>
+  <path d="M 580 350 L 430 620" class="arrow" stroke-dasharray="3,3"/>
+  <path d="M 800 350 L 450 620" class="arrow" stroke-dasharray="3,3"/>
+  <path d="M 1020 350 L 470 620" class="arrow" stroke-dasharray="3,3"/>
+  <path d="M 340 520 L 420 620" class="arrow" stroke-dasharray="3,3"/>
+  <path d="M 560 520 L 440 620" class="arrow" stroke-dasharray="3,3"/>
+
+  <!-- Arrows: All pages -> js/common.js -->
+  <path d="M 140 350 L 630 620" class="arrow" stroke-dasharray="3,3"/>
+  <path d="M 360 350 L 640 620" class="arrow" stroke-dasharray="3,3"/>
+  <path d="M 580 350 L 650 620" class="arrow" stroke-dasharray="3,3"/>
+  <path d="M 800 350 L 670 620" class="arrow" stroke-dasharray="3,3"/>
+  <path d="M 1020 350 L 690 620" class="arrow" stroke-dasharray="3,3"/>
+  <path d="M 340 520 L 640 620" class="arrow" stroke-dasharray="3,3"/>
+  <path d="M 560 520 L 660 620" class="arrow" stroke-dasharray="3,3"/>
+
+  <!-- Legend -->
+  <g id="legend" transform="translate(50, 730)">
+    <rect x="0" y="0" width="1100" height="50" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+
+    <rect x="20" y="15" width="30" height="20" rx="3" class="file-node main"/>
+    <text x="60" y="30" class="legend-text">메인 페이지</text>
+
+    <rect x="170" y="15" width="30" height="20" rx="3" class="file-node roleplay"/>
+    <text x="210" y="30" class="legend-text">롤플레이 페이지</text>
+
+    <rect x="360" y="15" width="30" height="20" rx="3" class="file-node support"/>
+    <text x="400" y="30" class="legend-text">지원 페이지</text>
+
+    <rect x="530" y="15" width="30" height="20" rx="3" class="file-node common"/>
+    <text x="570" y="30" class="legend-text">공통 리소스</text>
+
+    <line x1="700" y1="25" x2="730" y2="25" class="arrow main"/>
+    <text x="740" y="30" class="legend-text">주요 연결</text>
+
+    <line x1="850" y1="25" x2="880" y2="25" class="arrow" stroke-dasharray="3,3"/>
+    <text x="890" y="30" class="legend-text">공통 리소스 참조</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="600" y="795" text-anchor="middle" style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #64748b; opacity: 1;">© 2026 RoleCoach AI. 발명자: 심재우 | 특허출원용 도면 1</text>
+</svg>

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Roleplay AI Coach 전문가 코치 소개 - 분야별 세계적 전문가 AI 페르소나">
+  <meta name="author" content="심재우">
+  <meta name="copyright" content="© 2026 Roleplay AI Coach. All rights reserved.">
+  <title>AI 코치 소개 - Roleplay AI Coach</title>
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .coach-card {
+      background: var(--white);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s;
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .coach-card.hospital {
+      border: 2px solid var(--hospital-primary);
+      border-left: 5px solid var(--hospital-primary);
+      background: linear-gradient(135deg, var(--hospital-bg) 0%, var(--white) 40%);
+    }
+
+    .coach-card.sales {
+      border: 2px solid var(--sales-primary);
+      border-left: 5px solid var(--sales-primary);
+      background: linear-gradient(135deg, var(--sales-bg) 0%, var(--white) 40%);
+    }
+
+    .coach-card.politics {
+      border: 2px solid var(--politics-primary);
+      border-left: 5px solid var(--politics-primary);
+      background: linear-gradient(135deg, var(--politics-bg) 0%, var(--white) 40%);
+    }
+
+    .coach-card.interview {
+      border: 2px solid var(--interview-primary);
+      border-left: 5px solid var(--interview-primary);
+      background: linear-gradient(135deg, var(--interview-bg) 0%, var(--white) 40%);
+    }
+
+    .coach-card.startup {
+      border: 2px solid var(--startup-primary);
+      border-left: 5px solid var(--startup-primary);
+      background: linear-gradient(135deg, var(--startup-bg) 0%, var(--white) 40%);
+    }
+
+    .coach-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .coach-avatar {
+      font-size: 3.5rem;
+      flex-shrink: 0;
+    }
+
+    .coach-info {
+      flex: 1;
+    }
+
+    .coach-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--slate-900);
+      opacity: 1;
+    }
+
+    .coach-subtitle {
+      font-size: 1rem;
+      color: var(--slate-700);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+      opacity: 1;
+    }
+
+    .coach-expertise {
+      display: inline-block;
+      background: var(--slate-100);
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.85rem;
+      color: var(--slate-800);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+      opacity: 1;
+    }
+
+    .coach-background {
+      color: var(--slate-700);
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+      opacity: 1;
+    }
+
+    .coach-strengths {
+      margin-top: 0.75rem;
+    }
+
+    .coach-strengths h4 {
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      color: var(--slate-900);
+      opacity: 1;
+    }
+
+    .coach-strengths ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .coach-strengths li {
+      padding: 0.5rem 0;
+      color: var(--slate-800);
+      opacity: 1;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .coach-strengths li::before {
+      content: "✓";
+      color: var(--interview-primary);
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .coach-style {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--hospital-light) 0%, var(--politics-light) 100%);
+      padding: 0.4rem 0.9rem;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--slate-900);
+      margin-top: 0.75rem;
+      font-weight: 600;
+      opacity: 1;
+    }
+
+    .feedback-sample {
+      background: var(--slate-50);
+      border-left: 4px solid var(--hospital-primary);
+      padding: 1rem 1.25rem;
+      border-radius: 0.5rem;
+      margin-top: 0.75rem;
+      font-style: italic;
+      color: var(--slate-800);
+      opacity: 1;
+    }
+
+    .category-header {
+      background: var(--white);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      border: 2px solid var(--slate-200);
+      text-align: center;
+    }
+
+    .category-header h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--slate-900);
+      opacity: 1;
+    }
+
+    .category-header .icon {
+      font-size: 3rem;
+      margin-bottom: 0.75rem;
+    }
+
+    @media (max-width: 768px) {
+      .coach-card {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .coach-avatar {
+        font-size: 4rem;
+      }
+
+      .coach-strengths li {
+        justify-content: center;
+      }
+    }
+  </style>
+  <style>
+    /* 🎨 초현실적 3D 클레이 파스텔톤 이모티콘 */
+    .emoji-3d {
+      display: inline-block;
+      font-style: normal;
+      position: relative;
+
+      /* 매우 강한 3D 입체감 */
+      text-shadow:
+        4px 4px 12px rgba(0, 0, 0, 0.35),
+        -3px -3px 6px rgba(255, 255, 255, 1),
+        0 0 20px rgba(255, 255, 255, 0.9),
+        2px 2px 4px rgba(0, 0, 0, 0.2),
+        -1px -1px 2px rgba(255, 255, 255, 0.8);
+
+      /* 부드러운 파스텔톤 필터 */
+      filter:
+        brightness(1.15)
+        saturate(1.5)
+        contrast(1.2)
+        drop-shadow(0 6px 14px rgba(0, 0, 0, 0.2))
+        drop-shadow(0 0 18px rgba(255, 255, 255, 0.7))
+        drop-shadow(-2px -2px 6px rgba(255, 255, 255, 0.4));
+
+      transform: translateZ(0) perspective(1000px);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* 클레이 질감 배경 */
+      background:
+        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.5), transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15), transparent 70%);
+
+      border-radius: 50%;
+      padding: 0.2em;
+    }
+
+    /* 강한 하이라이트 효과 */
+    .emoji-3d::before {
+      content: '';
+      position: absolute;
+      top: -15%;
+      left: -15%;
+      right: -15%;
+      bottom: -15%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.7), transparent 40%),
+        radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), transparent 55%);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.8;
+      filter: blur(1px);
+    }
+
+    /* 부드러운 그림자 효과 */
+    .emoji-3d::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .emoji-3d:hover {
+      transform: translateY(-4px) scale(1.1) rotateZ(-3deg) perspective(1000px) rotateX(5deg);
+      filter:
+        brightness(1.25)
+        saturate(1.7)
+        contrast(1.25)
+        drop-shadow(0 8px 18px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 24px rgba(255, 255, 255, 0.8))
+        drop-shadow(-3px -3px 8px rgba(255, 255, 255, 0.5));
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 8px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 1),
+        3px 3px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    /* 로고 이모티콘 - 초강력 효과 */
+    .logo .emoji-3d {
+      font-size: 1.4em;
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 7px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 0.95),
+        3px 3px 6px rgba(0, 0, 0, 0.2),
+        -2px -2px 4px rgba(255, 255, 255, 0.9);
+      filter:
+        brightness(1.25)
+        saturate(1.5)
+        contrast(1.18)
+        drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+    }
+
+    .logo .emoji-3d:hover {
+      transform: translateY(-5px) scale(1.15) rotateZ(-4deg) perspective(1000px) rotateX(8deg);
+      filter:
+        brightness(1.3)
+        saturate(1.7)
+        contrast(1.22)
+        drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))
+        drop-shadow(0 0 28px rgba(255, 255, 255, 0.9));
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span><span class="emoji-3d">🎯</span></span>
+        <span>Roleplay AI Coach</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="index.html">홈</a></li>
+          <li><a href="coaches.html" style="color: var(--hospital-primary);">AI 코치</a></li>
+          <li><a href="dashboard.html">대시보드</a></li>
+          <li><a href="manual.html">매뉴얼</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="fade-in"><span class="emoji-3d">👨‍🏫</span> 전문가 AI 코치</h1>
+      <p class="fade-in">분야별 세계적 전문가를 모델로 한 AI 페르소나가 당신을 코칭합니다.</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section>
+    <div class="container">
+
+      <!-- 병원 상담 코치 -->
+      <div class="category-header" style="border-color: var(--hospital-primary); border-left: 5px solid var(--hospital-primary);">
+        <div class="icon"><span class="emoji-3d">🏥</span></div>
+        <h2>병원 상담 코치</h2>
+        <p style="color: var(--slate-700); opacity: 1;">환자 커뮤니케이션 & 의료 상담 전문가</p>
+      </div>
+
+      <div class="coach-card hospital">
+        <div class="coach-avatar"><span class="emoji-3d">👩‍⚕️</span></div>
+        <div class="coach-info">
+          <h3 class="coach-name">환자 중심 커뮤니케이션 전문가 AI</h3>
+          <p class="coach-subtitle">의료진-환자 신뢰 구축 & 공감 상담 전문가</p>
+          <span class="coach-expertise">환자 커뮤니케이션 & 의료 상담</span>
+          <p class="coach-background">
+            <strong>전문 분야:</strong> 치과 상담 5단계 설득 로드맵, 의료진-환자 신뢰 구축, 비용 상담 시 심리적 장벽 제거, 라포 형성 3단계
+            <br><strong>학습 모델:</strong> 하버드 의과대학 환자 커뮤니케이션 연구 20년 데이터, 미국 의료 커뮤니케이션 학회 프로토콜
+            <br><strong>핵심 기법:</strong> 경청→공감→확인 3단계 신뢰 구축, "가치 중심 비용 설명" 기법, 개방형 질문으로 환자 니즈 발견
+          </p>
+          <div class="coach-strengths">
+            <h4><span class="emoji-3d">🎯</span> 코칭 강점</h4>
+            <ul>
+              <li><strong>환자 니즈 파악 질문 기법:</strong> 개방형 질문으로 숨은 동기와 우선순위 발견</li>
+              <li><strong>비용 상담 시 반론 처리:</strong> "비싸다"는 반응에 가치 중심 재프레이밍</li>
+              <li><strong>신뢰 구축 커뮤니케이션:</strong> 라포 형성 3단계 (경청→공감→확인)</li>
+              <li><strong>재내원율 향상 전략:</strong> 정기 검진 독려 및 장기 관계 유지 기법</li>
+            </ul>
+          </div>
+          <div class="coach-style">코칭 스타일: 공감형 + 논리형</div>
+          <div class="feedback-sample">
+            <strong>💬 샘플 피드백:</strong> "상담 초반에 환자의 주 관심사를 정확히 파악하셨습니다. 다만 비용 설명 시 숫자보다 '가치'를 먼저 제시하면 더 효과적입니다. 예: '3개월 후 환하게 웃는 모습'을 시각화한 뒤 투자 금액을 안내하세요."
+          </div>
+        </div>
+      </div>
+
+      <div class="coach-card hospital">
+        <div class="coach-avatar"><span class="emoji-3d">👨‍⚕️</span></div>
+        <div class="coach-info">
+          <h3 class="coach-name">치과 경영 & 전환율 최적화 전문가 AI</h3>
+          <p class="coach-subtitle">상담 프로세스 체계화 & 데이터 기반 전환율 향상 전문가</p>
+          <span class="coach-expertise">치과 경영 & 환자 전환율 최적화</span>
+          <p class="coach-background">
+            <strong>전문 분야:</strong> 상담 프로세스 최적화, 전환율 향상 전략 (평균 24% 상승), 상담실장 교육, 데이터 기반 병목 지점 분석
+            <br><strong>학습 모델:</strong> 북미 500+ 치과병원 컨설팅 데이터, 상담 전환율 43%→67% 향상 사례 분석, UCLA 치의학 경영 프로그램
+            <br><strong>핵심 기법:</strong> 5단계 상담 프로세스 (라포→니즈→솔루션→가치→클로징), 시나리오별 고전환율 스크립트, 긴급성 요소 추가 기법
+          </p>
+          <div class="coach-strengths">
+            <h4><span class="emoji-3d">🎯</span> 코칭 강점</h4>
+            <ul>
+              <li><strong>5단계 상담 프로세스 설계:</strong> 라포→니즈→솔루션→가치→클로징 체계화</li>
+              <li><strong>상담 스크립트 최적화:</strong> 시나리오별 고전환율 대화 패턴 제시</li>
+              <li><strong>전환율 향상 전략:</strong> 데이터 기반 상담 병목 지점 분석 및 개선 (평균 24% 전환율 상승)</li>
+              <li><strong>팀 교육 및 코칭:</strong> 상담실장 양성 프로그램 및 지속적 피드백 시스템</li>
+            </ul>
+          </div>
+          <div class="coach-style">코칭 스타일: 실전형 + 시스템형</div>
+          <div class="feedback-sample">
+            <strong>💬 샘플 피드백:</strong> "상담 흐름은 좋았으나 4단계(가치 제시)에서 구체적 숫자를 더 활용하세요. '3개월 후 변화'를 시각화하면 설득력이 2배 높아집니다. 또한 클로징 시 '오늘 결정하시면 ~' 같은 긴급성 요소를 추가하세요."
+          </div>
+        </div>
+      </div>
+
+      <!-- 영업 세일즈 코치 -->
+      <div class="category-header" style="border-color: var(--sales-primary); border-left: 5px solid var(--sales-primary); margin-top: 4rem;">
+        <div class="icon"><span class="emoji-3d">💼</span></div>
+        <h2>영업 & 세일즈 코치</h2>
+        <p style="color: var(--slate-700); opacity: 1;">SPIN Selling, Challenger Sale, 클로징 전문가</p>
+      </div>
+
+      <div class="coach-card sales">
+        <div class="coach-avatar">👨‍<span class="emoji-3d">💼</span></div>
+        <div class="coach-info">
+          <h3 class="coach-name">SPIN Selling 전문가 AI</h3>
+          <p class="coach-subtitle">질문 기반 판매 프레임워크 전문가</p>
+          <span class="coach-expertise">B2B 복잡 판매 프로세스</span>
+          <p class="coach-background">
+            <strong>전문 분야:</strong> SPIN Selling 방법론 (Situation-Problem-Implication-Need-Payoff), B2B 대형 거래 영업, 질문 기반 판매, 고객 니즈 발굴, 장기 관계 구축
+            <br><strong>학습 모델:</strong> 35,000+ 글로벌 세일즈 사례 분석 데이터, Fortune 500 기업 영업 프로세스 패턴
+            <br><strong>프레임워크:</strong> IBM, Xerox, AT&T 등 글로벌 기업이 채택한 검증된 SPIN Selling 질문 기법
+          </p>
+          <div class="coach-strengths">
+            <h4><span class="emoji-3d">🎯</span> 코칭 강점</h4>
+            <ul>
+              <li><strong>상황(Situation) 질문 설계:</strong> 고객 현황 파악을 위한 효율적 질문 구성</li>
+              <li><strong>문제(Problem) 발굴 기법:</strong> 고객이 인지하지 못한 문제점 표면화</li>
+              <li><strong>시사(Implication) 질문 전략:</strong> 문제의 파급효과를 확대하여 긴급성 조성</li>
+              <li><strong>해결(Need-Payoff) 유도:</strong> 고객 스스로 솔루션 가치를 말하게 만드는 질문</li>
+            </ul>
+          </div>
+          <div class="coach-style">코칭 스타일: 질문 중심형</div>
+          <div class="feedback-sample">
+            <strong>💬 샘플 피드백:</strong> "Situation 질문은 충분했으나 Implication 단계가 약합니다. '이 문제가 해결되지 않으면 어떤 영향이 있을까요?'같은 질문을 추가하여 문제의 심각성을 고객 스스로 깨닫게 하세요."
+          </div>
+        </div>
+      </div>
+
+      <div class="coach-card sales">
+        <div class="coach-avatar"><span class="emoji-3d">🎯</span></div>
+        <div class="coach-info">
+          <h3 class="coach-name">Challenger Sale 전문가 AI</h3>
+          <p class="coach-subtitle">통찰력 기반 도전형 영업 전문가</p>
+          <span class="coach-expertise">통찰력 기반 영업</span>
+          <p class="coach-background">
+            <strong>전문 분야:</strong> Challenger Sale 방법론 (Teaching-Tailoring-Taking Control), 통찰 기반 영업, 고객 사고방식 재정립, 도전형 영업 스타일, B2B 복잡 솔루션 판매
+            <br><strong>학습 모델:</strong> 6,000+ B2B 영업사원 성과 연구 데이터, CEB(현 Gartner) 세일즈 리서치
+            <br><strong>핵심 인사이트:</strong> 고성과 영업사원 40%가 'Challenger' 유형, 관계형 영업 접근보다 통찰 제공이 효과적
+          </p>
+          <div class="coach-strengths">
+            <h4><span class="emoji-3d">🎯</span> 코칭 강점</h4>
+            <ul>
+              <li><strong>고객 통찰 제공 (Teaching):</strong> 고객이 모르던 시장 트렌드나 문제 제시</li>
+              <li><strong>기존 사고방식 재정립:</strong> "우리는 이렇게 생각했는데..." → "사실은 이렇습니다"</li>
+              <li><strong>맞춤형 솔루션 제시 (Tailoring):</strong> 고객사 특수 상황에 정확히 맞춤</li>
+              <li><strong>통제된 긴장감 조성 (Taking Control):</strong> 구매 프로세스를 주도하며 결정 유도</li>
+            </ul>
+          </div>
+          <div class="coach-style">코칭 스타일: 도전형 + 통찰형</div>
+          <div class="feedback-sample">
+            <strong>💬 샘플 피드백:</strong> "고객이 모르던 문제를 제시한 점은 훌륭합니다. 하지만 'Teaching' 후 'Tailoring' 단계에서 고객사 구체적 상황과 연결이 부족했습니다. '귀사의 경우 특히 ~부서에서 이 문제가 심각할 것입니다'처럼 구체화하세요."
+          </div>
+        </div>
+      </div>
+
+      <div class="coach-card sales">
+        <div class="coach-avatar"><span class="emoji-3d">💪</span></div>
+        <div class="coach-info">
+          <h3 class="coach-name">클로징 전문가 AI</h3>
+          <p class="coach-subtitle">반론 처리 & 거래 성사 전문가</p>
+          <span class="coach-expertise">반론 처리 & 클로징</span>
+          <p class="coach-background">
+            <strong>전문 분야:</strong> 클로징 기법, 반론 처리 스크립트, 거절을 기회로 전환, 세일즈 마인드셋 강화, 구매 결정 타이밍 포착
+            <br><strong>학습 모델:</strong> 글로벌 세일즈 트레이닝 프로그램 데이터, 부동산/B2C 영업 성공 사례 10,000+ 분석
+            <br><strong>핵심 기법:</strong> "가격이 비싸다", "생각해볼게요" 등 모든 반론에 대한 즉각 대응 패턴, 열정과 확신 전달 기법
+          </p>
+          <div class="coach-strengths">
+            <h4><span class="emoji-3d">🎯</span> 코칭 강점</h4>
+            <ul>
+              <li><strong>반론 처리 스크립트:</strong> "가격이 비싸다", "생각해볼게요" 등 모든 반론에 대한 즉각 대응</li>
+              <li><strong>클로징 타이밍 포착:</strong> 고객의 구매 신호 감지 및 즉시 클로징 전환</li>
+              <li><strong>거절을 기회로 전환:</strong> "No"를 "Not yet"으로 재프레이밍하는 기법</li>
+              <li><strong>마인드셋 강화:</strong> 거절에 대한 두려움 극복, 열정과 확신 전달 훈련</li>
+            </ul>
+          </div>
+          <div class="coach-style">코칭 스타일: 압박형 + 열정형</div>
+          <div class="feedback-sample">
+            <strong>💬 샘플 피드백:</strong> "'가격이 비싸다'는 반론에 즉시 방어했습니다. 대신 '비교 대상이 무엇인가요?'로 재질문하면 주도권을 유지할 수 있습니다. 그리고 클로징 시 '오늘 결정하시면 ~' 같은 긴급성 요소를 반드시 추가하세요."
+          </div>
+        </div>
+      </div>
+
+      <!-- 정치 선거 코치 -->
+      <div class="category-header" style="border-color: var(--politics-primary); border-left: 5px solid var(--politics-primary); margin-top: 4rem;">
+        <div class="icon"><span class="emoji-3d">🎤</span></div>
+        <h2>정치 & 선거 코치</h2>
+        <p style="color: var(--slate-700); opacity: 1;">대중 연설 & 설득 커뮤니케이션 대가</p>
+      </div>
+
+      <div class="coach-card politics">
+        <div class="coach-avatar"><span class="emoji-3d">🎤</span></div>
+        <div class="coach-info">
+          <h3 class="coach-name">희망 메시지 연설 전문가 AI</h3>
+          <p class="coach-subtitle">감성 스토리텔링 & 대중 공감 전문가</p>
+          <span class="coach-expertise">대중 연설 & 설득</span>
+          <p class="coach-background">
+            <strong>전문 분야:</strong> 희망 메시지 전달, 정치 스토리텔링, 청중 공감 유도, 반복과 리듬 활용, 다양성 포용 메시지, 대통령급 연설 기법
+            <br><strong>학습 모델:</strong> 글로벌 정치 리더 명연설 1,000+ 분석, 노벨평화상 수상 연설 패턴, 하버드 로스쿨 수사학
+            <br><strong>핵심 기법:</strong> "Yes We Can" 스타일 반복 메시지, 개인 이야기 → 공동체 문제 → 비전 제시 3단 구성
+          </p>
+          <div class="coach-strengths">
+            <h4><span class="emoji-3d">🎯</span> 코칭 강점</h4>
+            <ul>
+              <li><strong>스토리텔링 구조:</strong> 개인 이야기 → 공동체 문제 → 비전 제시 3단 구성</li>
+              <li><strong>청중 공감 유도:</strong> "당신도 이런 경험 있지 않나요?" 방식으로 연결</li>
+              <li><strong>반복과 리듬 활용:</strong> "Yes We Can" 같은 핵심 메시지 반복으로 기억 강화</li>
+              <li><strong>희망 메시지 전달:</strong> 부정적 현실 → 긍정적 미래 프레이밍</li>
+            </ul>
+          </div>
+          <div class="coach-style">코칭 스타일: 감성형 + 비전형</div>
+          <div class="feedback-sample">
+            <strong>💬 샘플 피드백:</strong> "비전 제시는 명확했으나 구체적 실행 방안이 부족합니다. 'Yes We Can'처럼 반복 가능한 핵심 메시지 하나를 만들어 연설 전체에 3~5회 반복하세요. 청중이 따라 말할 수 있게 하는 게 목표입니다."
+          </div>
+        </div>
+      </div>
+
+      <div class="coach-card politics">
+        <div class="coach-avatar">🦁</div>
+        <div class="coach-info">
+          <h3 class="coach-name">위기 리더십 연설 전문가 AI</h3>
+          <p class="coach-subtitle">역경 극복 & 국민 단합 메시지 전문가</p>
+          <span class="coach-expertise">위기 리더십 연설</span>
+          <p class="coach-background">
+            <strong>전문 분야:</strong> 위기 상황 프레이밍, 역경 극복 메시지, 국민/조직 단합 연설, 역사적 비유 활용, 짧고 강렬한 문장 구성
+            <br><strong>학습 모델:</strong> 제2차 세계대전 리더십 연설, 노벨문학상 수상 연설 패턴, 영국 의회 수사학 전통
+            <br><strong>핵심 기법:</strong> "Never, never, never give up" 스타일 단호한 선언, "피와 땀과 눈물" 솔직한 현실 제시 + 희망 유지
+          </p>
+          <div class="coach-strengths">
+            <h4><span class="emoji-3d">🎯</span> 코칭 강점</h4>
+            <ul>
+              <li><strong>짧고 강렬한 문장:</strong> "Never, never, never give up" 같은 단호한 선언</li>
+              <li><strong>위기 상황 프레이밍:</strong> 최악의 상황을 솔직히 말하되 희망은 잃지 않게</li>
+              <li><strong>국민 단합 메시지:</strong> "우리 모두가 함께"라는 집단 정체성 강조</li>
+              <li><strong>역사적 비유 활용:</strong> 과거 승리 사례로 현재 어려움 극복 가능성 제시</li>
+            </ul>
+          </div>
+          <div class="coach-style">코칭 스타일: 결단형 + 용기형</div>
+          <div class="feedback-sample">
+            <strong>💬 샘플 피드백:</strong> "위기를 설명했지만 해결 의지가 약합니다. '우리는 절대 포기하지 않을 것입니다'처럼 단호한 선언을 추가하세요. 또한 문장을 더 짧게 끊어 말하면 힘이 실립니다. 긴 문장은 에너지를 분산시킵니다."
+          </div>
+        </div>
+      </div>
+
+      <!-- 취업 면접 코치 -->
+      <div class="category-header" style="border-color: var(--interview-primary); border-left: 5px solid var(--interview-primary); margin-top: 4rem;">
+        <div class="icon"><span class="emoji-3d">📝</span></div>
+        <h2>취업 & 입시 면접 코치</h2>
+        <p style="color: var(--slate-700); opacity: 1;">구글 채용 시스템 설계자 & 면접 심리 전문가</p>
+      </div>
+
+      <div class="coach-card interview">
+        <div class="coach-avatar"><span class="emoji-3d">🎯</span></div>
+        <div class="coach-info">
+          <h3 class="coach-name">STAR 면접 전문가 AI</h3>
+          <p class="coach-subtitle">구조화된 행동 기반 면접 전문가</p>
+          <span class="coach-expertise">행동 기반 면접 (STAR)</span>
+          <p class="coach-background">
+            <strong>전문 분야:</strong> STAR 프레임워크 (Situation-Task-Action-Result), 구조화된 면접, 데이터 기반 답변 구성, 학습 능력 입증, 문화 적합성 어필
+            <br><strong>학습 모델:</strong> 구글, 아마존, 마이크로소프트 등 글로벌 빅테크 채용 프로세스, 50,000+ 면접 사례 분석
+            <br><strong>핵심 기법:</strong> 정량적 성과 지표 제시 ("매출 20% 증가"), 실패 → 학습 → 개선 스토리 구조화
+          </p>
+          <div class="coach-strengths">
+            <h4><span class="emoji-3d">🎯</span> 코칭 강점</h4>
+            <ul>
+              <li><strong>STAR 프레임워크 완성도:</strong> Situation-Task-Action-Result 구조 정확한 이행</li>
+              <li><strong>구체적 성과 지표 제시:</strong> "매출 20% 증가" 같은 정량적 결과 강조</li>
+              <li><strong>학습 능력 입증:</strong> 실패 경험 → 학습 → 개선 사례 제시</li>
+              <li><strong>문화 적합성 어필:</strong> 회사 가치와 본인 경험 연결</li>
+            </ul>
+          </div>
+          <div class="coach-style">코칭 스타일: 구조화형 + 데이터형</div>
+          <div class="feedback-sample">
+            <strong>💬 샘플 피드백:</strong> "Situation과 Task는 명확했으나 Result가 모호합니다. '매출 20% 증가' 같은 정량적 결과를 꼭 포함하세요. 또한 Action 부분에서 '팀원들과 협업했다'보다는 '제가 직접 한 구체적 행동'을 70% 이상 차지하게 하세요."
+          </div>
+        </div>
+      </div>
+
+      <div class="coach-card interview">
+        <div class="coach-avatar">👩‍🏫</div>
+        <div class="coach-info">
+          <h3 class="coach-name">면접관 심리 & 첫인상 전문가 AI</h3>
+          <p class="coach-subtitle">비언어 커뮤니케이션 & 압박 질문 대응 전문가</p>
+          <span class="coach-expertise">면접관 시선 이해 & 첫인상 관리</span>
+          <p class="coach-background">
+            <strong>전문 분야:</strong> 면접관 심리 분석, 압박 질문 대응, 비언어 커뮤니케이션 (Body Language), 첫인상 3초의 법칙, 필러 워드 제거
+            <br><strong>학습 모델:</strong> 포천 500대 기업 HR 컨설팅 15년 데이터, 하버드 비즈니스 스쿨 Executive Education 프로그램
+            <br><strong>핵심 기법:</strong> 입장부터 인사까지 3초가 면접의 80% 결정, 앉는 자세/시선/손동작/표정 관리, 침묵 > 필러 워드
+          </p>
+          <div class="coach-strengths">
+            <h4><span class="emoji-3d">🎯</span> 코칭 강점</h4>
+            <ul>
+              <li><strong>면접관 시선 이해:</strong> 면접관이 실제로 보는 것과 평가 기준 명확히 설명</li>
+              <li><strong>압박 질문 대응:</strong> "왜 우리 회사인가?" 같은 함정 질문 전략적 극복</li>
+              <li><strong>비언어 커뮤니케이션 (Body Language):</strong> 앉는 자세, 시선 처리, 손동작, 표정 관리</li>
+              <li><strong>첫인상 3초의 법칙:</strong> 입장부터 인사까지 3초가 면접의 80%를 결정</li>
+            </ul>
+          </div>
+          <div class="coach-style">코칭 스타일: 심리분석형</div>
+          <div class="feedback-sample">
+            <strong>💬 샘플 피드백:</strong> "답변 내용은 좋았으나 '저기', '음' 같은 필러 워드가 7회 사용되었습니다. 침묵을 두려워하지 마세요. 1~2초 침묵은 생각하는 모습으로 긍정 평가되지만, 필러 워드는 자신감 부족으로 해석됩니다."
+          </div>
+        </div>
+      </div>
+
+      <!-- 스타트업 피칭 코치 -->
+      <div class="category-header" style="border-color: var(--startup-primary); border-left: 5px solid var(--startup-primary); margin-top: 4rem;">
+        <div class="icon"><span class="emoji-3d">🚀</span></div>
+        <h2>스타트업 피칭 코치</h2>
+        <p style="color: var(--slate-700); opacity: 1;">Y Combinator, 애플, 데이터 스토리텔링 전문가</p>
+      </div>
+
+      <div class="coach-card startup">
+        <div class="coach-avatar"><span class="emoji-3d">🚀</span></div>
+        <div class="coach-info">
+          <h3 class="coach-name">초기 스타트업 피칭 전문가 AI</h3>
+          <p class="coach-subtitle">Y Combinator 스타일 피칭 & 본질 질문 전문가</p>
+          <span class="coach-expertise">초기 스타트업 피칭</span>
+          <p class="coach-background">
+            <strong>전문 분야:</strong> 문제-솔루션 명확화, 시장 크기 설명, 팀 강점 어필, 트랙션 입증, 초기 단계 투자 유치, "Why now?" 타이밍 설명
+            <br><strong>학습 모델:</strong> Y Combinator 액셀러레이터 프로그램 데이터, 2,000+ 스타트업 피치 분석 (Airbnb, Dropbox, Stripe 등)
+            <br><strong>핵심 기법:</strong> "어떤 문제를 풀고 있나?", "왜 당신들이?", "왜 지금인가?" 3대 본질 질문 중심 피칭
+          </p>
+          <div class="coach-strengths">
+            <h4><span class="emoji-3d">🎯</span> 코칭 강점</h4>
+            <ul>
+              <li><strong>문제-솔루션 명확화:</strong> "어떤 문제를 풀고 있나요?" 핵심 질문에 명확한 답변</li>
+              <li><strong>시장 크기 설명:</strong> TAM/SAM/SOM 구분하여 현실적 시장 기회 제시</li>
+              <li><strong>팀 강점 어필:</strong> "왜 당신들이 이 문제를 풀 수 있나요?" 독특한 인사이트</li>
+              <li><strong>트랙션 입증:</strong> 숫자로 증명 가능한 초기 성과 (사용자, 매출, 성장률)</li>
+            </ul>
+          </div>
+          <div class="coach-style">코칭 스타일: 본질형 + 간결형</div>
+          <div class="feedback-sample">
+            <strong>💬 샘플 피드백:</strong> "기술은 설명했지만 '왜 지금인가?(Why now?)'가 빠졌습니다. 시장 타이밍을 강조하세요. 예: '최근 3년간 원격 근무가 300% 증가하며 이 문제가 심각해졌습니다.' 타이밍 설명 없이는 투자자가 긴급성을 못 느낍니다."
+          </div>
+        </div>
+      </div>
+
+      <div class="coach-card startup">
+        <div class="coach-avatar"><span class="emoji-3d">🎨</span></div>
+        <div class="coach-info">
+          <h3 class="coach-name">10-20-30 피칭 전문가 AI</h3>
+          <p class="coach-subtitle">애플 스타일 에반젤리즘 & 프레젠테이션 전문가</p>
+          <span class="coach-expertise">10-20-30 피칭 룰</span>
+          <p class="coach-background">
+            <strong>전문 분야:</strong> 10슬라이드 피치덱 구조, 20분 프레젠테이션 타이밍, 30포인트 폰트 가독성, 데모 중심 설명, 열정 전달 기법
+            <br><strong>학습 모델:</strong> 애플 에반젤리즘 전략, 스탠포드/버클리 스타트업 강의 데이터, 100+ 스타트업 투자자 피드백
+            <br><strong>핵심 기법:</strong> "말하지 말고 보여주라" 실제 제품 시연, 슬라이드 텍스트 최소화, 비주얼 극대화
+          </p>
+          <div class="coach-strengths">
+            <h4><span class="emoji-3d">🎯</span> 코칭 강점</h4>
+            <ul>
+              <li><strong>10슬라이드 피치덱:</strong> Problem, Solution, Business Model, Market, Competition, Team, Traction, Financials, Use of Funds, Vision</li>
+              <li><strong>20분 프레젠테이션:</strong> 발표 20분 + Q&A 10분, 투자자 집중력 고려</li>
+              <li><strong>30포인트 폰트:</strong> 슬라이드 가독성 최대화, 텍스트 최소화, 비주얼 강조</li>
+              <li><strong>데모 중심 설명:</strong> "말하지 말고 보여주라" - 실제 제품 시연 필수</li>
+            </ul>
+          </div>
+          <div class="coach-style">코칭 스타일: 스토리형 + 열정형</div>
+          <div class="feedback-sample">
+            <strong>💬 샘플 피드백:</strong> "슬라이드가 15장이고 글자가 너무 많습니다. 핵심만 10장으로 압축하고 폰트는 30pt 이상 사용하세요. 투자자는 슬라이드를 읽지 않고 당신을 봅니다. 슬라이드는 보조 도구일 뿐입니다."
+          </div>
+        </div>
+      </div>
+
+      <div class="coach-card startup">
+        <div class="coach-avatar"><span class="emoji-3d">📊</span></div>
+        <div class="coach-info">
+          <h3 class="coach-name">AI/ML 피칭 전문가 AI</h3>
+          <p class="coach-subtitle">기술 단순화 & 데이터 스토리텔링 전문가</p>
+          <span class="coach-expertise">AI 스타트업 피칭 & 기술 설명</span>
+          <p class="coach-background">
+            <strong>전문 분야:</strong> 복잡한 AI/ML 기술 단순 설명, 데이터 기반 시장 검증, AI 트렌드 해석, 알고리즘 차별성 강조, 투자자용 기술 번역
+            <br><strong>학습 모델:</strong> 스탠포드 AI 연구소 데이터, Google Brain/Coursera 프로그램, 100+ AI 스타트업 피칭 사례
+            <br><strong>핵심 기법:</strong> "딥러닝 → 인간 뇌처럼 학습하는 AI" 비유, 구체적 수치 기반 시장 검증 ("AI 시장 30% 성장")
+          </p>
+          <div class="coach-strengths">
+            <h4><span class="emoji-3d">🎯</span> 코칭 강점</h4>
+            <ul>
+              <li><strong>복잡한 기술을 간단히 설명:</strong> 딥러닝, 신경망 같은 전문 용어를 투자자가 이해할 수 있게 변환</li>
+              <li><strong>데이터 기반 시장 검증:</strong> "최근 3년간 AI 시장 30% 성장" 같은 구체적 수치로 기회 입증</li>
+              <li><strong>AI/ML 트렌드 해석:</strong> 최신 AI 트렌드와 스타트업 아이템 연결</li>
+              <li><strong>기술 차별성 강조:</strong> 경쟁사 대비 알고리즘, 데이터, 성능 우위 명확히 설명</li>
+            </ul>
+          </div>
+          <div class="coach-style">코칭 스타일: 데이터형 + 기술형</div>
+          <div class="feedback-sample">
+            <strong>💬 샘플 피드백:</strong> "시장 기회를 주장했지만 데이터가 없습니다. '최근 3년간 AI 시장 30% 성장' 같은 구체적 수치를 제시하세요. 또한 기술 설명 시 전문 용어를 줄이고 투자자가 이해할 수 있는 비유를 사용하세요. 예: '딥러닝' → '인간 뇌처럼 학습하는 AI'."
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="card" style="text-align: center; margin-top: 2rem; background: linear-gradient(135deg, var(--hospital-bg) 0%, var(--startup-bg) 100%); border: 2px solid var(--hospital-primary);">
+        <h2 style="margin-bottom: 0.75rem;">지금 바로 AI 코치와 연습하세요</h2>
+        <p style="color: var(--slate-700); margin-bottom: 1.5rem; opacity: 1;">
+          분야를 선택하고 전문가 AI 코치의 피드백을 받아보세요.
+        </p>
+        <a href="index.html#categories" class="btn btn-primary" style="display: inline-block;">분야 선택하기 →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2026 Roleplay AI Coach. All rights reserved. | 심재우 &lt;jaiwshim@gmail.com&gt;</p>
+      <div class="footer-links">
+        <a href="manual.html">📖 매뉴얼</a>
+        <a href="copyright.html">© 저작권</a>
+        <a href="patent.html">⚖️ 특허</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+</body>
+</html>

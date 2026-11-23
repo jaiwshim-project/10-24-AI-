@@ -1,0 +1,459 @@
+{
+  "version": "2.0",
+  "totalCategories": 35,
+  "superCategories": [
+    {
+      "id": "medical",
+      "name": "의료·병원",
+      "icon": "🏥",
+      "color": "#2563eb",
+      "description": "환자 상담, 진료 설명, 의료 커뮤니케이션",
+      "categories": [
+        {
+          "id": "dental",
+          "name": "치과 환자상담",
+          "icon": "🦷",
+          "color": "#2563eb",
+          "target": "치과 원장, 상담실장, 코디네이터",
+          "methodology": "환자상담 5단계 설득 로드맵",
+          "framework": "공감 → 이해 → 결정권 선택 → 가치 전달 → 관계 형성",
+          "scenarios": ["임플란트 상담", "교정 상담", "심미치료 상담", "치료비 반대처리", "정밀검사 예약 유도"],
+          "coaches": ["Dr. 캐서린 밀러", "Dr. 마이클 첸"]
+        },
+        {
+          "id": "hospital-counselor",
+          "name": "병원 상담실장",
+          "icon": "🏥",
+          "color": "#3b82f6",
+          "target": "성형외과, 피부과, 안과, 정형외과, 통증의학과 상담실장",
+          "methodology": "고가 시술 상담 프로세스",
+          "scenarios": ["첫 방문 환자 상담", "비급여 치료 상담", "고가 시술 상담", "수술 불안 환자 상담", "예약 전환 상담"],
+          "coaches": ["Dr. 캐서린 밀러"]
+        },
+        {
+          "id": "doctor-explanation",
+          "name": "의사·전문가 진료 설명",
+          "icon": "👨‍⚕️",
+          "color": "#60a5fa",
+          "target": "의사, 한의사, 수의사, 약사, 전문 클리닉 원장",
+          "methodology": "환자 중심 설명 프로토콜",
+          "scenarios": ["검사 결과 설명", "진단 결과 설명", "수술 전 설명", "치료계획 설명", "부작용 설명"],
+          "coaches": ["Dr. 캐서린 밀러"]
+        },
+        {
+          "id": "foreign-patient",
+          "name": "외국인 환자 상담",
+          "icon": "🌏",
+          "color": "#93c5fd",
+          "target": "외국인 환자 유치 병원, 국제진료센터",
+          "methodology": "다문화 의료 커뮤니케이션",
+          "scenarios": ["영어 환자 상담", "중국어 환자 상담", "일본어 환자 상담", "치료비 설명", "문화 차이 대응"],
+          "coaches": ["Dr. 캐서린 밀러"]
+        }
+      ]
+    },
+    {
+      "id": "sales",
+      "name": "세일즈·영업",
+      "icon": "💼",
+      "color": "#ea580c",
+      "description": "B2B/B2C 영업, 설득, 클로징",
+      "categories": [
+        {
+          "id": "b2b-sales",
+          "name": "B2B 세일즈",
+          "icon": "🤝",
+          "color": "#ea580c",
+          "target": "B2B 영업사원, 영업팀장, 세일즈 매니저, 솔루션 영업",
+          "methodology": "SPIN Selling + Insight Selling",
+          "framework": "Situation → Problem → Implication → Need-Payoff",
+          "scenarios": ["첫 미팅", "고객 니즈 발굴", "제안서 발표", "ROI 설명", "계약 클로징"],
+          "coaches": ["Neil Rackham", "Matthew Dixon", "Grant Cardone"]
+        },
+        {
+          "id": "insurance",
+          "name": "보험 상담",
+          "icon": "🛡️",
+          "color": "#f97316",
+          "target": "보험설계사, GA 설계사, 재무상담사",
+          "methodology": "보장분석 → 니즈 발굴 → 가치 설명",
+          "scenarios": ["첫 상담", "보장분석 상담", "보험 리모델링 제안", "보험료 반대처리", "계약 클로징"],
+          "coaches": ["Neil Rackham"]
+        },
+        {
+          "id": "car-sales",
+          "name": "자동차 판매",
+          "icon": "🚗",
+          "color": "#fb923c",
+          "target": "자동차 카매니저, 전시장 영업사원, 수입차 딜러",
+          "methodology": "고객 니즈 발굴 → 시승 → 가치 설명 → 클로징",
+          "scenarios": ["첫 방문 고객 상담", "시승 후 상담", "경쟁차 비교", "가격 협상", "계약 전환"],
+          "coaches": ["Grant Cardone"]
+        },
+        {
+          "id": "realestate",
+          "name": "부동산·분양 상담",
+          "icon": "🏢",
+          "color": "#fdba74",
+          "target": "공인중개사, 분양 상담사, 부동산 컨설턴트",
+          "methodology": "고객 목적 파악 → 입지 분석 → 투자 가치 설명",
+          "scenarios": ["매수 상담", "매도 상담", "분양 상담", "입지 설명", "투자 가치 설명"],
+          "coaches": ["Neil Rackham"]
+        },
+        {
+          "id": "cold-call",
+          "name": "전화영업·콜드콜",
+          "icon": "📞",
+          "color": "#fed7aa",
+          "target": "보험설계사, B2B 영업사원, 병원 예약상담자",
+          "methodology": "10초 후킹 → 가치 제안 → 미팅 예약",
+          "scenarios": ["첫 전화 연결", "담당자 연결 요청", "거절 대응", "미팅 예약", "재통화 약속"],
+          "coaches": ["Grant Cardone"]
+        },
+        {
+          "id": "customer-success",
+          "name": "고객성공·재계약·업셀링",
+          "icon": "🔄",
+          "color": "#ffedd5",
+          "target": "B2B SaaS 고객성공팀, 컨설팅 회사, 프랜차이즈 본사",
+          "methodology": "성과 확인 → 문제 발견 → 가치 재확인 → 재계약",
+          "scenarios": ["사용현황 점검", "불만 고객 유지", "재계약 제안", "상위 요금제 업셀링", "이탈 방지 상담"],
+          "coaches": ["Matthew Dixon"]
+        }
+      ]
+    },
+    {
+      "id": "startup",
+      "name": "스타트업·투자·사업발표",
+      "icon": "🚀",
+      "color": "#0d9488",
+      "description": "투자 피칭, 정부지원사업, PoC 제안",
+      "categories": [
+        {
+          "id": "startup-pitch",
+          "name": "스타트업 CEO 피칭",
+          "icon": "🚀",
+          "color": "#0d9488",
+          "target": "스타트업 CEO, 예비창업자, 초기창업자",
+          "methodology": "10-20-30 Rule (Guy Kawasaki)",
+          "framework": "Problem → Solution → Market → Team → Traction",
+          "scenarios": ["1분 엘리베이터 피치", "3분 데모데이 피치", "5분 IR 피치", "VC Q&A", "고객사 세일즈 피치"],
+          "coaches": ["Paul Graham", "Guy Kawasaki", "Dr. Andrew Ng"]
+        },
+        {
+          "id": "government-grant",
+          "name": "정부지원사업 발표",
+          "icon": "🏛️",
+          "color": "#14b8a6",
+          "target": "예비창업패키지, 초기창업패키지, TIPS 준비 기업",
+          "methodology": "사업계획서 기반 발표 + 질의응답",
+          "scenarios": ["사업계획 발표", "기술성 질의응답", "사업성 질의응답", "사업비 사용계획 설명", "대표자 역량 검증"],
+          "coaches": ["Paul Graham"]
+        },
+        {
+          "id": "poc-partnership",
+          "name": "대기업 PoC·파트너십 제안",
+          "icon": "🤝",
+          "color": "#5eead4",
+          "target": "B2B 솔루션 기업, AI 솔루션 기업, 오픈이노베이션 참여기업",
+          "methodology": "문제 이해 → PoC 목표 설정 → 성과지표 제시",
+          "scenarios": ["대기업 신사업팀 제안", "PoC 제안", "공동사업 제안", "전략적 제휴 제안", "현업 부서장 설득"],
+          "coaches": ["Paul Graham", "Guy Kawasaki"]
+        }
+      ]
+    },
+    {
+      "id": "politics",
+      "name": "정치·공공 커뮤니케이션",
+      "icon": "🎤",
+      "color": "#9333ea",
+      "description": "선거, 공약, 토론, 민원응대",
+      "categories": [
+        {
+          "id": "election-campaign",
+          "name": "정치인 선거유세",
+          "icon": "🎤",
+          "color": "#9333ea",
+          "target": "지방선거 후보자, 국회의원 후보자, 교육감 후보자",
+          "methodology": "출마 이유 → 공감 → 비전 → 투표 호소",
+          "scenarios": ["1분 자기소개", "3분 선거유세", "출정식 연설", "시장 방문 유세", "지지 호소 연설"],
+          "coaches": ["Barack Obama", "Winston Churchill"]
+        },
+        {
+          "id": "policy-announcement",
+          "name": "정치인 공약발표",
+          "icon": "📋",
+          "color": "#a855f7",
+          "target": "선거 후보자, 정책 담당자, 정당 발표자",
+          "methodology": "문제 정의 → 공약 제시 → 실행 계획 → 효과 설명",
+          "scenarios": ["대표 공약 발표", "청년 정책 발표", "복지 정책 발표", "교통 공약 발표", "기자 질문 대응"],
+          "coaches": ["Barack Obama"]
+        },
+        {
+          "id": "debate-interview",
+          "name": "TV토론·언론 인터뷰·위기대응",
+          "icon": "📺",
+          "color": "#c084fc",
+          "target": "후보자, 대변인, 캠프 메시지 담당자, 기관장",
+          "methodology": "사실 확인 → 논점 명확화 → 메시지 전달 → 신뢰 회복",
+          "scenarios": ["상대 후보 공격 대응", "예산 질문 대응", "과거 발언 논란 대응", "기자회견", "위기상황 사과"],
+          "coaches": ["Winston Churchill"]
+        },
+        {
+          "id": "civil-complaint",
+          "name": "공공기관 민원응대",
+          "icon": "🏢",
+          "color": "#d8b4fe",
+          "target": "공무원, 공공기관 직원, 지자체 민원 담당자",
+          "methodology": "감정 인정 → 규정 설명 → 대안 제시 → 후속 안내",
+          "scenarios": ["화난 민원인 응대", "반복 민원 대응", "규정 설명", "불가능한 요구 거절", "상급자 요청 민원"],
+          "coaches": ["Winston Churchill"]
+        }
+      ]
+    },
+    {
+      "id": "interview",
+      "name": "면접·입시·진로",
+      "icon": "📝",
+      "color": "#16a34a",
+      "description": "취업, 입시, 진로 상담",
+      "categories": [
+        {
+          "id": "job-interview",
+          "name": "취업면접",
+          "icon": "💼",
+          "color": "#16a34a",
+          "target": "취업준비생, 대학생, 이직자, 경력직 지원자",
+          "methodology": "STAR 프레임워크",
+          "framework": "Situation → Task → Action → Result",
+          "scenarios": ["1분 자기소개", "지원동기", "직무면접", "인성면접", "압박면접"],
+          "coaches": ["Laszlo Bock", "Susan Williams"]
+        },
+        {
+          "id": "college-interview",
+          "name": "입시면접",
+          "icon": "🎓",
+          "color": "#22c55e",
+          "target": "대학 수시 지원자, 특목고 지원자, 의대·약대 지원자",
+          "methodology": "지원동기 → 학생부 → 전공적합성 → 인성",
+          "scenarios": ["지원동기 면접", "학생부 기반 면접", "제시문 기반 면접", "전공적합성 면접", "의료윤리 면접"],
+          "coaches": ["Laszlo Bock"]
+        },
+        {
+          "id": "education-counseling",
+          "name": "교육·입학상담",
+          "icon": "📚",
+          "color": "#4ade80",
+          "target": "학원 상담자, 입시 컨설턴트, 에듀테크 영업자",
+          "methodology": "학생 진단 → 문제 발견 → 프로그램 연결 → 등록 전환",
+          "scenarios": ["학부모 상담", "학생 수준 진단", "학원 등록 상담", "성적 부진 상담", "재등록 상담"],
+          "coaches": ["Susan Williams"]
+        }
+      ]
+    },
+    {
+      "id": "leadership",
+      "name": "조직·리더십·내부 커뮤니케이션",
+      "icon": "👥",
+      "color": "#8b5cf6",
+      "description": "리더십, 피드백, 조직 관리",
+      "categories": [
+        {
+          "id": "leadership-feedback",
+          "name": "리더십·피드백 대화",
+          "icon": "💬",
+          "color": "#8b5cf6",
+          "target": "팀장, 임원, 관리자, HR 담당자, 프로젝트 리더",
+          "methodology": "사실 전달 → 영향 설명 → 의견 청취 → 행동 합의",
+          "scenarios": ["성과면담", "1:1 코칭", "피드백 대화", "저성과자 면담", "팀원 동기부여"],
+          "coaches": ["Laszlo Bock", "Susan Williams"]
+        },
+        {
+          "id": "conflict-discipline",
+          "name": "조직 갈등·징계·어려운 대화",
+          "icon": "⚖️",
+          "color": "#a78bfa",
+          "target": "팀장, 임원, HR, 노무 담당자",
+          "methodology": "사실 확인 → 입장 청취 → 원칙 적용 → 해결 방안",
+          "scenarios": ["부서 간 갈등 조정", "팀원 간 갈등 중재", "징계 사전 면담", "퇴사자 면담", "조직개편 설명"],
+          "coaches": ["Susan Williams"]
+        },
+        {
+          "id": "executive-presentation",
+          "name": "사내 발표·임원 보고",
+          "icon": "📊",
+          "color": "#c4b5fd",
+          "target": "직장인, 팀장, 임원, PM, 기획자",
+          "methodology": "결론 먼저 → 근거 제시 → 대안 제시 → 의사결정 요청",
+          "scenarios": ["임원 보고", "프로젝트 발표", "성과 보고", "문제 상황 보고", "신사업 제안"],
+          "coaches": ["Guy Kawasaki"]
+        }
+      ]
+    },
+    {
+      "id": "professional",
+      "name": "전문직·고관여 상담",
+      "icon": "⚖️",
+      "color": "#dc2626",
+      "description": "법률, 세무, 노무, 컨설팅",
+      "categories": [
+        {
+          "id": "legal",
+          "name": "법률 상담",
+          "icon": "⚖️",
+          "color": "#dc2626",
+          "target": "변호사, 법무법인 상담실장, 법률사무소 직원",
+          "methodology": "사실관계 확인 → 법적 분석 → 가능성 설명 → 수임 제안",
+          "scenarios": ["이혼 상담", "상속 상담", "형사 사건 상담", "계약분쟁 상담", "수임료 반대처리"],
+          "coaches": ["Susan Williams"]
+        },
+        {
+          "id": "tax-accounting",
+          "name": "세무·회계 상담",
+          "icon": "💰",
+          "color": "#ef4444",
+          "target": "세무사, 회계사, 세무법인 상담자",
+          "methodology": "재무 상황 파악 → 절세 방안 → 리스크 설명 → 계약 제안",
+          "scenarios": ["절세 상담", "세무조사 상담", "법인전환 상담", "상속·증여세 상담", "기장 계약 상담"],
+          "coaches": ["Susan Williams"]
+        },
+        {
+          "id": "labor",
+          "name": "노무 상담",
+          "icon": "👔",
+          "color": "#f87171",
+          "target": "노무사, HR 컨설턴트, 기업 인사담당자",
+          "methodology": "사실관계 확인 → 법적 분석 → 리스크 설명 → 해결 방안",
+          "scenarios": ["해고·징계 상담", "임금체불 상담", "직장 내 괴롭힘 상담", "노사분쟁 상담", "컨설팅 계약 상담"],
+          "coaches": ["Susan Williams"]
+        },
+        {
+          "id": "consulting-sales",
+          "name": "강사·컨설턴트 영업상담",
+          "icon": "🎓",
+          "color": "#fca5a5",
+          "target": "기업교육 강사, 컨설턴트, 코치, HRD 전문가",
+          "methodology": "문제 발굴 → 교육 효과 → 성과 연결 → 제안서 요청",
+          "scenarios": ["기업교육 제안 상담", "HR 담당자 니즈 발굴", "CEO 컨설팅 상담", "교육 예산 반대처리", "재계약 상담"],
+          "coaches": ["Neil Rackham", "Matthew Dixon"]
+        }
+      ]
+    },
+    {
+      "id": "commerce",
+      "name": "커머스·미디어·콘텐츠",
+      "icon": "🛍️",
+      "color": "#f59e0b",
+      "description": "라이브커머스, 인플루언서, 콘텐츠 판매",
+      "categories": [
+        {
+          "id": "live-commerce",
+          "name": "라이브커머스·쇼호스트",
+          "icon": "📱",
+          "color": "#f59e0b",
+          "target": "쇼호스트, 라이브커머스 판매자, 인플루언서, 소상공인",
+          "methodology": "10초 후킹 → 상품 가치 → 긴급성 → 구매 유도",
+          "scenarios": ["라이브 상품 소개", "첫 10초 후킹", "댓글 질문 대응", "가격 반대 대응", "구매 마감 멘트"],
+          "coaches": ["Grant Cardone"]
+        },
+        {
+          "id": "creator-branding",
+          "name": "크리에이터·인플루언서 브랜딩 피치",
+          "icon": "🎬",
+          "color": "#fbbf24",
+          "target": "유튜버, 강사, 작가, 인플루언서, 1인 기업가",
+          "methodology": "브랜드 정체성 → 타깃 명확화 → 성과 입증 → 협업 제안",
+          "scenarios": ["브랜드 소개", "협찬 제안", "광고주 미팅", "출판사 미팅", "강연 제안"],
+          "coaches": ["Guy Kawasaki"]
+        }
+      ]
+    },
+    {
+      "id": "religion",
+      "name": "종교·상담·돌봄",
+      "icon": "🙏",
+      "color": "#06b6d4",
+      "description": "목회, 심리상담, 코칭",
+      "categories": [
+        {
+          "id": "ministry",
+          "name": "종교·목회 상담",
+          "icon": "⛪",
+          "color": "#06b6d4",
+          "target": "목회자, 전도자, 교회 리더, 상담 사역자",
+          "methodology": "경청 → 공감 → 위로 → 방향 제시 → 돌봄 연결",
+          "scenarios": ["새가족 상담", "신앙 고민 상담", "전도 대화", "상처받은 성도 상담", "소그룹 리더 코칭"],
+          "coaches": ["Susan Williams"]
+        },
+        {
+          "id": "psychological-coaching",
+          "name": "심리·코칭·상담 대화",
+          "icon": "💭",
+          "color": "#22d3ee",
+          "target": "코치, 상담사, 멘토, 커리어 코치, 라이프 코치",
+          "methodology": "경청 → 감정 반영 → 목표 설정 → 행동계획",
+          "scenarios": ["고민 경청", "목표 설정", "감정 탐색", "행동계획 수립", "진로 상담"],
+          "coaches": ["Susan Williams"]
+        }
+      ]
+    },
+    {
+      "id": "global",
+      "name": "글로벌·외국어 비즈니스",
+      "icon": "🌍",
+      "color": "#10b981",
+      "description": "해외 영업, 글로벌 투자 유치",
+      "categories": [
+        {
+          "id": "global-buyer",
+          "name": "글로벌 바이어 상담",
+          "icon": "🌏",
+          "color": "#10b981",
+          "target": "수출기업, 무역회사, 전시회 참가기업, 해외영업 담당자",
+          "methodology": "제품 설명 → 가격 협상 → 납기 협상 → 파트너십",
+          "scenarios": ["해외 바이어 첫 상담", "국제 전시회 부스 상담", "가격 협상", "MOQ 협상", "파트너십 제안"],
+          "coaches": ["Neil Rackham"]
+        },
+        {
+          "id": "global-pitch",
+          "name": "영어 피칭·글로벌 투자자 미팅",
+          "icon": "🌐",
+          "color": "#34d399",
+          "target": "글로벌 진출 스타트업, 해외 투자유치 준비 기업",
+          "methodology": "영어 피칭 + 글로벌 투자자 관점",
+          "scenarios": ["영어 1분 피치", "영어 IR 발표", "해외 VC Q&A", "글로벌 파트너 제안", "국제 컨퍼런스 발표"],
+          "coaches": ["Paul Graham", "Dr. Andrew Ng"]
+        }
+      ]
+    },
+    {
+      "id": "franchise",
+      "name": "프랜차이즈·창업",
+      "icon": "🏪",
+      "color": "#f43f5e",
+      "description": "가맹상담, 창업상담, 소상공인",
+      "categories": [
+        {
+          "id": "franchise-counseling",
+          "name": "프랜차이즈 가맹상담",
+          "icon": "🏪",
+          "color": "#f43f5e",
+          "target": "프랜차이즈 본사, 가맹개발팀, 가맹상담자",
+          "methodology": "창업 니즈 파악 → 시스템 설명 → 투자 회수 → 계약 전환",
+          "scenarios": ["예비창업자 상담", "투자금 설명", "회수기간 설명", "상권 분석 설명", "계약 전환"],
+          "coaches": ["Neil Rackham"]
+        },
+        {
+          "id": "startup-counseling",
+          "name": "소상공인·창업 컨설팅 상담",
+          "icon": "💼",
+          "color": "#fb7185",
+          "target": "창업컨설턴트, 소상공인 지원기관, 창업교육 강사",
+          "methodology": "창업 진단 → 수익구조 분석 → 실행 계획 → 지원 방안",
+          "scenarios": ["창업 아이템 상담", "상권 분석 상담", "마케팅 전략 상담", "자금 조달 상담", "매출 개선 상담"],
+          "coaches": ["Paul Graham", "Guy Kawasaki"]
+        }
+      ]
+    }
+  ]
+}

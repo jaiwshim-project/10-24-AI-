@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="취업 & 입시 면접 롤플레이 - Roleplay AI Coach">
+  <meta name="author" content="심재우">
+  <meta name="copyright" content="© 2026 Roleplay AI Coach. All rights reserved.">
+  <title>취업 & 입시 면접 롤플레이 - Roleplay AI Coach</title>
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Interview Theme */
+    :root {
+      --primary-color: var(--interview-primary);
+      --primary-light: var(--interview-light);
+      --primary-bg: var(--interview-bg);
+    }
+
+    .hero-interview {
+      background: linear-gradient(135deg, var(--interview-primary) 0%, #15803d 100%);
+      color: var(--white);
+      padding: 2rem 0;
+      text-align: center;
+    }
+
+    .hero-interview h1 {
+      color: var(--white);
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      opacity: 1;
+    }
+
+    .hero-interview p {
+      color: var(--white);
+      font-size: 1.1rem;
+      opacity: 0.95;
+    }
+
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      color: var(--slate-700);
+      font-weight: 600;
+      opacity: 1;
+    }
+
+    .step.active {
+      border-color: var(--primary-color);
+      background: var(--primary-bg);
+      color: var(--primary-color);
+    }
+
+    .step.completed {
+      border-color: var(--interview-primary);
+      background: var(--interview-bg);
+      color: var(--interview-primary);
+    }
+
+    .scenario-card {
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .scenario-card:hover {
+      border-color: var(--primary-color);
+      background: var(--primary-bg);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .scenario-card.selected {
+      border-color: var(--primary-color);
+      border-width: 3px;
+      background: var(--primary-bg);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .scenario-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 0.5rem;
+      opacity: 1;
+    }
+
+    .scenario-desc {
+      color: var(--slate-700);
+      opacity: 1;
+      line-height: 1.6;
+    }
+
+    .star-framework {
+      background: var(--primary-bg);
+      border: 2px solid var(--primary-light);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .star-framework h3 {
+      color: var(--slate-900);
+      margin-bottom: 0.75rem;
+      opacity: 1;
+    }
+
+    .star-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+
+    .star-item {
+      background: var(--white);
+      border: 2px solid var(--primary-color);
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      text-align: center;
+    }
+
+    .star-item h4 {
+      color: var(--primary-color);
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      opacity: 1;
+    }
+
+    .star-item p {
+      color: var(--slate-700);
+      font-size: 0.9rem;
+      opacity: 1;
+    }
+
+    .record-section {
+      text-align: center;
+      padding: 2rem;
+      background: var(--primary-bg);
+      border-radius: 1rem;
+      border: 2px solid var(--primary-light);
+    }
+
+    .record-btn {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: none;
+      background: var(--primary-color);
+      color: var(--white);
+      font-size: 2.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .record-btn:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .record-btn.recording {
+      background: #dc2626;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .timer {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-top: 1.5rem;
+      opacity: 1;
+    }
+
+    .coach-card {
+      background: var(--white);
+      border: 2px solid var(--primary-light);
+      border-radius: 0.75rem;
+      padding: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .coach-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--primary-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+    }
+
+    .coach-info h4 {
+      font-size: 1.1rem;
+      color: var(--slate-900);
+      margin-bottom: 0.25rem;
+      opacity: 1;
+    }
+
+    .coach-info p {
+      font-size: 0.9rem;
+      color: var(--slate-700);
+      opacity: 1;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Language Selector */
+    .language-selector {
+      background: var(--white);
+      border: 2px solid var(--primary-color);
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .language-selector label {
+      font-weight: 700;
+      color: var(--slate-900);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .language-selector select {
+      flex: 1;
+      padding: 0.5rem 0.75rem;
+      border: 2px solid var(--slate-300);
+      border-radius: 0.375rem;
+      font-size: 0.95rem;
+      color: var(--slate-800);
+      background: var(--white);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .language-selector select:hover {
+      border-color: var(--primary-color);
+    }
+
+    .language-selector select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px var(--primary-bg);
+    }
+
+    @media (max-width: 768px) {
+      .star-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+  <style>
+    /* 🎨 초현실적 3D 클레이 파스텔톤 이모티콘 */
+    .emoji-3d {
+      display: inline-block;
+      font-style: normal;
+      position: relative;
+
+      /* 매우 강한 3D 입체감 */
+      text-shadow:
+        4px 4px 12px rgba(0, 0, 0, 0.35),
+        -3px -3px 6px rgba(255, 255, 255, 1),
+        0 0 20px rgba(255, 255, 255, 0.9),
+        2px 2px 4px rgba(0, 0, 0, 0.2),
+        -1px -1px 2px rgba(255, 255, 255, 0.8);
+
+      /* 부드러운 파스텔톤 필터 */
+      filter:
+        brightness(1.15)
+        saturate(1.5)
+        contrast(1.2)
+        drop-shadow(0 6px 14px rgba(0, 0, 0, 0.2))
+        drop-shadow(0 0 18px rgba(255, 255, 255, 0.7))
+        drop-shadow(-2px -2px 6px rgba(255, 255, 255, 0.4));
+
+      transform: translateZ(0) perspective(1000px);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* 클레이 질감 배경 */
+      background:
+        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.5), transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15), transparent 70%);
+
+      border-radius: 50%;
+      padding: 0.2em;
+    }
+
+    /* 강한 하이라이트 효과 */
+    .emoji-3d::before {
+      content: '';
+      position: absolute;
+      top: -15%;
+      left: -15%;
+      right: -15%;
+      bottom: -15%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.7), transparent 40%),
+        radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), transparent 55%);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.8;
+      filter: blur(1px);
+    }
+
+    /* 부드러운 그림자 효과 */
+    .emoji-3d::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .emoji-3d:hover {
+      transform: translateY(-4px) scale(1.1) rotateZ(-3deg) perspective(1000px) rotateX(5deg);
+      filter:
+        brightness(1.25)
+        saturate(1.7)
+        contrast(1.25)
+        drop-shadow(0 8px 18px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 24px rgba(255, 255, 255, 0.8))
+        drop-shadow(-3px -3px 8px rgba(255, 255, 255, 0.5));
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 8px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 1),
+        3px 3px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    /* 로고 이모티콘 - 초강력 효과 */
+    .logo .emoji-3d {
+      font-size: 1.4em;
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 7px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 0.95),
+        3px 3px 6px rgba(0, 0, 0, 0.2),
+        -2px -2px 4px rgba(255, 255, 255, 0.9);
+      filter:
+        brightness(1.25)
+        saturate(1.5)
+        contrast(1.18)
+        drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+    }
+
+    .logo .emoji-3d:hover {
+      transform: translateY(-5px) scale(1.15) rotateZ(-4deg) perspective(1000px) rotateX(8deg);
+      filter:
+        brightness(1.3)
+        saturate(1.7)
+        contrast(1.22)
+        drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))
+        drop-shadow(0 0 28px rgba(255, 255, 255, 0.9));
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span><span class="emoji-3d">🎯</span></span>
+        <span>Roleplay AI Coach</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="index.html">홈</a></li>
+          <li><a href="dashboard.html">대시보드</a></li>
+          <li><a href="manual.html">매뉴얼</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero-interview">
+    <div class="container">
+      <h1><span class="emoji-3d">📝</span> 취업 면접 롤플레이</h1>
+      <p>사례를 골라 내 경험으로 답하고, 처음 보는 직무 질문으로 실전 감각을 확인하세요.</p>
+    </div>
+  </section>
+
+  <!-- Step Indicator -->
+  <section>
+    <div class="container">
+      <div class="step-indicator">
+        <div class="step active" id="step1-indicator">
+          <span><span class="emoji-3d">1️⃣</span></span>
+          <span>시나리오 선택</span>
+        </div>
+        <div class="step" id="step2-indicator">
+          <span><span class="emoji-3d">2️⃣</span></span>
+          <span>AI 면접</span>
+        </div>
+        <div class="step" id="step3-indicator">
+          <span><span class="emoji-3d">3️⃣</span></span>
+          <span>맞춤 피드백</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAR Framework Guide -->
+  <section id="practice-guide">
+    <div class="container">
+
+      <!-- Language Selector -->
+      <div class="language-selector">
+        <label for="languageSelect">
+          <span class="emoji-3d">🌐</span> 롤플레이 언어 선택:
+        </label>
+        <select id="languageSelect" onchange="changeLanguage()">
+          <option value="ko"><span class="emoji-3d">🇰🇷</span> 한국어 (Korean)</option>
+          <option value="en"><span class="emoji-3d">🇺🇸</span> English (영어)</option>
+          <option value="zh-CN"><span class="emoji-3d">🇨🇳</span> 简体中文 (중국어 간체)</option>
+          <option value="zh-TW"><span class="emoji-3d">🇹🇼</span> 繁體中文 (중국어 번체)</option>
+          <option value="ja"><span class="emoji-3d">🇯🇵</span> 日本語 (일본어)</option>
+          <option value="es"><span class="emoji-3d">🇪🇸</span> Español (스페인어)</option>
+          <option value="fr"><span class="emoji-3d">🇫🇷</span> Français (프랑스어)</option>
+          <option value="de"><span class="emoji-3d">🇩🇪</span> Deutsch (독일어)</option>
+          <option value="pt"><span class="emoji-3d">🇵🇹</span> Português (포르투갈어)</option>
+          <option value="ru"><span class="emoji-3d">🇷🇺</span> Русский (러시아어)</option>
+          <option value="ar"><span class="emoji-3d">🇸🇦</span> العربية (아랍어)</option>
+          <option value="hi"><span class="emoji-3d">🇮🇳</span> हिन्दी (힌디어)</option>
+          <option value="it"><span class="emoji-3d">🇮🇹</span> Italiano (이탈리아어)</option>
+          <option value="nl"><span class="emoji-3d">🇳🇱</span> Nederlands (네덜란드어)</option>
+          <option value="pl"><span class="emoji-3d">🇵🇱</span> Polski (폴란드어)</option>
+          <option value="tr"><span class="emoji-3d">🇹🇷</span> Türkçe (터키어)</option>
+          <option value="vi"><span class="emoji-3d">🇻🇳</span> Tiếng Việt (베트남어)</option>
+          <option value="th"><span class="emoji-3d">🇹🇭</span> ไทย (태국어)</option>
+          <option value="id"><span class="emoji-3d">🇮🇩</span> Bahasa Indonesia (인도네시아어)</option>
+          <option value="ms"><span class="emoji-3d">🇲🇾</span> Bahasa Melayu (말레이시아어)</option>
+          <option value="sv"><span class="emoji-3d">🇸🇪</span> Svenska (스웨덴어)</option>
+          <option value="no"><span class="emoji-3d">🇳🇴</span> Norsk (노르웨이어)</option>
+          <option value="da"><span class="emoji-3d">🇩🇰</span> Dansk (덴마크어)</option>
+          <option value="fi"><span class="emoji-3d">🇫🇮</span> Suomi (핀란드어)</option>
+          <option value="cs"><span class="emoji-3d">🇨🇿</span> Čeština (체코어)</option>
+          <option value="ro"><span class="emoji-3d">🇷🇴</span> Română (루마니아어)</option>
+          <option value="hu"><span class="emoji-3d">🇭🇺</span> Magyar (헝가리어)</option>
+          <option value="el"><span class="emoji-3d">🇬🇷</span> Ελληνικά (그리스어)</option>
+          <option value="he"><span class="emoji-3d">🇮🇱</span> עברית (히브리어)</option>
+          <option value="uk"><span class="emoji-3d">🇺🇦</span> Українська (우크라이나어)</option>
+        </select>
+        <p style="color: var(--slate-700); font-size: 0.85rem; margin: 0;">
+          선택한 언어로 AI가 대응합니다
+        </p>
+      </div>
+
+      <div class="star-framework">
+        <h3><span class="emoji-3d">📊</span> STAR 프레임워크 가이드</h3>
+        <p style="color: var(--slate-700); margin-bottom: 1rem; opacity: 1;">
+          면접에서 경험을 효과적으로 전달하는 구조화된 답변 방법론입니다.
+        </p>
+        <div class="star-grid">
+          <div class="star-item">
+            <h4>S</h4>
+            <p><strong>Situation</strong><br>상황 설명</p>
+          </div>
+          <div class="star-item">
+            <h4>T</h4>
+            <p><strong>Task</strong><br>맡은 과제</p>
+          </div>
+          <div class="star-item">
+            <h4>A</h4>
+            <p><strong>Action</strong><br>실행한 행동</p>
+          </div>
+          <div class="star-item">
+            <h4>R</h4>
+            <p><strong>Result</strong><br>결과와 성과</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 1: Scenario Selection -->
+  <section id="step1">
+    <div class="container">
+      <h2 class="section-title">사례 선택 연습</h2>
+      <p style="text-align:center;margin-bottom:1rem;">연습할 면접 사례를 고르고, 일·수업·프로젝트에서 겪은 자신의 경험으로 답하세요.</p>
+      <p style="text-align:center;margin-bottom:1rem;"><a href="interview-study.html">취업 면접 연습 비교 실험 참여</a></p>
+
+      <div class="scenario-card" data-scenario="problem-solving" style="max-width: 900px; margin: 0 auto 1.5rem;">
+        <div class="scenario-title">대표 질문 · 직무 관련 문제 해결 경험</div>
+        <div class="scenario-desc">지원 직무와 가장 관련 있는 문제를 해결한 경험을 말씀해 주세요. 한국어로 연습하면 PROVE 기준으로 꼬리질문과 피드백을 받습니다.</div>
+      </div>
+
+      <section class="card" aria-labelledby="prove-guide-title" style="max-width:900px;margin:0 auto 1.5rem;">
+        <h3 id="prove-guide-title">PROVE 면접 가이드</h3>
+        <p>아래 다섯 기준을 순서와 관계없이 자신의 경험으로 설명해 보세요.</p>
+        <dl style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:1rem;margin-top:1rem;">
+          <div><dt><strong>P · Problem — 문제 정의</strong></dt><dd>무엇을 해결해야 했고, 어떤 제약이 있었나요?</dd></div>
+          <div><dt><strong>R · Reasoning — 판단 근거</strong></dt><dd>어떤 단서를 보고 그 해결책을 골랐나요?</dd></div>
+          <div><dt><strong>O · Ownership — 본인 기여</strong></dt><dd>본인이 직접 결정하거나 실행한 일은 무엇인가요?</dd></div>
+          <div><dt><strong>V · Verification — 결과 확인</strong></dt><dd>무엇이 달라졌고, 어떤 기록이나 관찰로 확인했나요?</dd></div>
+          <div><dt><strong>E · Extension — 직무 적용</strong></dt><dd>이 경험에서 배운 방법을 지원 직무의 어떤 업무에 적용할 수 있나요?</dd></div>
+        </dl>
+      </section>
+
+      <div class="grid grid-2" style="max-width:900px;margin:0 auto 1rem;">
+        <div class="scenario-card" data-scenario="case1">
+          <div class="scenario-title">신입 개발자 기술 면접</div>
+          <p class="scenario-desc">수업이나 프로젝트에서 직접 해결한 기술 문제를 떠올려 보세요.</p>
+        </div>
+        <div class="scenario-card" data-scenario="case2">
+          <div class="scenario-title">경력직 성과 면접</div>
+          <p class="scenario-desc">반복되는 업무 문제를 개선한 경험으로 답해 보세요.</p>
+        </div>
+        <div class="scenario-card" data-scenario="case3">
+          <div class="scenario-title">협업·갈등 해결 면접</div>
+          <p class="scenario-desc">팀 안에서 의견이 엇갈렸을 때 문제를 해결한 경험을 떠올려 보세요.</p>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <div class="card" style="max-width:900px;margin:0 auto 1rem;text-align:left;">
+          <label for="interview-job-posting"><strong>채용공고 (선택)</strong></label>
+          <textarea id="interview-job-posting" rows="4" maxlength="6000" style="display:block;width:100%;margin:0.5rem 0;font:inherit;" placeholder="지원 직무의 주요 업무와 자격 요건을 붙여넣으세요."></textarea>
+          <p>제출한 답변과 채용공고 텍스트가 피드백을 위해 Claude에 전달됩니다.</p>
+        </div>
+        <button class="btn btn-primary" id="next-to-step2" disabled>사례 연습 시작</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="practical-setup" hidden>
+    <div class="container" style="max-width:800px;">
+      <div class="card">
+        <h2 id="practical-title" tabindex="-1">실전 모의면접</h2>
+        <p>지원 직무를 고르세요. 한국어 질문은 시작한 뒤에 공개됩니다.</p>
+        <form id="practical-form" style="margin-top:1rem;">
+          <label for="practical-role"><strong>지원 직무</strong></label>
+          <select id="practical-role" required style="display:block;margin-block:0.5rem 1rem;font:inherit;">
+            <option value="">직무 선택</option>
+            <option value="engineering">개발·엔지니어링</option>
+            <option value="operations">운영·물류·관리</option>
+            <option value="sales">영업·고객 응대</option>
+            <option value="product">기획·제품</option>
+            <option value="general">기타 직무</option>
+          </select>
+          <button type="submit" class="btn btn-primary" id="practical-start">실전 면접 시작</button>
+          <button type="button" class="btn btn-secondary" id="practical-back">사례 선택으로</button>
+        </form>
+        <p id="practical-status" role="status"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 2: Interview -->
+  <section id="step2" class="hidden">
+    <div class="container" style="max-width: 800px;">
+      <h2 class="section-title" id="interview-mode-title">사례 선택 연습</h2>
+
+      <!-- Scenario Context -->
+      <div class="card" style="margin-bottom: 1rem; border: 2px solid var(--primary-light); background: var(--primary-bg);">
+        <h3 style="color: var(--slate-900); margin-bottom: 1rem; opacity: 1;">면접 질문</h3>
+        <p id="interview-question-criterion" hidden style="margin-bottom:0.5rem;font-weight:700;"></p>
+        <p id="scenario-context" tabindex="-1" aria-describedby="interview-question-criterion" style="color: var(--slate-800); line-height: 1.8; opacity: 1;">
+          <!-- 동적 삽입 -->
+        </p>
+      </div>
+
+      <div class="card" style="margin-bottom: 1rem;">
+        <label for="interview-answer"><strong>내 답변</strong></label>
+        <textarea id="interview-answer" rows="5" maxlength="3000" style="display:block;width:100%;margin:0.5rem 0;font:inherit;"></textarea>
+        <p>음성으로 답하거나 직접 입력하세요. 제출한 텍스트는 Claude에 전달됩니다.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem;">
+          <button type="button" class="btn btn-secondary" id="interview-mic">음성 답변</button>
+          <button type="button" class="btn btn-primary" id="interview-submit" disabled>답변 제출</button>
+          <button type="button" class="btn btn-secondary" id="interview-finish" disabled>면접 종료 · 피드백 받기</button>
+        </div>
+        <p id="interview-status" role="status" style="margin-top:0.75rem;"></p>
+      </div>
+      <details class="card" style="margin-bottom:1rem;">
+        <summary>제출한 질문과 답변 기록</summary>
+        <ol id="interview-transcript" style="padding-inline-start:1.5rem;overflow-wrap:anywhere;"></ol>
+      </details>
+      <section id="interview-result" class="card" tabindex="-1" hidden>
+        <h3 id="interview-result-title">맞춤 면접 피드백</h3>
+        <section id="interview-overall" class="card" style="margin-bottom:1rem;overflow-wrap:anywhere;" hidden></section>
+        <p id="interview-feedback" style="white-space:pre-wrap;overflow-wrap:anywhere;"></p>
+        <div id="interview-comparison" style="overflow-wrap:anywhere;"></div>
+        <button type="button" class="btn btn-primary" id="interview-retry" hidden>같은 질문에 다시 답하기</button>
+        <button type="button" class="btn btn-secondary" id="interview-go-practical" hidden>처음 보는 질문으로 실전 연습</button>
+      </section>
+
+      <div style="text-align: center; margin-top: 2rem;">
+        <button class="btn btn-secondary" id="back-to-step1">← 이전</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2026 Roleplay AI Coach. All rights reserved. | 심재우 &lt;jaiwshim@gmail.com&gt;</p>
+      <div class="footer-links">
+        <a href="manual.html">📖 매뉴얼</a>
+        <a href="copyright.html">© 저작권</a>
+        <a href="patent.html">⚖️ 특허</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="mobile/interview-overview.js"></script>
+  <script src="js/interview.js"></script>
+  <script>
+    // ========================================
+    // Global State
+    // ========================================
+    let selectedScenario = null;
+    const interview = createInterview('job');
+    let selectedLanguage = 'ko'; // 기본값: 한국어
+
+    // 30개 언어 정보
+    const LANGUAGES = {
+      'ko': { name: '한국어', nativeName: '한국어', flag: '<span class="emoji-3d">🇰🇷</span>' },
+      'en': { name: 'English', nativeName: 'English', flag: '<span class="emoji-3d">🇺🇸</span>' },
+      'zh-CN': { name: '简体中文', nativeName: '简体中文', flag: '<span class="emoji-3d">🇨🇳</span>' },
+      'zh-TW': { name: '繁體中文', nativeName: '繁體中文', flag: '<span class="emoji-3d">🇹🇼</span>' },
+      'ja': { name: '日本語', nativeName: '日本語', flag: '<span class="emoji-3d">🇯🇵</span>' },
+      'es': { name: 'Español', nativeName: 'Español', flag: '<span class="emoji-3d">🇪🇸</span>' },
+      'fr': { name: 'Français', nativeName: 'Français', flag: '<span class="emoji-3d">🇫🇷</span>' },
+      'de': { name: 'Deutsch', nativeName: 'Deutsch', flag: '<span class="emoji-3d">🇩🇪</span>' },
+      'pt': { name: 'Português', nativeName: 'Português', flag: '<span class="emoji-3d">🇵🇹</span>' },
+      'ru': { name: 'Русский', nativeName: 'Русский', flag: '<span class="emoji-3d">🇷🇺</span>' },
+      'ar': { name: 'العربية', nativeName: 'العربية', flag: '<span class="emoji-3d">🇸🇦</span>' },
+      'hi': { name: 'हिन्दी', nativeName: 'हिन्दी', flag: '<span class="emoji-3d">🇮🇳</span>' },
+      'it': { name: 'Italiano', nativeName: 'Italiano', flag: '<span class="emoji-3d">🇮🇹</span>' },
+      'nl': { name: 'Nederlands', nativeName: 'Nederlands', flag: '<span class="emoji-3d">🇳🇱</span>' },
+      'pl': { name: 'Polski', nativeName: 'Polski', flag: '<span class="emoji-3d">🇵🇱</span>' },
+      'tr': { name: 'Türkçe', nativeName: 'Türkçe', flag: '<span class="emoji-3d">🇹🇷</span>' },
+      'vi': { name: 'Tiếng Việt', nativeName: 'Tiếng Việt', flag: '<span class="emoji-3d">🇻🇳</span>' },
+      'th': { name: 'ไทย', nativeName: 'ไทย', flag: '<span class="emoji-3d">🇹🇭</span>' },
+      'id': { name: 'Bahasa Indonesia', nativeName: 'Bahasa Indonesia', flag: '<span class="emoji-3d">🇮🇩</span>' },
+      'ms': { name: 'Bahasa Melayu', nativeName: 'Bahasa Melayu', flag: '<span class="emoji-3d">🇲🇾</span>' },
+      'sv': { name: 'Svenska', nativeName: 'Svenska', flag: '<span class="emoji-3d">🇸🇪</span>' },
+      'no': { name: 'Norsk', nativeName: 'Norsk', flag: '<span class="emoji-3d">🇳🇴</span>' },
+      'da': { name: 'Dansk', nativeName: 'Dansk', flag: '<span class="emoji-3d">🇩🇰</span>' },
+      'fi': { name: 'Suomi', nativeName: 'Suomi', flag: '<span class="emoji-3d">🇫🇮</span>' },
+      'cs': { name: 'Čeština', nativeName: 'Čeština', flag: '<span class="emoji-3d">🇨🇿</span>' },
+      'ro': { name: 'Română', nativeName: 'Română', flag: '<span class="emoji-3d">🇷🇴</span>' },
+      'hu': { name: 'Magyar', nativeName: 'Magyar', flag: '<span class="emoji-3d">🇭🇺</span>' },
+      'el': { name: 'Ελληνικά', nativeName: 'Ελληνικά', flag: '<span class="emoji-3d">🇬🇷</span>' },
+      'he': { name: 'עברית', nativeName: 'עברית', flag: '<span class="emoji-3d">🇮🇱</span>' },
+      'uk': { name: 'Українська', nativeName: 'Українська', flag: '<span class="emoji-3d">🇺🇦</span>' }
+    };
+
+    // 언어 변경
+    function changeLanguage() {
+      const select = document.getElementById('languageSelect');
+      selectedLanguage = select.value;
+
+      const langInfo = LANGUAGES[selectedLanguage];
+      showToast(`${langInfo.flag} ${langInfo.nativeName}로 변경되었습니다. AI가 ${langInfo.nativeName}로 대응합니다.`, 'success');
+
+      // localStorage에 저장
+      localStorage.setItem('roleplay_language', selectedLanguage);
+    }
+
+    const scenarioData = {
+      case1: { context: '수업이나 프로젝트에서 직접 해결한 기술적 문제와 그 해결 과정을 설명해 주세요.' },
+      case2: { context: '반복되던 업무 문제를 직접 개선해 성과를 낸 경험을 말씀해 주세요.' },
+      case3: { context: '팀에서 의견이 엇갈렸을 때 직접 해결에 기여한 경험을 말씀해 주세요.' },
+      'problem-solving': {
+        context: '지원 직무와 가장 관련 있는 문제를 해결한 경험을 말씀해 주세요.'
+      },
+      intro: {
+        title: '👋 자기소개',
+        context: '면접관: "1분 동안 자기소개를 해주세요. 학력, 경력, 지원 동기를 중심으로 말씀해 주시면 됩니다."'
+      },
+      experience: {
+        title: '<span class="emoji-3d">💼</span> 경험 설명 (STAR)',
+        context: '면접관: "지금까지 가장 큰 성취를 이룬 경험을 말씀해주세요. STAR 프레임워크(상황-과제-행동-결과)를 활용하여 구체적으로 설명해 주세요."'
+      },
+      strength: {
+        title: '<span class="emoji-3d">💪</span> 강점/약점 질문',
+        context: '면접관: "당신의 강점과 약점은 무엇인가요? 약점은 어떻게 보완하고 계신가요?"'
+      },
+      situation: {
+        title: '<span class="emoji-3d">🎯</span> 상황 질문 대응',
+        context: '면접관: "프로젝트 중 팀원과 의견 충돌이 발생했습니다. 팀원은 일정을 늦추자고 하고, 당신은 품질을 낮춰서라도 마감을 지켜야 한다고 생각합니다. 어떻게 해결하시겠습니까?"'
+      },
+      reverse: {
+        title: '❓ 역질문',
+        context: '면접관: "마지막으로 궁금한 점이 있으신가요? 우리 회사나 직무에 대해 질문해 주세요."'
+      }
+    };
+
+    // ========================================
+    // Step 1: Scenario Selection
+    // ========================================
+    document.querySelectorAll('.scenario-card').forEach(card => {
+      card.addEventListener('click', () => {
+        // 이전 선택 해제
+        document.querySelectorAll('.scenario-card').forEach(c => c.classList.remove('selected'));
+
+        // 현재 선택
+        card.classList.add('selected');
+        selectedScenario = card.dataset.scenario;
+
+        // 다음 버튼 활성화
+        document.getElementById('next-to-step2').disabled = false;
+
+        console.log('[Step1] 시나리오 선택:', selectedScenario);
+      });
+    });
+
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const guide = document.getElementById('practice-guide');
+    const practicalSetup = document.getElementById('practical-setup');
+    const practicalRole = document.getElementById('practical-role');
+    const practicalStart = document.getElementById('practical-start');
+    const practicalBack = document.getElementById('practical-back');
+    const practicalStatus = document.getElementById('practical-status');
+    const lastPracticalQuestion = new Map();
+    let activeMode;
+
+    function showView(view) {
+      step1.classList.toggle('hidden', view !== 'cases');
+      step2.classList.toggle('hidden', view !== 'interview');
+      guide.hidden = view !== 'cases' && !(view === 'interview' && activeMode === 'practice');
+      practicalSetup.hidden = view !== 'setup';
+      document.getElementById('step1-indicator').classList.toggle('active', view !== 'interview');
+      document.getElementById('step1-indicator').classList.toggle('completed', view === 'interview');
+      document.getElementById('step2-indicator').classList.toggle('active', view === 'interview');
+    }
+
+    function openInterview(mode, prompt, locale, scenarioId, posting, role) {
+      activeMode = mode;
+      showView('interview');
+      document.getElementById('interview-mode-title').textContent = mode === 'practical' ?
+        '실전 모의면접 · ' + practicalRole.selectedOptions[0].textContent : '사례 선택 연습';
+      interview.start(prompt, locale, scenarioId, posting, role);
+      document.getElementById('scenario-context').focus();
+    }
+
+    document.getElementById('next-to-step2').addEventListener('click', () => {
+      if (!selectedScenario) return;
+      openInterview('practice', scenarioData[selectedScenario].context, selectedLanguage, selectedScenario,
+        document.getElementById('interview-job-posting').value.trim());
+    });
+
+    function openPracticalSetup() {
+      practicalStatus.textContent = '';
+      showView('setup');
+      document.getElementById('practical-title').focus();
+    }
+
+    document.getElementById('interview-go-practical').addEventListener('click', openPracticalSetup);
+    practicalBack.addEventListener('click', () => { showView('cases'); document.getElementById('next-to-step2').focus(); });
+    document.getElementById('back-to-step1').addEventListener('click', () => {
+      if (activeMode === 'practical') openPracticalSetup();
+      else { showView('cases'); document.getElementById('next-to-step2').focus(); }
+    });
+
+    document.getElementById('practical-form').addEventListener('submit', async event => {
+      event.preventDefault();
+      const role = practicalRole.value;
+      if (!role || practicalStart.disabled) return;
+      practicalStart.disabled = practicalBack.disabled = practicalRole.disabled = true;
+      practicalStatus.textContent = '실전 질문을 준비하고 있습니다.';
+      try {
+        const response = await fetch('/api/interview', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'job', action: 'start-practical', role, previousQuestion: lastPracticalQuestion.get(role) }),
+          signal: AbortSignal.timeout(10000)
+        });
+        const data = await response.json();
+        if (!response.ok || typeof data.text !== 'string' || !data.text.trim()) throw new Error('Question unavailable');
+        lastPracticalQuestion.set(role, data.text);
+        openInterview('practical', data.text, 'ko', 'practical', '', role);
+      } catch {
+        practicalStatus.textContent = '실전 질문을 받지 못했습니다. API가 연결된 주소에서 다시 시도해 주세요.';
+      } finally {
+        practicalStart.disabled = practicalBack.disabled = practicalRole.disabled = false;
+      }
+    });
+
+    // ========================================
+    // Page Init
+    // ========================================
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLanguage = localStorage.getItem('roleplay_language') || 'ko';
+      selectedLanguage = savedLanguage;
+      document.getElementById('languageSelect').value = savedLanguage;
+      console.log('[RolePlay-Interview] 페이지 로드 완료');
+    });
+  </script>
+</body>
+</html>

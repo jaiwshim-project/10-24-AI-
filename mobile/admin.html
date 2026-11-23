@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>참여 및 연습 효과 | Roleplay AI Coach</title>
+  <link rel="icon" href="./favicon.png">
+  <link rel="stylesheet" href="./mobile.css">
+  <link rel="stylesheet" href="./admin.css?v=2">
+  <script src="./admin.js?v=2" defer></script>
+</head>
+<body>
+  <main class="admin">
+    <a href="./">← Roleplay AI Coach</a>
+    <h1>참여 및 연습 효과</h1>
+    <form id="metrics-form">
+      <label>관리자 비밀번호<input id="token" type="password" autocomplete="off" required></label>
+      <label>조회 기간<select id="days"><option value="1">오늘</option><option value="7" selected>최근 7일</option><option value="30">최근 30일</option></select></label>
+      <label>면접 유형<select id="type"><option value="all">전체</option><option value="job">취업 면접</option><option value="college">대학 입학 면접</option></select></label>
+      <button class="primary" type="submit">집계 조회</button>
+    </form>
+    <p id="metrics-status" role="status"></p>
+    <div id="report" hidden>
+      <h2>면접 참여 현황</h2>
+      <p class="muted">앱에서 집계된 연습을 표시합니다. 날짜는 한국 시간과 면접 시작일을 기준으로 집계합니다. 시작 후 24시간 동안 완료 기록이 없으면 미완료로 집계합니다.</p>
+      <dl id="participation"></dl>
+      <h2>같은 질문 재답변</h2>
+      <p class="muted">같은 질문을 같은 순서로 완료한 첫 재답변을 원답변과 비교합니다. PROVE 하위 평가 기준이 같은 항목끼리 비교합니다. 이 수치로 처음 보는 질문에서의 향상이나 코칭의 인과 효과를 판단하기는 어렵습니다.</p>
+      <dl id="effect"></dl>
+      <h2>날짜별 면접 참여</h2>
+      <table>
+        <thead><tr><th scope="col">날짜</th><th scope="col">시작</th><th scope="col">완료</th></tr></thead>
+        <tbody id="daily"></tbody>
+      </table>
+      <h2>상담 유형별 참여 및 평가</h2>
+      <p class="muted">같은 조회 기간의 진학·취업·영양 상담을 표시합니다. 완료율은 완료 ÷ 시작이며, 평균 점수와 항목별 평가는 완료 건으로 계산합니다.</p>
+      <div id="counseling-metrics"></div>
+    </div>
+  </main>
+</body>
+</html>

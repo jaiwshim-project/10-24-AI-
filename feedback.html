@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Roleplay AI Coach - AI 피드백 분석">
+  <meta name="author" content="심재우">
+  <meta name="copyright" content="© 2026 Roleplay AI Coach. All rights reserved.">
+  <title>AI 피드백 분석 - Roleplay AI Coach</title>
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Feedback 전용 스타일 */
+    .feedback-container {
+      max-width: 1000px;
+      margin: 1.5rem auto;
+      padding: 0 1rem;
+    }
+
+    .feedback-header {
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .feedback-header h1 {
+      color: var(--slate-900);
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      opacity: 1;
+    }
+
+    .feedback-header .meta {
+      display: flex;
+      gap: 1rem;
+      color: var(--slate-700);
+      opacity: 1;
+    }
+
+    .section-card {
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .section-card h2 {
+      color: var(--slate-900);
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      opacity: 1;
+      border-bottom: 2px solid var(--slate-200);
+      padding-bottom: 0.5rem;
+    }
+
+    /* 1. 전체 점수 - 원형 게이지 */
+    .score-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .gauge-wrapper {
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
+
+    .gauge-canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    .score-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .score-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      opacity: 1;
+      line-height: 1;
+    }
+
+    .score-label {
+      font-size: 0.9rem;
+      color: var(--slate-700);
+      opacity: 1;
+    }
+
+    /* 2. 스피치 메트릭 */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .metric-item {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      opacity: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      color: var(--slate-700);
+      opacity: 1;
+    }
+
+    .metric-detail {
+      font-size: 0.85rem;
+      color: var(--slate-600);
+      opacity: 1;
+      margin-top: 0.5rem;
+    }
+
+    /* 3. 프레임워크 분석 - 막대 차트 */
+    .framework-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .framework-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .framework-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .framework-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--slate-900);
+      opacity: 1;
+    }
+
+    .framework-score {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      opacity: 1;
+    }
+
+    .framework-bar {
+      width: 100%;
+      height: 12px;
+      background: var(--slate-200);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .framework-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--hospital-primary), var(--interview-primary));
+      border-radius: 6px;
+      transition: width 0.6s ease-out;
+    }
+
+    /* 4. AI 코치 피드백 */
+    .coach-feedback {
+      background: var(--hospital-bg);
+      border-left: 4px solid var(--hospital-primary);
+      padding: 1.25rem;
+      border-radius: 0.5rem;
+      color: var(--slate-800);
+      opacity: 1;
+      line-height: 1.7;
+    }
+
+    .coach-name {
+      font-weight: 700;
+      color: var(--hospital-primary);
+      opacity: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    /* 5. 오디오 플레이어 */
+    .audio-player {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 0.5rem;
+      padding: 1.25rem;
+    }
+
+    .audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .audio-controls audio {
+      flex: 1;
+      border-radius: 0.5rem;
+    }
+
+    .transcript {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      max-height: 200px;
+      overflow-y: auto;
+      color: var(--slate-800);
+      opacity: 1;
+      line-height: 1.8;
+    }
+
+    .timestamp {
+      display: inline-block;
+      background: var(--slate-200);
+      color: var(--slate-700);
+      padding: 0.15rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.85rem;
+      margin-right: 0.5rem;
+      opacity: 1;
+    }
+
+    /* 액션 버튼 */
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+
+    /* 카테고리별 컬러 테마 */
+    .category-hospital .section-card,
+    .category-hospital-counselor .section-card,
+    .category-foreign-patient .section-card,
+    .category-doctor-explanation .section-card {
+      border-left: 5px solid var(--hospital-primary);
+    }
+
+    .category-sales .section-card,
+    .category-insurance .section-card,
+    .category-car-sales .section-card,
+    .category-realestate .section-card,
+    .category-cold-call .section-card,
+    .category-customer-success .section-card {
+      border-left: 5px solid var(--sales-primary);
+    }
+
+    .category-politics .section-card,
+    .category-policy-announcement .section-card,
+    .category-debate-interview .section-card,
+    .category-ministry .section-card {
+      border-left: 5px solid var(--politics-primary);
+    }
+
+    .category-interview .section-card,
+    .category-college-interview .section-card,
+    .category-education-counseling .section-card {
+      border-left: 5px solid var(--interview-primary);
+    }
+
+    .category-startup .section-card,
+    .category-government-grant .section-card,
+    .category-poc-partnership .section-card,
+    .category-consulting-sales .section-card {
+      border-left: 5px solid var(--startup-primary);
+    }
+
+    /* 추가 카테고리 (기본 컬러) */
+    .category-leadership-feedback .section-card,
+    .category-conflict-discipline .section-card,
+    .category-executive-presentation .section-card {
+      border-left: 5px solid #8b5cf6;
+    }
+
+    .category-legal .section-card,
+    .category-tax-accounting .section-card,
+    .category-labor .section-card {
+      border-left: 5px solid #dc2626;
+    }
+
+    .category-live-commerce .section-card,
+    .category-creator-branding .section-card {
+      border-left: 5px solid #f59e0b;
+    }
+
+    .category-psychological-coaching .section-card {
+      border-left: 5px solid #06b6d4;
+    }
+
+    .category-global-buyer .section-card,
+    .category-global-pitch .section-card {
+      border-left: 5px solid #10b981;
+    }
+
+    /* Tone 분석 - 3개 게이지 */
+    .tone-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .tone-item {
+      text-align: center;
+    }
+
+    .tone-gauge {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 0.5rem;
+    }
+
+    .tone-label {
+      font-size: 0.9rem;
+      color: var(--slate-700);
+      opacity: 1;
+    }
+
+    .tone-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      opacity: 1;
+    }
+
+    /* 반응형 */
+    @media (max-width: 768px) {
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tone-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+  <style>
+    /* 🎨 초현실적 3D 클레이 파스텔톤 이모티콘 */
+    .emoji-3d {
+      display: inline-block;
+      font-style: normal;
+      position: relative;
+
+      /* 매우 강한 3D 입체감 */
+      text-shadow:
+        4px 4px 12px rgba(0, 0, 0, 0.35),
+        -3px -3px 6px rgba(255, 255, 255, 1),
+        0 0 20px rgba(255, 255, 255, 0.9),
+        2px 2px 4px rgba(0, 0, 0, 0.2),
+        -1px -1px 2px rgba(255, 255, 255, 0.8);
+
+      /* 부드러운 파스텔톤 필터 */
+      filter:
+        brightness(1.15)
+        saturate(1.5)
+        contrast(1.2)
+        drop-shadow(0 6px 14px rgba(0, 0, 0, 0.2))
+        drop-shadow(0 0 18px rgba(255, 255, 255, 0.7))
+        drop-shadow(-2px -2px 6px rgba(255, 255, 255, 0.4));
+
+      transform: translateZ(0) perspective(1000px);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* 클레이 질감 배경 */
+      background:
+        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.5), transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15), transparent 70%);
+
+      border-radius: 50%;
+      padding: 0.2em;
+    }
+
+    /* 강한 하이라이트 효과 */
+    .emoji-3d::before {
+      content: '';
+      position: absolute;
+      top: -15%;
+      left: -15%;
+      right: -15%;
+      bottom: -15%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.7), transparent 40%),
+        radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), transparent 55%);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.8;
+      filter: blur(1px);
+    }
+
+    /* 부드러운 그림자 효과 */
+    .emoji-3d::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .emoji-3d:hover {
+      transform: translateY(-4px) scale(1.1) rotateZ(-3deg) perspective(1000px) rotateX(5deg);
+      filter:
+        brightness(1.25)
+        saturate(1.7)
+        contrast(1.25)
+        drop-shadow(0 8px 18px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 24px rgba(255, 255, 255, 0.8))
+        drop-shadow(-3px -3px 8px rgba(255, 255, 255, 0.5));
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 8px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 1),
+        3px 3px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    /* 로고 이모티콘 - 초강력 효과 */
+    .logo .emoji-3d {
+      font-size: 1.4em;
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 7px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 0.95),
+        3px 3px 6px rgba(0, 0, 0, 0.2),
+        -2px -2px 4px rgba(255, 255, 255, 0.9);
+      filter:
+        brightness(1.25)
+        saturate(1.5)
+        contrast(1.18)
+        drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+    }
+
+    .logo .emoji-3d:hover {
+      transform: translateY(-5px) scale(1.15) rotateZ(-4deg) perspective(1000px) rotateX(8deg);
+      filter:
+        brightness(1.3)
+        saturate(1.7)
+        contrast(1.22)
+        drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))
+        drop-shadow(0 0 28px rgba(255, 255, 255, 0.9));
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span><span class="emoji-3d">🎯</span></span>
+        <span>Roleplay AI Coach</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="index.html">홈</a></li>
+          <li><a href="dashboard.html">대시보드</a></li>
+          <li><a href="manual.html">매뉴얼</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Feedback Container -->
+  <div class="feedback-container" id="feedbackContainer">
+
+    <!-- Header -->
+    <div class="feedback-header">
+      <h1 id="sessionTitle">세션 피드백 분석</h1>
+      <div class="meta">
+        <span id="sessionDate">-</span>
+        <span id="sessionCategory">-</span>
+        <span id="sessionScenario">-</span>
+      </div>
+    </div>
+
+    <!-- 1. 전체 점수 -->
+    <div class="section-card">
+      <h2><span class="emoji-3d">📊</span> 전체 점수</h2>
+      <div class="score-container">
+        <div class="gauge-wrapper">
+          <canvas id="scoreGauge" class="gauge-canvas"></canvas>
+          <div class="score-text">
+            <div class="score-number" id="overallScore">-</div>
+            <div class="score-label">/ 100</div>
+          </div>
+        </div>
+        <p style="color: var(--slate-700); opacity: 1; text-align: center;" id="scoreComment">-</p>
+      </div>
+    </div>
+
+    <!-- 2. 스피치 메트릭 -->
+    <div class="section-card">
+      <h2><span class="emoji-3d">🎤</span> 스피치 메트릭</h2>
+      <div class="metrics-grid">
+        <div class="metric-item">
+          <div class="metric-value" id="fillerWordsCount">-</div>
+          <div class="metric-label">필러 워드 횟수</div>
+          <div class="metric-detail" id="fillerWordsDetail">-</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-value" id="speechSpeed">-</div>
+          <div class="metric-label">말하기 속도</div>
+          <div class="metric-detail" id="speedRating">-</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-value" id="durationMinutes">-</div>
+          <div class="metric-label">세션 시간</div>
+          <div class="metric-detail">분</div>
+        </div>
+      </div>
+
+      <!-- Tone 분석 -->
+      <h3 style="color: var(--slate-900); opacity: 1; margin-top: 1.5rem; margin-bottom: 0.75rem;">톤 분석</h3>
+      <div class="tone-grid">
+        <div class="tone-item">
+          <canvas id="toneConfidence" class="tone-gauge"></canvas>
+          <div class="tone-label">자신감</div>
+          <div class="tone-value" id="confidenceValue">-</div>
+        </div>
+        <div class="tone-item">
+          <canvas id="toneClarity" class="tone-gauge"></canvas>
+          <div class="tone-label">명확성</div>
+          <div class="tone-value" id="clarityValue">-</div>
+        </div>
+        <div class="tone-item">
+          <canvas id="toneEnergy" class="tone-gauge"></canvas>
+          <div class="tone-label">에너지</div>
+          <div class="tone-value" id="energyValue">-</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 프레임워크 분석 -->
+    <div class="section-card">
+      <h2><span class="emoji-3d">🎯</span> 프레임워크 준수도</h2>
+      <div id="frameworkList" class="framework-list">
+        <!-- 동적으로 생성 -->
+      </div>
+    </div>
+
+    <!-- 4. AI 코치 피드백 -->
+    <div class="section-card">
+      <h2><span class="emoji-3d">👨‍🏫</span> AI 코치 피드백</h2>
+      <div class="coach-feedback">
+        <div class="coach-name" id="coachName">AI 코치</div>
+        <p id="coachComment" style="color: var(--slate-800); opacity: 1; line-height: 1.8;">-</p>
+      </div>
+    </div>
+
+    <!-- 5. 녹음 재생 -->
+    <div class="section-card">
+      <h2><span class="emoji-3d">🎙️</span> 녹음 재생</h2>
+      <div class="audio-player">
+        <div class="audio-controls">
+          <audio id="audioPlayer" controls style="width: 100%;">
+            <source src="" type="audio/webm">
+            브라우저가 오디오 재생을 지원하지 않습니다.
+          </audio>
+        </div>
+        <h3 style="color: var(--slate-900); opacity: 1; margin-bottom: 0.5rem;">대화 내용</h3>
+        <div class="transcript" id="transcript">
+          <p style="color: var(--slate-700); opacity: 1;">대화 내용이 여기에 표시됩니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 액션 버튼 -->
+    <div class="action-buttons">
+      <button class="btn btn-primary" onclick="retrySession()"><span class="emoji-3d">🔄</span> 다시 연습하기</button>
+      <a href="dashboard.html" class="btn btn-secondary"><span class="emoji-3d">📊</span> 대시보드로 이동</a>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2026 Roleplay AI Coach. All rights reserved. | 심재우 &lt;jaiwshim@gmail.com&gt;</p>
+      <div class="footer-links">
+        <a href="manual.html">📖 매뉴얼</a>
+        <a href="copyright.html">© 저작권</a>
+        <a href="patent.html">⚖️ 특허</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script>
+    // URL 파라미터 파싱
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionId = urlParams.get('session');
+    const category = urlParams.get('category') || 'hospital';
+
+    // 카테고리별 컬러 테마 적용
+    document.getElementById('feedbackContainer').classList.add(`category-${category}`);
+
+    // 카테고리별 한글명
+    const categoryNames = {
+      // 의료 (3개)
+      'hospital': '병원 상담',
+      'hospital-counselor': '병원 상담사',
+      'foreign-patient': '외국인 환자 상담',
+      'doctor-explanation': '의사 설명',
+
+      // 세일즈 (6개)
+      'sales': 'B2B 영업',
+      'insurance': '보험 영업',
+      'car-sales': '자동차 영업',
+      'realestate': '부동산 상담',
+      'cold-call': '전화영업·콜드콜',
+      'customer-success': '고객성공·재계약',
+
+      // 스타트업 (4개)
+      'startup': '소상공인·창업',
+      'government-grant': '정부지원사업',
+      'poc-partnership': 'PoC 파트너십',
+      'consulting-sales': '강사·컨설턴트 영업',
+
+      // 정치 (4개)
+      'politics': '정치·선거',
+      'policy-announcement': '정책발표·기자회견',
+      'debate-interview': 'TV토론·언론 인터뷰',
+      'ministry': '공공기관 민원응대',
+
+      // 면접 (3개)
+      'interview': '취업·이직 면접',
+      'college-interview': '대입 면접',
+      'education-counseling': '교육 상담',
+
+      // 리더십 (3개)
+      'leadership-feedback': '리더십·피드백',
+      'conflict-discipline': '조직 갈등·징계',
+      'executive-presentation': '사내 발표·임원 보고',
+
+      // 전문직 (4개)
+      'legal': '법률 상담',
+      'tax-accounting': '세무회계 상담',
+      'labor': '노무 상담',
+
+      // 커머스 (2개)
+      'live-commerce': '라이브커머스·쇼호스트',
+      'creator-branding': '크리에이터 브랜딩',
+
+      // 심리·코칭 (1개)
+      'psychological-coaching': '심리·코칭·상담',
+
+      // 글로벌 (2개)
+      'global-buyer': '글로벌 바이어 상담',
+      'global-pitch': '영어 피칭·글로벌 투자'
+    };
+
+    // 카테고리별 코치 이름
+    const coachNames = {
+      // 의료
+      'hospital': '병원 상담 전문가 AI',
+      'hospital-counselor': '병원 상담사 전문가 AI',
+      'foreign-patient': '외국인 환자 상담 전문가 AI',
+      'doctor-explanation': '의사 설명 전문가 AI',
+
+      // 세일즈
+      'sales': 'SPIN Selling 코치 AI',
+      'insurance': '보험 상담 전문가 AI',
+      'car-sales': '자동차 판매 전문가 AI',
+      'realestate': '부동산 상담 전문가 AI',
+      'cold-call': '콜드콜 전문가 AI',
+      'customer-success': '고객 성공 전문가 AI',
+
+      // 스타트업
+      'startup': '피칭 전문가 AI',
+      'government-grant': '정부지원사업 전문가 AI',
+      'poc-partnership': 'PoC 제안 전문가 AI',
+      'consulting-sales': '컨설턴트 영업 전문가 AI',
+
+      // 정치
+      'politics': '정치 커뮤니케이션 전문가 AI',
+      'policy-announcement': '정책 발표 전문가 AI',
+      'debate-interview': 'TV토론 전문가 AI',
+      'ministry': '민원 응대 전문가 AI',
+
+      // 면접
+      'interview': '면접 코치 AI',
+      'college-interview': '입시면접 전문가 AI',
+      'education-counseling': '교육 상담 전문가 AI',
+
+      // 리더십
+      'leadership-feedback': '리더십 코치 AI',
+      'conflict-discipline': '조직 갈등 해결 전문가 AI',
+      'executive-presentation': '임원 보고 전문가 AI',
+
+      // 전문직
+      'legal': '법률 상담 전문가 AI',
+      'tax-accounting': '세무회계 전문가 AI',
+      'labor': '노무 상담 전문가 AI',
+
+      // 커머스
+      'live-commerce': '라이브커머스 전문가 AI',
+      'creator-branding': '크리에이터 브랜딩 전문가 AI',
+
+      // 심리·코칭
+      'psychological-coaching': '심리 코칭 전문가 AI',
+
+      // 글로벌
+      'global-buyer': '글로벌 바이어 상담 전문가 AI',
+      'global-pitch': '영어 피칭 전문가 AI'
+    };
+
+    // 원형 게이지 그리기
+    function drawCircularGauge(canvasId, value, maxValue = 100) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = Math.min(canvas.width, canvas.height) / 2 - 10;
+
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Background circle
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 15;
+      ctx.stroke();
+
+      // Value arc
+      const percentage = value / maxValue;
+      const endAngle = -Math.PI / 2 + (2 * Math.PI * percentage);
+
+      // Color gradient based on score
+      let color = '#dc2626'; // Red (low)
+      if (value >= 80) color = '#16a34a'; // Green (high)
+      else if (value >= 60) color = '#2563eb'; // Blue (medium)
+
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, -Math.PI / 2, endAngle);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 15;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+    }
+
+    // 작은 원형 게이지 (톤 분석용)
+    function drawSmallGauge(canvasId, value) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+
+      canvas.width = 100;
+      canvas.height = 100;
+
+      const ctx = canvas.getContext('2d');
+      const centerX = 50;
+      const centerY = 50;
+      const radius = 40;
+
+      ctx.clearRect(0, 0, 100, 100);
+
+      // Background
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 8;
+      ctx.stroke();
+
+      // Value
+      const percentage = value / 100;
+      const endAngle = -Math.PI / 2 + (2 * Math.PI * percentage);
+
+      let color = '#dc2626';
+      if (value >= 80) color = '#16a34a';
+      else if (value >= 60) color = '#2563eb';
+
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, -Math.PI / 2, endAngle);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 8;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+    }
+
+    // 프레임워크 항목 렌더링
+    function renderFrameworkItems(frameworks) {
+      const container = document.getElementById('frameworkList');
+      container.innerHTML = '';
+
+      frameworks.forEach(fw => {
+        const item = document.createElement('div');
+        item.className = 'framework-item';
+        item.innerHTML = `
+          <div class="framework-header">
+            <span class="framework-name">${fw.name}</span>
+            <span class="framework-score">${fw.score}%</span>
+          </div>
+          <div class="framework-bar">
+            <div class="framework-bar-fill" style="width: ${fw.score}%"></div>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    // 데이터 로드
+    function loadFeedbackData() {
+      // Storage에서 세션 데이터 가져오기
+      const history = Storage.getRoleplayHistory();
+      let sessionData = null;
+
+      if (sessionId) {
+        sessionData = history.find(item => item.id == sessionId);
+      } else {
+        // 최근 세션
+        sessionData = history[history.length - 1];
+      }
+
+      if (!sessionData) {
+        // Mock 데이터
+        sessionData = {
+          id: Date.now(),
+          timestamp: Date.now(),
+          category: category,
+          scenario: '기본 시나리오',
+          score: 78,
+          duration: 5.5,
+          fillerWords: {
+            count: 7,
+            words: ['어', '음', '저기', '그러니까'],
+            timestamps: [3.2, 8.5, 15.3, 22.1, 30.5, 45.2, 58.7]
+          },
+          speed: {
+            wordsPerMinute: 145,
+            rating: 'good'
+          },
+          tone: {
+            confidence: 75,
+            clarity: 82,
+            energy: 68
+          },
+          framework: {
+            completeness: 80,
+            items: [
+              { name: 'Situation (상황 파악)', score: 85 },
+              { name: 'Problem (문제 확인)', score: 90 },
+              { name: 'Implication (파급효과)', score: 65 },
+              { name: 'Need-Payoff (니즈 확대)', score: 75 }
+            ]
+          },
+          transcript: '안녕하세요, 저희 병원을 방문해주셔서 감사합니다. 어... 오늘은 어떤 부분이 불편하셔서 오셨나요? 음... 제가 자세히 상담 도와드리겠습니다.',
+          coachFeedback: 'SPIN 프레임워크의 Situation과 Problem 질문은 잘 진행하셨으나, Implication 단계가 다소 약합니다. 문제의 파급효과를 확대하는 질문을 추가하여 환자의 니즈를 더 명확히 부각시키세요. 필러 워드는 7회로 평균 수준입니다. 긴장을 줄이고 천천히 말하면 개선될 것입니다.',
+          audioUrl: null
+        };
+      }
+
+      // UI 업데이트
+      const categoryDisplayName = categoryNames[sessionData.category] || sessionData.category;
+      document.getElementById('sessionTitle').textContent = `${categoryDisplayName} - ${sessionData.scenario}`;
+      document.getElementById('sessionDate').textContent = formatDate(sessionData.timestamp, 'YYYY-MM-DD HH:mm');
+      document.getElementById('sessionCategory').textContent = `분야: ${categoryDisplayName}`;
+      document.getElementById('sessionScenario').textContent = `시나리오: ${sessionData.scenario}`;
+
+      // 1. 전체 점수
+      document.getElementById('overallScore').textContent = sessionData.score;
+
+      const canvas = document.getElementById('scoreGauge');
+      canvas.width = 200;
+      canvas.height = 200;
+      drawCircularGauge('scoreGauge', sessionData.score);
+
+      const scoreComment = sessionData.score >= 80 ? '우수한 성과입니다!' :
+                           sessionData.score >= 60 ? '양호한 수준입니다.' : '개선이 필요합니다.';
+      document.getElementById('scoreComment').textContent = scoreComment;
+
+      // 2. 스피치 메트릭
+      document.getElementById('fillerWordsCount').textContent = sessionData.fillerWords.count;
+      document.getElementById('fillerWordsDetail').textContent = sessionData.fillerWords.words.join(', ');
+      document.getElementById('speechSpeed').textContent = sessionData.speed.wordsPerMinute;
+      const speedText = sessionData.speed.rating === 'good' ? '적절함' :
+                        sessionData.speed.rating === 'slow' ? '느림' : '빠름';
+      document.getElementById('speedRating').textContent = speedText;
+      document.getElementById('durationMinutes').textContent = sessionData.duration.toFixed(1);
+
+      // 톤 분석
+      drawSmallGauge('toneConfidence', sessionData.tone.confidence);
+      drawSmallGauge('toneClarity', sessionData.tone.clarity);
+      drawSmallGauge('toneEnergy', sessionData.tone.energy);
+
+      document.getElementById('confidenceValue').textContent = sessionData.tone.confidence;
+      document.getElementById('clarityValue').textContent = sessionData.tone.clarity;
+      document.getElementById('energyValue').textContent = sessionData.tone.energy;
+
+      // 3. 프레임워크
+      renderFrameworkItems(sessionData.framework.items);
+
+      // 4. 코치 피드백
+      document.getElementById('coachName').textContent = coachNames[category] || 'AI 코치';
+      document.getElementById('coachComment').textContent = sessionData.coachFeedback;
+
+      // 5. 오디오 & 대화 내용
+      if (sessionData.audioUrl) {
+        document.getElementById('audioPlayer').querySelector('source').src = sessionData.audioUrl;
+        document.getElementById('audioPlayer').load();
+      } else {
+        document.getElementById('audioPlayer').style.display = 'none';
+      }
+
+      document.getElementById('transcript').innerHTML = `<p style="color: var(--slate-800); opacity: 1; line-height: 1.8;">${sessionData.transcript}</p>`;
+    }
+
+    // 다시 연습하기
+    function retrySession() {
+      const categoryPages = {
+        // 의료 (4개)
+        'hospital': 'roleplay-hospital.html',
+        'hospital-counselor': 'roleplay-hospital-counselor.html',
+        'foreign-patient': 'roleplay-foreign-patient.html',
+        'doctor-explanation': 'roleplay-doctor-explanation.html',
+
+        // 세일즈 (6개)
+        'sales': 'roleplay-sales.html',
+        'insurance': 'roleplay-insurance.html',
+        'car-sales': 'roleplay-car-sales.html',
+        'realestate': 'roleplay-realestate.html',
+        'cold-call': 'roleplay-cold-call.html',
+        'customer-success': 'roleplay-customer-success.html',
+
+        // 스타트업 (4개)
+        'startup': 'roleplay-startup.html',
+        'government-grant': 'roleplay-government-grant.html',
+        'poc-partnership': 'roleplay-poc-partnership.html',
+        'consulting-sales': 'roleplay-consulting-sales.html',
+
+        // 정치 (4개)
+        'politics': 'roleplay-politics.html',
+        'policy-announcement': 'roleplay-policy-announcement.html',
+        'debate-interview': 'roleplay-debate-interview.html',
+        'ministry': 'roleplay-ministry.html',
+
+        // 면접 (3개)
+        'interview': 'roleplay-interview.html',
+        'college-interview': 'roleplay-college-interview.html',
+        'education-counseling': 'roleplay-education-counseling.html',
+
+        // 리더십 (3개)
+        'leadership-feedback': 'roleplay-leadership-feedback.html',
+        'conflict-discipline': 'roleplay-conflict-discipline.html',
+        'executive-presentation': 'roleplay-executive-presentation.html',
+
+        // 전문직 (3개)
+        'legal': 'roleplay-legal.html',
+        'tax-accounting': 'roleplay-tax-accounting.html',
+        'labor': 'roleplay-labor.html',
+
+        // 커머스 (2개)
+        'live-commerce': 'roleplay-live-commerce.html',
+        'creator-branding': 'roleplay-creator-branding.html',
+
+        // 심리·코칭 (1개)
+        'psychological-coaching': 'roleplay-psychological-coaching.html',
+
+        // 글로벌 (2개)
+        'global-buyer': 'roleplay-global-buyer.html',
+        'global-pitch': 'roleplay-global-pitch.html'
+      };
+
+      const targetPage = categoryPages[category] || 'index.html';
+      location.href = targetPage;
+    }
+
+    // 페이지 로드
+    document.addEventListener('DOMContentLoaded', () => {
+      loadFeedbackData();
+    });
+  </script>
+</body>
+</html>

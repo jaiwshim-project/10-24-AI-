@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Roleplay AI Coach - 학습 대시보드">
+  <meta name="author" content="심재우">
+  <meta name="copyright" content="© 2026 Roleplay AI Coach. All rights reserved.">
+  <title>대시보드 - Roleplay AI Coach</title>
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* 🎨 초현실적 3D 클레이 파스텔톤 이모티콘 */
+    .emoji-3d {
+      display: inline-block;
+      font-style: normal;
+      position: relative;
+
+      /* 매우 강한 3D 입체감 */
+      text-shadow:
+        4px 4px 12px rgba(0, 0, 0, 0.35),
+        -3px -3px 6px rgba(255, 255, 255, 1),
+        0 0 20px rgba(255, 255, 255, 0.9),
+        2px 2px 4px rgba(0, 0, 0, 0.2),
+        -1px -1px 2px rgba(255, 255, 255, 0.8);
+
+      /* 선명하고 컬러풀한 필터 */
+      filter:
+        brightness(1.15)
+        saturate(1.5)
+        contrast(1.2)
+        drop-shadow(0 7px 16px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 22px rgba(255, 255, 255, 0.8))
+        drop-shadow(-3px -3px 8px rgba(255, 255, 255, 0.5));
+
+      transform: translateZ(0) perspective(1000px);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* 클레이 질감 배경 */
+      background:
+        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.5), transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15), transparent 70%);
+
+      border-radius: 50%;
+      padding: 0.2em;
+    }
+
+    /* 강한 하이라이트 효과 */
+    .emoji-3d::before {
+      content: '';
+      position: absolute;
+      top: -15%;
+      left: -15%;
+      right: -15%;
+      bottom: -15%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.7), transparent 40%),
+        radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), transparent 55%);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.8;
+      filter: blur(1px);
+    }
+
+    /* 부드러운 그림자 효과 */
+    .emoji-3d::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .emoji-3d:hover {
+      transform: translateY(-4px) scale(1.1) rotateZ(-3deg) perspective(1000px) rotateX(5deg);
+      filter:
+        brightness(1.25)
+        saturate(1.7)
+        contrast(1.25)
+        drop-shadow(0 9px 20px rgba(0, 0, 0, 0.3))
+        drop-shadow(0 0 28px rgba(255, 255, 255, 0.85))
+        drop-shadow(-4px -4px 10px rgba(255, 255, 255, 0.6));
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 8px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 1),
+        3px 3px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    /* 로고 이모티콘 - 초강력 효과 */
+    .logo .emoji-3d {
+      font-size: 1.4em;
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 7px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 0.95),
+        3px 3px 6px rgba(0, 0, 0, 0.2),
+        -2px -2px 4px rgba(255, 255, 255, 0.9);
+      filter:
+        brightness(1.2)
+        saturate(1.5)
+        contrast(1.18)
+        drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+    }
+
+    .logo .emoji-3d:hover {
+      transform: translateY(-5px) scale(1.15) rotateZ(-4deg) perspective(1000px) rotateX(8deg);
+      filter:
+        brightness(1.3)
+        saturate(1.7)
+        contrast(1.22)
+        drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))
+        drop-shadow(0 0 28px rgba(255, 255, 255, 0.9));
+    }
+
+
+    /* Dashboard 전용 스타일 */
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 1rem auto;
+      padding: 0 0.75rem;
+    }
+
+    .dashboard-header {
+      text-align: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .dashboard-header h1 {
+      color: var(--slate-900);
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
+      opacity: 1;
+    }
+
+    .dashboard-header p {
+      color: var(--slate-700);
+      font-size: 0.95rem;
+      opacity: 1;
+    }
+
+    /* 통계 카드 */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .stat-icon {
+      font-size: 1.75rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      opacity: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      color: var(--slate-700);
+      font-size: 0.9rem;
+      opacity: 1;
+    }
+
+    /* 세션 테이블 */
+    .sessions-section {
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+
+    .sessions-section h2 {
+      color: var(--slate-900);
+      font-size: 1.15rem;
+      margin-bottom: 0.75rem;
+      opacity: 1;
+      border-bottom: 2px solid var(--slate-200);
+      padding-bottom: 0.4rem;
+    }
+
+    .sessions-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .sessions-table thead {
+      background: var(--slate-50);
+    }
+
+    .sessions-table th {
+      padding: 0.6rem;
+      text-align: left;
+      color: var(--slate-900);
+      font-weight: 600;
+      opacity: 1;
+      border-bottom: 2px solid var(--slate-200);
+      font-size: 0.9rem;
+    }
+
+    .sessions-table td {
+      padding: 0.6rem;
+      color: var(--slate-800);
+      opacity: 1;
+      border-bottom: 1px solid var(--slate-200);
+      font-size: 0.85rem;
+    }
+
+    .sessions-table tbody tr:hover {
+      background: var(--slate-50);
+    }
+
+    .category-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 0.375rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      opacity: 1;
+    }
+
+    .category-badge.hospital {
+      background: var(--hospital-bg);
+      color: var(--hospital-primary);
+    }
+
+    .category-badge.sales {
+      background: var(--sales-bg);
+      color: var(--sales-primary);
+    }
+
+    .category-badge.politics {
+      background: var(--politics-bg);
+      color: var(--politics-primary);
+    }
+
+    .category-badge.interview {
+      background: var(--interview-bg);
+      color: var(--interview-primary);
+    }
+
+    .category-badge.startup {
+      background: var(--startup-bg);
+      color: var(--startup-primary);
+    }
+
+    .score-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 0.375rem;
+      font-weight: 700;
+      opacity: 1;
+      font-size: 0.85rem;
+    }
+
+    .score-badge.high {
+      background: #dcfce7;
+      color: #16a34a;
+    }
+
+    .score-badge.medium {
+      background: #dbeafe;
+      color: #2563eb;
+    }
+
+    .score-badge.low {
+      background: #fee;
+      color: #dc2626;
+    }
+
+    .btn-small {
+      padding: 0.4rem 0.85rem;
+      font-size: 0.8rem;
+      border-radius: 0.375rem;
+    }
+
+    /* 차트 섹션 */
+    .charts-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .chart-card {
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .chart-card h2 {
+      color: var(--slate-900);
+      font-size: 1.15rem;
+      margin-bottom: 0.75rem;
+      opacity: 1;
+      border-bottom: 2px solid var(--slate-200);
+      padding-bottom: 0.4rem;
+    }
+
+    .chart-canvas {
+      width: 100%;
+      max-height: 300px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 1.5rem;
+      color: var(--slate-700);
+      opacity: 1;
+    }
+
+    .empty-state-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    /* 반응형 */
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .charts-section {
+        grid-template-columns: 1fr;
+      }
+
+      .sessions-table {
+        font-size: 0.85rem;
+      }
+
+      .sessions-table th,
+      .sessions-table td {
+        padding: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="mobile/brand-icon-192.png" width="36" height="36" alt="">
+        <span>Roleplay AI Coach</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="index.html">홈</a></li>
+          <li><a href="dashboard.html" style="background: var(--hospital-bg); color: var(--hospital-primary);">대시보드</a></li>
+          <li><a href="manual.html">매뉴얼</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Dashboard Container -->
+  <div class="dashboard-container">
+
+    <!-- Header -->
+    <div class="dashboard-header">
+      <h1><span class="emoji-3d">📊</span> 학습 대시보드</h1>
+      <p>당신의 커뮤니케이션 성장을 한눈에 확인하세요</p>
+    </div>
+
+    <!-- 통계 카드 -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon"><span class="emoji-3d">🎯</span></div>
+        <div class="stat-value" id="totalSessions">0</div>
+        <div class="stat-label">총 세션 수</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><span class="emoji-3d">📈</span></div>
+        <div class="stat-value" id="avgScore">0</div>
+        <div class="stat-label">평균 점수</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><span class="emoji-3d">⏱️</span></div>
+        <div class="stat-value" id="weeklyTime">0</div>
+        <div class="stat-label">이번 주 연습 (분)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><span class="emoji-3d">🏆</span></div>
+        <div class="stat-value" id="topCategory">-</div>
+        <div class="stat-label">가장 많이 한 분야</div>
+      </div>
+    </div>
+
+    <!-- 최근 세션 리스트 -->
+    <div class="sessions-section">
+      <h2><span class="emoji-3d">📝</span> 최근 세션</h2>
+      <div id="sessionsTableContainer">
+        <!-- 동적으로 생성 -->
+      </div>
+    </div>
+
+    <!-- 차트 -->
+    <div class="charts-section">
+      <!-- 분야별 성과 차트 -->
+      <div class="chart-card">
+        <h2><span class="emoji-3d">📊</span> 분야별 평균 점수</h2>
+        <canvas id="categoryChart" class="chart-canvas"></canvas>
+      </div>
+
+      <!-- 진행 추이 차트 -->
+      <div class="chart-card">
+        <h2><span class="emoji-3d">📈</span> 점수 진행 추이</h2>
+        <canvas id="progressChart" class="chart-canvas"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2026 Roleplay AI Coach. All rights reserved. | 심재우 &lt;jaiwshim@gmail.com&gt;</p>
+      <div class="footer-links">
+        <a href="manual.html">📖 매뉴얼</a>
+        <a href="copyright.html">© 저작권</a>
+        <a href="patent.html">⚖️ 특허</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script>
+    // 카테고리 한글명
+    const categoryNames = {
+      hospital: '병원 상담',
+      sales: '영업 세일즈',
+      politics: '정치 선거',
+      interview: '취업 면접',
+      startup: '스타트업 피칭'
+    };
+
+    // 통계 데이터 로드
+    function loadStats() {
+      const stats = Storage.getStats();
+      const history = Storage.getRoleplayHistory();
+
+      // 1. 총 세션 수
+      document.getElementById('totalSessions').textContent = stats.totalSessions;
+
+      // 2. 평균 점수
+      document.getElementById('avgScore').textContent = stats.avgScore;
+
+      // 3. 이번 주 연습 시간
+      const oneWeekAgo = Date.now() - (7 * 24 * 60 * 60 * 1000);
+      const weeklyHistory = history.filter(item => item.timestamp > oneWeekAgo);
+      const weeklyMinutes = weeklyHistory.reduce((sum, item) => sum + (item.duration || 0), 0);
+      document.getElementById('weeklyTime').textContent = Math.round(weeklyMinutes);
+
+      // 4. 가장 많이 한 분야
+      let topCategory = '-';
+      let maxCount = 0;
+      for (const [cat, count] of Object.entries(stats.categoryCount)) {
+        if (count > maxCount) {
+          maxCount = count;
+          topCategory = categoryNames[cat] || cat;
+        }
+      }
+      document.getElementById('topCategory').textContent = topCategory;
+    }
+
+    // 세션 테이블 렌더링
+    function renderSessionsTable() {
+      const history = Storage.getRoleplayHistory();
+      const container = document.getElementById('sessionsTableContainer');
+
+      if (history.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon"><span class="emoji-3d">📭</span></div>
+            <p style="color: var(--slate-700); opacity: 1; font-size: 1.1rem; margin-bottom: 1rem;">아직 세션이 없습니다</p>
+            <a href="index.html#categories" class="btn btn-primary">시작하기</a>
+          </div>
+        `;
+        return;
+      }
+
+      // 최근 10개 세션
+      const recentSessions = history.slice(-10).reverse();
+
+      let tableHTML = `
+        <table class="sessions-table">
+          <thead>
+            <tr>
+              <th>날짜</th>
+              <th>분야</th>
+              <th>시나리오</th>
+              <th>점수</th>
+              <th>시간</th>
+              <th>상세</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      recentSessions.forEach(session => {
+        const scoreClass = session.score >= 80 ? 'high' : session.score >= 60 ? 'medium' : 'low';
+        const categoryName = categoryNames[session.category] || session.category;
+
+        tableHTML += `
+          <tr>
+            <td>${formatDate(session.timestamp, 'MM-DD HH:mm')}</td>
+            <td><span class="category-badge ${session.category}">${categoryName}</span></td>
+            <td>${session.scenario || '-'}</td>
+            <td><span class="score-badge ${scoreClass}">${session.score}</span></td>
+            <td>${(session.duration || 0).toFixed(1)}분</td>
+            <td>
+              <a href="feedback.html?session=${session.id}&category=${session.category}" class="btn btn-primary btn-small">
+                상세보기
+              </a>
+            </td>
+          </tr>
+        `;
+      });
+
+      tableHTML += `
+          </tbody>
+        </table>
+      `;
+
+      container.innerHTML = tableHTML;
+    }
+
+    // 분야별 차트 그리기 (Canvas)
+    function drawCategoryChart() {
+      const canvas = document.getElementById('categoryChart');
+      const ctx = canvas.getContext('2d');
+      const history = Storage.getRoleplayHistory();
+
+      if (history.length === 0) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#64748b';
+        ctx.font = '14px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('데이터가 없습니다', canvas.width / 2, canvas.height / 2);
+        return;
+      }
+
+      // 카테고리별 평균 점수 계산
+      const categoryData = {};
+      const categoryCount = {};
+
+      history.forEach(item => {
+        if (!categoryData[item.category]) {
+          categoryData[item.category] = 0;
+          categoryCount[item.category] = 0;
+        }
+        categoryData[item.category] += item.score || 0;
+        categoryCount[item.category] += 1;
+      });
+
+      const categories = Object.keys(categoryData);
+      const avgScores = categories.map(cat => Math.round(categoryData[cat] / categoryCount[cat]));
+
+      // Canvas 크기 설정
+      canvas.width = canvas.offsetWidth;
+      canvas.height = 300;
+
+      const barWidth = canvas.width / categories.length - 20;
+      const maxScore = 100;
+      const chartHeight = canvas.height - 60;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 막대 그리기
+      categories.forEach((cat, index) => {
+        const score = avgScores[index];
+        const barHeight = (score / maxScore) * chartHeight;
+        const x = index * (barWidth + 20) + 10;
+        const y = canvas.height - barHeight - 40;
+
+        // 색상 선택
+        const colors = {
+          hospital: '#2563eb',
+          sales: '#ea580c',
+          politics: '#9333ea',
+          interview: '#16a34a',
+          startup: '#0d9488'
+        };
+        ctx.fillStyle = colors[cat] || '#64748b';
+
+        // 막대
+        ctx.fillRect(x, y, barWidth, barHeight);
+
+        // 점수 표시
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 14px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(score, x + barWidth / 2, y - 5);
+
+        // 카테고리명
+        ctx.fillStyle = '#334155';
+        ctx.font = '12px sans-serif';
+        const catName = categoryNames[cat] || cat;
+        ctx.fillText(catName, x + barWidth / 2, canvas.height - 20);
+      });
+
+      // Y축 레이블
+      ctx.fillStyle = '#64748b';
+      ctx.font = '12px sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText('100', 5, 20);
+      ctx.fillText('50', 5, chartHeight / 2);
+      ctx.fillText('0', 5, chartHeight + 20);
+    }
+
+    // 진행 추이 차트 (선 그래프)
+    function drawProgressChart() {
+      const canvas = document.getElementById('progressChart');
+      const ctx = canvas.getContext('2d');
+      const history = Storage.getRoleplayHistory();
+
+      if (history.length === 0) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#64748b';
+        ctx.font = '14px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('데이터가 없습니다', canvas.width / 2, canvas.height / 2);
+        return;
+      }
+
+      // 최근 10개 세션
+      const recentHistory = history.slice(-10);
+      const scores = recentHistory.map(item => item.score || 0);
+
+      canvas.width = canvas.offsetWidth;
+      canvas.height = 300;
+
+      const chartWidth = canvas.width - 60;
+      const chartHeight = canvas.height - 60;
+      const stepX = chartWidth / (scores.length - 1 || 1);
+      const maxScore = 100;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 축 그리기
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(40, 20);
+      ctx.lineTo(40, chartHeight + 20);
+      ctx.lineTo(canvas.width - 20, chartHeight + 20);
+      ctx.stroke();
+
+      // 선 그리기
+      ctx.strokeStyle = '#2563eb';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+
+      scores.forEach((score, index) => {
+        const x = 40 + index * stepX;
+        const y = chartHeight + 20 - (score / maxScore) * chartHeight;
+
+        if (index === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      });
+
+      ctx.stroke();
+
+      // 점 그리기
+      scores.forEach((score, index) => {
+        const x = 40 + index * stepX;
+        const y = chartHeight + 20 - (score / maxScore) * chartHeight;
+
+        ctx.fillStyle = '#2563eb';
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, 2 * Math.PI);
+        ctx.fill();
+
+        // 점수 표시
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 12px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(score, x, y - 10);
+      });
+
+      // Y축 레이블
+      ctx.fillStyle = '#64748b';
+      ctx.font = '12px sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText('100', 35, 25);
+      ctx.fillText('50', 35, chartHeight / 2 + 20);
+      ctx.fillText('0', 35, chartHeight + 20);
+
+      // X축 레이블
+      ctx.textAlign = 'center';
+      recentHistory.forEach((item, index) => {
+        const x = 40 + index * stepX;
+        const date = formatDate(item.timestamp, 'MM-DD');
+        ctx.fillText(date, x, chartHeight + 40);
+      });
+    }
+
+    // 페이지 로드
+    document.addEventListener('DOMContentLoaded', () => {
+      loadStats();
+      renderSessionsTable();
+      drawCategoryChart();
+      drawProgressChart();
+
+      // 반응형 리사이즈
+      window.addEventListener('resize', () => {
+        drawCategoryChart();
+        drawProgressChart();
+      });
+    });
+  </script>
+</body>
+</html>

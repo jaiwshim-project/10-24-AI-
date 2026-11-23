@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="교육·입학상담 롤플레이 - Roleplay AI Coach">
+  <meta name="author" content="심재우">
+  <meta name="copyright" content="© 2026 Roleplay AI Coach. All rights reserved.">
+  <title>교육·입학상담 롤플레이 - Roleplay AI Coach</title>
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Green Theme (Lighter) */
+    :root {
+      --primary-color: #4ade80;
+      --primary-light: #dcfce7;
+      --primary-bg: #f0fdf4;
+    }
+
+    .hero-section {
+      background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+      color: var(--white);
+      padding: 3rem 0;
+      text-align: center;
+    }
+
+    .hero-section h1 {
+      color: var(--white);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      opacity: 1;
+    }
+
+    .hero-section p {
+      color: var(--white);
+      font-size: 1.1rem;
+      opacity: 0.95;
+    }
+
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 2rem;
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      color: var(--slate-700);
+      font-weight: 600;
+      opacity: 1;
+    }
+
+    .step.active {
+      border-color: var(--primary-color);
+      background: var(--primary-bg);
+      color: var(--primary-color);
+    }
+
+    .step.completed {
+      border-color: #4ade80;
+      background: var(--primary-bg);
+      color: #4ade80;
+    }
+
+    .scenario-card {
+      background: var(--white);
+      border: 2px solid var(--slate-200);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .scenario-card:hover {
+      border-color: var(--primary-color);
+      background: var(--primary-bg);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .scenario-card.selected {
+      border-color: var(--primary-color);
+      border-width: 3px;
+      background: var(--primary-bg);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .scenario-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 0.5rem;
+      opacity: 1;
+    }
+
+    .scenario-desc {
+      color: var(--slate-700);
+      opacity: 1;
+      line-height: 1.6;
+    }
+
+    .record-section {
+      text-align: center;
+      padding: 3rem;
+      background: var(--primary-bg);
+      border-radius: 1rem;
+      border: 2px solid var(--primary-light);
+    }
+
+    .record-btn {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: none;
+      background: var(--primary-color);
+      color: var(--white);
+      font-size: 3rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .record-btn:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .record-btn.recording {
+      background: #dc2626;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .timer {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-top: 1.5rem;
+      opacity: 1;
+    }
+
+    .coach-card {
+      background: var(--white);
+      border: 2px solid var(--primary-light);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .coach-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--primary-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .coach-info h4 {
+      font-size: 1.1rem;
+      color: var(--slate-900);
+      margin-bottom: 0.25rem;
+      opacity: 1;
+    }
+
+    .coach-info p {
+      font-size: 0.9rem;
+      color: var(--slate-700);
+      opacity: 1;
+    }
+
+    .custom-scenario-input {
+      width: 100%;
+      min-height: 120px;
+      padding: 1rem;
+      border: 2px solid var(--slate-200);
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      margin-top: 1rem;
+      resize: vertical;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Language Selector */
+    .language-selector {
+      background: var(--white);
+      border: 2px solid var(--primary-color);
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .language-selector label {
+      font-weight: 700;
+      color: var(--slate-900);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .language-selector select {
+      flex: 1;
+      padding: 0.5rem 0.75rem;
+      border: 2px solid var(--slate-300);
+      border-radius: 0.375rem;
+      font-size: 0.95rem;
+      color: var(--slate-800);
+      background: var(--white);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .language-selector select:hover {
+      border-color: var(--primary-color);
+    }
+
+    .language-selector select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px var(--primary-bg);
+    }
+
+    @media (max-width: 768px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <style>
+        /* 🎨 초현실적 3D 클레이 파스텔톤 이모티콘 */
+    .emoji-3d {
+      display: inline-block;
+      font-style: normal;
+      position: relative;
+
+      /* 매우 강한 3D 입체감 */
+      text-shadow:
+        4px 4px 12px rgba(0, 0, 0, 0.35),
+        -3px -3px 6px rgba(255, 255, 255, 1),
+        0 0 20px rgba(255, 255, 255, 0.9),
+        2px 2px 4px rgba(0, 0, 0, 0.2),
+        -1px -1px 2px rgba(255, 255, 255, 0.8);
+
+      /* 부드러운 파스텔톤 필터 */
+      filter:
+        brightness(1.15)
+        saturate(1.5)
+        contrast(1.2)
+        drop-shadow(0 6px 14px rgba(0, 0, 0, 0.2))
+        drop-shadow(0 0 18px rgba(255, 255, 255, 0.7))
+        drop-shadow(-2px -2px 6px rgba(255, 255, 255, 0.4));
+
+      transform: translateZ(0) perspective(1000px);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* 클레이 질감 배경 */
+      background:
+        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.5), transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15), transparent 70%);
+
+      border-radius: 50%;
+      padding: 0.2em;
+    }
+
+    /* 강한 하이라이트 효과 */
+    .emoji-3d::before {
+      content: '';
+      position: absolute;
+      top: -15%;
+      left: -15%;
+      right: -15%;
+      bottom: -15%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.7), transparent 40%),
+        radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), transparent 55%);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.8;
+      filter: blur(1px);
+    }
+
+    /* 부드러운 그림자 효과 */
+    .emoji-3d::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .emoji-3d:hover {
+      transform: translateY(-4px) scale(1.1) rotateZ(-3deg) perspective(1000px) rotateX(5deg);
+      filter:
+        brightness(1.25)
+        saturate(1.7)
+        contrast(1.25)
+        drop-shadow(0 8px 18px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 24px rgba(255, 255, 255, 0.8))
+        drop-shadow(-3px -3px 8px rgba(255, 255, 255, 0.5));
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 8px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 1),
+        3px 3px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    /* 로고 이모티콘 - 초강력 효과 */
+    .logo .emoji-3d {
+      font-size: 1.4em;
+      text-shadow:
+        5px 5px 14px rgba(0, 0, 0, 0.4),
+        -4px -4px 7px rgba(255, 255, 255, 1),
+        0 0 25px rgba(255, 255, 255, 0.95),
+        3px 3px 6px rgba(0, 0, 0, 0.2),
+        -2px -2px 4px rgba(255, 255, 255, 0.9);
+      filter:
+        brightness(1.25)
+        saturate(1.5)
+        contrast(1.18)
+        drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+    }
+
+    .logo .emoji-3d:hover {
+      transform: translateY(-5px) scale(1.15) rotateZ(-4deg) perspective(1000px) rotateX(8deg);
+      filter:
+        brightness(1.3)
+        saturate(1.7)
+        contrast(1.22)
+        drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))
+        drop-shadow(0 0 28px rgba(255, 255, 255, 0.9));
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span><span class="emoji-3d">🎯</span></span>
+        <span>Roleplay AI Coach</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="index.html">홈</a></li>
+          <li><a href="dashboard.html">대시보드</a></li>
+          <li><a href="manual.html">매뉴얼</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero-section">
+    <div class="container">
+      <h1><span class="emoji-3d">👨‍🏫</span> 교육·입학상담 롤플레이</h1>
+      <p>학부모·학생 상담 스킬을 AI 시뮬레이션으로 완벽하게 마스터하세요.</p>
+    </div>
+  </section>
+
+  <!-- Step Indicator -->
+  <section>
+    <div class="container">
+      <div class="step-indicator">
+        <div class="step active" id="step1-indicator">
+          <span><span class="emoji-3d">1️⃣</span></span>
+          <span>시나리오 선택</span>
+        </div>
+        <div class="step" id="step2-indicator">
+          <span><span class="emoji-3d">2️⃣</span></span>
+          <span>녹음</span>
+        </div>
+        <div class="step" id="step3-indicator">
+          <span><span class="emoji-3d">3️⃣</span></span>
+          <span>AI 분석</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 1: Scenario Selection -->
+  <section id="step1">
+    <div class="container">
+      <h2 class="section-title">상담 시나리오를 선택하세요</h2>
+
+      <!-- 사용 가이드 -->
+      <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid #0ea5e9; border-left: 5px solid #0ea5e9; border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 1.5rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+        <h4 style="font-size: 1.1rem; font-weight: 700; color: #0369a1; margin-bottom: 1rem; opacity: 1; display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 1.5rem;"><span class="emoji-3d">💡</span></span> 사례 선택 가이드
+        </h4>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem;">
+          <div style="background: white; padding: 1rem; border-radius: 0.5rem; border: 1px solid #bae6fd;">
+            <div style="font-weight: 700; color: #0369a1; margin-bottom: 0.5rem; opacity: 1;"><span class="emoji-3d">1️⃣</span> 난이도 확인</div>
+            <div style="font-size: 0.9rem; color: var(--slate-700); line-height: 1.6; opacity: 1;">
+              <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span> 초급: 기본 상황<br>
+              <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span> 중급: 복잡한 변수<br>
+              <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span> 고급: 위기 상황
+            </div>
+          </div>
+          <div style="background: white; padding: 1rem; border-radius: 0.5rem; border: 1px solid #bae6fd;">
+            <div style="font-weight: 700; color: #0369a1; margin-bottom: 0.5rem; opacity: 1;"><span class="emoji-3d">2️⃣</span> 사례 읽기</div>
+            <div style="font-size: 0.9rem; color: var(--slate-700); line-height: 1.6; opacity: 1;">
+              상황·목표·챌린지를 꼼꼼히 읽고 실제 상황처럼 준비하세요
+            </div>
+          </div>
+          <div style="background: white; padding: 1rem; border-radius: 0.5rem; border: 1px solid #bae6fd;">
+            <div style="font-weight: 700; color: #0369a1; margin-bottom: 0.5rem; opacity: 1;"><span class="emoji-3d">3️⃣</span> 카드 클릭</div>
+            <div style="font-size: 0.9rem; color: var(--slate-700); line-height: 1.6; opacity: 1;">
+              사례 카드를 클릭하면 선택됩니다. 이후 시나리오를 선택하고 녹음을 시작하세요
+            </div>
+          </div>
+        </div>
+        <div style="background: #fef3c7; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #f59e0b;">
+          <div style="font-weight: 700; color: #92400e; margin-bottom: 0.5rem; opacity: 1; display: flex; align-items: center; gap: 0.5rem;">
+            <span><span class="emoji-3d">🎯</span></span> 실전 팁
+          </div>
+          <div style="font-size: 0.9rem; color: #78350f; opacity: 1; line-height: 1.6;">
+            • 처음이라면 <span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span> 난이도부터 시작하세요<br>
+            • 실제 업무와 유사한 사례를 선택하면 학습 효과가 높습니다<br>
+            • 4번째 "나만의 실제 사례"는 본인이 직면한 실제 상황을 입력할 수 있습니다<br>
+            • 녹음 전에 사례 내용을 2-3번 읽고 역할을 머릿속으로 리허설하세요
+          </div>
+        </div>
+      </div>
+
+      <!-- Language Selector -->
+      <div class="language-selector" style="max-width: 900px; margin: 0 auto 1.5rem;">
+        <label for="languageSelect">
+          <span class="emoji-3d">🌐</span> 롤플레이 언어 선택:
+        </label>
+        <select id="languageSelect" onchange="changeLanguage()">
+          <option value="ko"><span class="emoji-3d">🇰🇷</span> 한국어 (Korean)</option>
+          <option value="en"><span class="emoji-3d">🇺🇸</span> English (영어)</option>
+          <option value="zh-CN"><span class="emoji-3d">🇨🇳</span> 简体中文 (중국어 간체)</option>
+          <option value="zh-TW"><span class="emoji-3d">🇹🇼</span> 繁體中文 (중국어 번체)</option>
+          <option value="ja"><span class="emoji-3d">🇯🇵</span> 日本語 (일본어)</option>
+          <option value="es"><span class="emoji-3d">🇪🇸</span> Español (스페인어)</option>
+          <option value="fr"><span class="emoji-3d">🇫🇷</span> Français (프랑스어)</option>
+          <option value="de"><span class="emoji-3d">🇩🇪</span> Deutsch (독일어)</option>
+          <option value="pt"><span class="emoji-3d">🇵🇹</span> Português (포르투갈어)</option>
+          <option value="ru"><span class="emoji-3d">🇷🇺</span> Русский (러시아어)</option>
+          <option value="ar"><span class="emoji-3d">🇸🇦</span> العربية (아랍어)</option>
+          <option value="hi"><span class="emoji-3d">🇮🇳</span> हिन्दी (힌디어)</option>
+          <option value="it"><span class="emoji-3d">🇮🇹</span> Italiano (이탈리아어)</option>
+          <option value="nl"><span class="emoji-3d">🇳🇱</span> Nederlands (네덜란드어)</option>
+          <option value="pl"><span class="emoji-3d">🇵🇱</span> Polski (폴란드어)</option>
+          <option value="tr"><span class="emoji-3d">🇹🇷</span> Türkçe (터키어)</option>
+          <option value="vi"><span class="emoji-3d">🇻🇳</span> Tiếng Việt (베트남어)</option>
+          <option value="th"><span class="emoji-3d">🇹🇭</span> ไทย (태국어)</option>
+          <option value="id"><span class="emoji-3d">🇮🇩</span> Bahasa Indonesia (인도네시아어)</option>
+          <option value="ms"><span class="emoji-3d">🇲🇾</span> Bahasa Melayu (말레이시아어)</option>
+          <option value="sv"><span class="emoji-3d">🇸🇪</span> Svenska (스웨덴어)</option>
+          <option value="no"><span class="emoji-3d">🇳🇴</span> Norsk (노르웨이어)</option>
+          <option value="da"><span class="emoji-3d">🇩🇰</span> Dansk (덴마크어)</option>
+          <option value="fi"><span class="emoji-3d">🇫🇮</span> Suomi (핀란드어)</option>
+          <option value="cs"><span class="emoji-3d">🇨🇿</span> Čeština (체코어)</option>
+          <option value="ro"><span class="emoji-3d">🇷🇴</span> Română (루마니아어)</option>
+          <option value="hu"><span class="emoji-3d">🇭🇺</span> Magyar (헝가리어)</option>
+          <option value="el"><span class="emoji-3d">🇬🇷</span> Ελληνικά (그리스어)</option>
+          <option value="he"><span class="emoji-3d">🇮🇱</span> עברית (히브리어)</option>
+          <option value="uk"><span class="emoji-3d">🇺🇦</span> Українська (우크라이나어)</option>
+        </select>
+        <p style="color: var(--slate-700); font-size: 0.85rem; margin: 0;">
+          선택한 언어로 AI가 대응합니다
+        </p>
+      </div>
+
+      <!-- 실전 상담 사례 (신규) -->
+      <div style="max-width: 900px; margin: 0 auto 3rem;">
+        <h3 style="color: var(--slate-900); font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; border-bottom: 2px solid var(--primary-color); padding-bottom: 0.5rem;">
+          <span class="emoji-3d">🔥</span> 실전 상담 사례 (난이도별)
+        </h3>
+
+        <div style="display: grid; gap: 1.5rem;">
+          <!-- 사례 1: 학습 부진 학생 상담 -->
+          <div class="scenario-card" data-scenario="case1" style="border-left: 5px solid #fbbf24;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <div class="scenario-title">📚 학습 부진 학생 상담</div>
+              <div style="font-size: 1.2rem; color: #fbbf24;"><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span></div>
+            </div>
+            <div class="scenario-desc" style="margin-bottom: 1rem;">
+              <strong style="color: var(--slate-900); display: block; margin-bottom: 0.5rem;">상황:</strong>
+              중2 남학생, 전교 100등→250등 급락 (전체 300명). 학부모는 게임 중독 의심, 학생은 "공부해도 안된다" 무기력. 최근 친구 관계도 소원해짐. 3개월 전 학원 3곳 등록했으나 성적 변화 없음.
+            </div>
+            <details style="cursor: pointer;">
+              <summary style="font-weight: 600; color: var(--primary-color); margin-bottom: 0.5rem;"><span class="emoji-3d">📋</span> 목표 및 챌린지 보기</summary>
+              <div style="padding: 1rem; background: var(--slate-50); border-radius: 0.5rem; margin-top: 0.5rem; font-size: 0.9rem; line-height: 1.7;">
+                <strong>목표:</strong> 90분 상담으로 성적 하락 진짜 원인 파악 (게임 vs 학습 방법 vs 심리 문제) → 3개월 맞춤 학습 플랜 수립 → 학부모 + 학생 동의 확보 → 월 4회 × 3개월 상담 계약 120만원<br><br>
+                <strong>챌린지:</strong> 학생의 진짜 속마음 끌어내기 / 학부모의 게임 중독 프레임 전환 / 학원 3곳 다니면서 성적 안오른 이유 설명 / 단기간 성적 상승 기대치 관리 / 학생의 자존감 회복<br><br>
+                <strong>기대결과:</strong> 3개월 후 전교 150등 회복 + 학습 동기 부여 + 친구 관계 개선 + 학부모-자녀 갈등 완화 + 6개월 장기 상담 연장
+              </div>
+            </details>
+          </div>
+
+          <!-- 사례 2: 진로 설계 상담 -->
+          <div class="scenario-card" data-scenario="case2" style="border-left: 5px solid #f97316;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <div class="scenario-title"><span class="emoji-3d">🎯</span> 진로 설계 상담</div>
+              <div style="font-size: 1.2rem; color: #f97316;"><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span></div>
+            </div>
+            <div class="scenario-desc" style="margin-bottom: 1rem;">
+              <strong style="color: var(--slate-900); display: block; margin-bottom: 0.5rem;">상황:</strong>
+              고1 여학생, 문·이과 선택 기로. 수학 3등급/국어 1등급, 장래 희망 불명확. 부모는 의대 희망(안정적), 본인은 막연히 방송 관련 관심. 담임은 인문계 추천. 2주 후 선택 마감.
+            </div>
+            <details style="cursor: pointer;">
+              <summary style="font-weight: 600; color: var(--primary-color); margin-bottom: 0.5rem;"><span class="emoji-3d">📋</span> 목표 및 챌린지 보기</summary>
+              <div style="padding: 1rem; background: var(--slate-50); border-radius: 0.5rem; margin-top: 0.5rem; font-size: 0.9rem; line-height: 1.7;">
+                <strong>목표:</strong> 2시간 심층 상담으로 적성 검사 + 흥미 분야 탐색 + 대입 경쟁률 분석 → 이과(생명과학) 선택 + 의대 외 바이오 관련 진로 3가지 제시 → 10년 로드맵 제공 → 진로 멘토링 6개월 계약 200만원<br><br>
+                <strong>챌린지:</strong> 2주 내 중대 결정 압박감 완화 / 부모 vs 본인 vs 담임 의견 충돌 조율 / 의대 아닌 이과 진로 설득력 확보 / 방송 관심과 이과 연결 고리 발견 / 문과 포기 시 국어 강점 활용 방안<br><br>
+                <strong>기대결과:</strong> 확신을 가진 이과 선택 + 바이오 헬스케어 콘텐츠 크리에이터 목표 설정 + 부모 설득 성공 + 고교 3년 로드맵 수립 + 대입까지 장기 상담
+              </div>
+            </details>
+          </div>
+
+          <!-- 사례 3: 명문대 입시 전략 상담 -->
+          <div class="scenario-card" data-scenario="case3" style="border-left: 5px solid #dc2626;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <div class="scenario-title"><span class="emoji-3d">🏆</span> 명문대 입시 전략 상담</div>
+              <div style="font-size: 1.2rem; color: #dc2626;"><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span><span class="emoji-3d">⭐</span></div>
+            </div>
+            <div class="scenario-desc" style="margin-bottom: 1rem;">
+              <strong style="color: var(--slate-900); display: block; margin-bottom: 0.5rem;">상황:</strong>
+              고3 남학생, 전교 5등, 서울대 의대 목표. 모의고사 국어 1등급/수학 2등급/과학 1등급. 학생부 비교과 약함(임원 경험 無, 수상 5개). 학종은 불리, 정시 올인 고민. 9월 모평까지 3개월.
+            </div>
+            <details style="cursor: pointer;">
+              <summary style="font-weight: 600; color: var(--primary-color); margin-bottom: 0.5rem;"><span class="emoji-3d">📋</span> 목표 및 챌린지 보기</summary>
+              <div style="padding: 1rem; background: var(--slate-50); border-radius: 0.5rem; margin-top: 0.5rem; font-size: 0.9rem; line-height: 1.7;">
+                <strong>목표:</strong> 3시간 입시 컨설팅으로 서울대 의대 정시 vs 연·고대 의대 학종 복수 전략 수립 → 수학 1등급 만들기 3개월 플랜 → 9월 모평 목표 국수과 평균 1.3등급 → 입시 컨설팅 패키지 500만원 계약<br><br>
+                <strong>챌린지:</strong> 서울대 의대 정시 컷 평균 0.5등급 vs 현실 1.5등급 격차 직시 / 학종 포기 vs 병행 전략 판단 / 수학 2→1등급 3개월 달성 가능성 50% / 학부모 서울대 집착 완화 / 멘탈 관리 + 학습 전략 병행<br><br>
+                <strong>기대결과:</strong> 9월 모평 1.2등급 달성 + 수시 연·고대 의대 최저 충족 + 정시 서울대 의대 지원 + 최종 연·고대 의대 합격 (서울대는 도전) + 만족도 높은 결과
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <!-- 기본 시나리오 -->
+      <div style="max-width: 900px; margin: 0 auto 3rem;">
+        <h3 style="color: var(--slate-900); font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; border-bottom: 2px solid var(--slate-300); padding-bottom: 0.5rem;">
+          <span class="emoji-3d">📋</span> 기본 시나리오
+        </h3>
+
+        <div class="grid grid-2">
+          <div class="scenario-card" data-scenario="parent">
+            <div class="scenario-title">👪 학부모 상담</div>
+            <div class="scenario-desc">
+              학부모가 자녀의 성적, 학습 태도, 진로에 대해 상담을 요청합니다.<br>
+              신뢰를 구축하고 학습 솔루션을 제시하는 연습입니다.
+            </div>
+          </div>
+
+          <div class="scenario-card" data-scenario="diagnosis">
+            <div class="scenario-title"><span class="emoji-3d">📊</span> 학생 수준 진단</div>
+            <div class="scenario-desc">
+              신규 학생의 학업 수준과 학습 스타일을 진단합니다.<br>
+              질문을 통해 학생의 강점·약점을 파악하고 맞춤 커리큘럼을 제안합니다.
+            </div>
+          </div>
+
+          <div class="scenario-card" data-scenario="enrollment">
+            <div class="scenario-title"><span class="emoji-3d">📝</span> 학원 등록 상담</div>
+            <div class="scenario-desc">
+              학부모·학생이 학원 프로그램, 수강료, 수업 방식을 문의합니다.<br>
+              니즈를 파악하고 등록까지 연결하는 클로징 스킬을 연습합니다.
+            </div>
+          </div>
+
+          <div class="scenario-card" data-scenario="underperformance">
+            <div class="scenario-title">📉 성적 부진 상담</div>
+            <div class="scenario-desc">
+              학생의 성적이 기대에 미치지 못해 학부모가 우려를 표현합니다.<br>
+              원인을 분석하고 개선 방안을 제시하며 신뢰를 유지하는 연습입니다.
+            </div>
+          </div>
+
+          <div class="scenario-card" data-scenario="renewal">
+            <div class="scenario-title"><span class="emoji-3d">🔄</span> 재등록 상담</div>
+            <div class="scenario-desc">
+              수강 기간이 종료된 학생의 재등록을 유도합니다.<br>
+              학습 성과를 강조하고 다음 단계 커리큘럼을 제안하는 스킬을 익힙니다.
+            </div>
+          </div>
+
+          <div class="scenario-card" data-scenario="custom">
+            <div class="scenario-title">✍️ 사용자 직접 입력</div>
+            <div class="scenario-desc">
+              실제 상담 현장에서 자주 발생하는 상황이나<br>
+              난이도 높은 상담 사례를 직접 입력하여 훈련할 수 있습니다.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="custom-input-section" class="hidden" style="max-width: 900px; margin: 0 auto 2rem;">
+        <label for="custom-question" style="display: block; font-weight: 600; color: var(--slate-900); margin-bottom: 0.5rem;">
+          상담 상황을 입력하세요
+        </label>
+        <textarea
+          id="custom-question"
+          class="custom-scenario-input"
+          placeholder="예시: '학부모가 다른 학원으로 옮기겠다고 통보했습니다. 어떻게 대응하시겠습니까?'"
+        ></textarea>
+      </div>
+
+      <div style="text-align: center;">
+        <button class="btn btn-primary" id="next-to-step2" disabled>다음 단계로 →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 2: Recording -->
+  <section id="step2" class="hidden">
+    <div class="container" style="max-width: 800px;">
+      <h2 class="section-title">AI 학부모·학생과 상담을 시작하세요</h2>
+
+      <!-- AI Coach Info -->
+      <div class="coach-card" style="max-width: 500px; margin: 0 auto 2rem;">
+        <div class="coach-avatar">👩‍🏫</div>
+        <div class="coach-info">
+          <h4>Susan Williams</h4>
+          <p>교육 심리학 박사, 학부모 상담 전문가</p>
+        </div>
+      </div>
+
+      <!-- Scenario Context -->
+      <div class="card" style="margin-bottom: 2rem; border: 2px solid var(--primary-light); background: var(--primary-bg);">
+        <h3 style="color: var(--slate-900); margin-bottom: 1rem; opacity: 1;">상담 상황</h3>
+        <p id="scenario-context" style="color: var(--slate-800); line-height: 1.8; opacity: 1;">
+          <!-- 동적 삽입 -->
+        </p>
+      </div>
+
+      <!-- Recording Section -->
+      <div class="record-section">
+        <button class="record-btn" id="record-btn">
+          <span class="emoji-3d">🎙️</span>
+        </button>
+        <div class="timer" id="timer">00:00</div>
+        <p style="margin-top: 1rem; color: var(--slate-700); opacity: 1;">
+          버튼을 눌러 녹음을 시작하세요. 다시 누르면 종료됩니다.
+        </p>
+      </div>
+
+      <div style="text-align: center; margin-top: 2rem;">
+        <button class="btn btn-secondary" id="back-to-step1">← 이전</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2026 Roleplay AI Coach. All rights reserved. | 심재우 &lt;jaiwshim@gmail.com&gt;</p>
+      <div class="footer-links">
+        <a href="manual.html">📖 매뉴얼</a>
+        <a href="copyright.html">© 저작권</a>
+        <a href="patent.html">⚖️ 특허</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script>
+    // ========================================
+    // Global State
+    // ========================================
+    let selectedScenario = null;
+    let recorder = new AudioRecorder();
+    let recordingStartTime = null;
+    let timerInterval = null;
+    let selectedLanguage = 'ko'; // 기본값: 한국어
+
+    // 30개 언어 정보
+    const LANGUAGES = {
+      'ko': { name: '한국어', nativeName: '한국어', flag: '<span class="emoji-3d">🇰🇷</span>' },
+      'en': { name: 'English', nativeName: 'English', flag: '<span class="emoji-3d">🇺🇸</span>' },
+      'zh-CN': { name: '简体中文', nativeName: '简体中文', flag: '<span class="emoji-3d">🇨🇳</span>' },
+      'zh-TW': { name: '繁體中文', nativeName: '繁體中文', flag: '<span class="emoji-3d">🇹🇼</span>' },
+      'ja': { name: '日本語', nativeName: '日本語', flag: '<span class="emoji-3d">🇯🇵</span>' },
+      'es': { name: 'Español', nativeName: 'Español', flag: '<span class="emoji-3d">🇪🇸</span>' },
+      'fr': { name: 'Français', nativeName: 'Français', flag: '<span class="emoji-3d">🇫🇷</span>' },
+      'de': { name: 'Deutsch', nativeName: 'Deutsch', flag: '<span class="emoji-3d">🇩🇪</span>' },
+      'pt': { name: 'Português', nativeName: 'Português', flag: '<span class="emoji-3d">🇵🇹</span>' },
+      'ru': { name: 'Русский', nativeName: 'Русский', flag: '<span class="emoji-3d">🇷🇺</span>' },
+      'ar': { name: 'العربية', nativeName: 'العربية', flag: '<span class="emoji-3d">🇸🇦</span>' },
+      'hi': { name: 'हिन्दी', nativeName: 'हिन्दी', flag: '<span class="emoji-3d">🇮🇳</span>' },
+      'it': { name: 'Italiano', nativeName: 'Italiano', flag: '<span class="emoji-3d">🇮🇹</span>' },
+      'nl': { name: 'Nederlands', nativeName: 'Nederlands', flag: '<span class="emoji-3d">🇳🇱</span>' },
+      'pl': { name: 'Polski', nativeName: 'Polski', flag: '<span class="emoji-3d">🇵🇱</span>' },
+      'tr': { name: 'Türkçe', nativeName: 'Türkçe', flag: '<span class="emoji-3d">🇹🇷</span>' },
+      'vi': { name: 'Tiếng Việt', nativeName: 'Tiếng Việt', flag: '<span class="emoji-3d">🇻🇳</span>' },
+      'th': { name: 'ไทย', nativeName: 'ไทย', flag: '<span class="emoji-3d">🇹🇭</span>' },
+      'id': { name: 'Bahasa Indonesia', nativeName: 'Bahasa Indonesia', flag: '<span class="emoji-3d">🇮🇩</span>' },
+      'ms': { name: 'Bahasa Melayu', nativeName: 'Bahasa Melayu', flag: '<span class="emoji-3d">🇲🇾</span>' },
+      'sv': { name: 'Svenska', nativeName: 'Svenska', flag: '<span class="emoji-3d">🇸🇪</span>' },
+      'no': { name: 'Norsk', nativeName: 'Norsk', flag: '<span class="emoji-3d">🇳🇴</span>' },
+      'da': { name: 'Dansk', nativeName: 'Dansk', flag: '<span class="emoji-3d">🇩🇰</span>' },
+      'fi': { name: 'Suomi', nativeName: 'Suomi', flag: '<span class="emoji-3d">🇫🇮</span>' },
+      'cs': { name: 'Čeština', nativeName: 'Čeština', flag: '<span class="emoji-3d">🇨🇿</span>' },
+      'ro': { name: 'Română', nativeName: 'Română', flag: '<span class="emoji-3d">🇷🇴</span>' },
+      'hu': { name: 'Magyar', nativeName: 'Magyar', flag: '<span class="emoji-3d">🇭🇺</span>' },
+      'el': { name: 'Ελληνικά', nativeName: 'Ελληνικά', flag: '<span class="emoji-3d">🇬🇷</span>' },
+      'he': { name: 'עברית', nativeName: 'עברית', flag: '<span class="emoji-3d">🇮🇱</span>' },
+      'uk': { name: 'Українська', nativeName: 'Українська', flag: '<span class="emoji-3d">🇺🇦</span>' }
+    };
+
+    // 언어 변경
+    function changeLanguage() {
+      const select = document.getElementById('languageSelect');
+      selectedLanguage = select.value;
+
+      const langInfo = LANGUAGES[selectedLanguage];
+      showToast(`${langInfo.flag} ${langInfo.nativeName}로 변경되었습니다. AI가 ${langInfo.nativeName}로 대응합니다.`, 'success');
+
+      // localStorage에 저장
+      localStorage.setItem('roleplay_language', selectedLanguage);
+    }
+
+    // 페이지 로드 시 저장된 언어 복원
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLanguage = localStorage.getItem('roleplay_language') || 'ko';
+      selectedLanguage = savedLanguage;
+      document.getElementById('languageSelect').value = savedLanguage;
+    });
+
+    const scenarioData = {
+      // 실전 사례 3가지
+      case1: {
+        title: '📚 학습 부진 학생 상담',
+        context: '학부모: "선생님, 저희 아이가 중2인데 전교 100등에서 250등으로 떨어졌어요. 전체가 300명인데... 게임만 하고 공부를 안 해요. 3개월 전에 학원 3곳을 등록했는데도 성적이 안 오르네요. 친구들과도 안 어울리고... 어떡하죠?"\n\n학생: "공부해도 안 돼요. 아무리 해도 성적이 안 오르니까 의욕이 안 생겨요. 게임이 더 재밌어요."\n\n당신의 목표: 90분 상담으로 (1) 성적 하락의 진짜 원인 파악 (게임 vs 학습 방법 vs 심리 문제), (2) 3개월 맞춤 학습 플랜 수립, (3) 학부모 + 학생 동의 확보, (4) 월 4회 × 3개월 상담 계약 120만원 체결. 학생의 자존감을 회복시키면서 학부모의 게임 중독 프레임을 전환시켜야 합니다.'
+      },
+      case2: {
+        title: '<span class="emoji-3d">🎯</span> 진로 설계 상담',
+        context: '학부모: "선생님, 저희 애가 고1인데 2주 후에 문·이과를 선택해야 해요. 수학은 3등급, 국어는 1등급인데... 저희는 의대를 보내고 싶은데 애는 방송 쪽에 관심이 있대요. 담임 선생님은 인문계를 추천하시고... 어떻게 해야 할까요?"\n\n학생: "의대는... 글쎄요. 방송 관련 일을 하고 싶긴 한데 구체적으로는 잘 모르겠어요. 수학이 좀 어렵긴 한데 완전히 못하는 건 아니에요."\n\n당신의 목표: 2시간 심층 상담으로 (1) 적성 검사 + 흥미 분야 탐색 + 대입 경쟁률 분석, (2) 이과(생명과학) 선택 + 의대 외 바이오 관련 진로 3가지 제시, (3) 10년 로드맵 제공, (4) 진로 멘토링 6개월 계약 200만원 체결. 부모·학생·담임의 의견 충돌을 조율하고 방송 관심과 이과를 연결해야 합니다.'
+      },
+      case3: {
+        title: '<span class="emoji-3d">🏆</span> 명문대 입시 전략 상담',
+        context: '학부모: "선생님, 저희 아이가 고3이고 전교 5등인데 서울대 의대를 목표로 하고 있습니다. 모의고사 성적은 국어 1등급, 수학 2등급, 과학 1등급인데... 비교과가 약해서 학종은 불리할 것 같아요. 정시로 올인해야 할까요?"\n\n학생: "수학만 1등급으로 올리면 서울대 의대 갈 수 있을까요? 9월 모평까지 3개월밖에 안 남았는데..."\n\n당신의 목표: 3시간 입시 컨설팅으로 (1) 서울대 의대 정시 vs 연·고대 의대 학종 복수 전략 수립, (2) 수학 1등급 만들기 3개월 플랜 제시, (3) 9월 모평 목표 국수과 평균 1.3등급 설정, (4) 입시 컨설팅 패키지 500만원 계약 체결. 서울대 의대 정시 컷(평균 0.5등급) vs 현실(1.5등급) 격차를 직시시키고 학부모의 서울대 집착을 완화하며 수학 2→1등급 3개월 달성 가능성 50%라는 현실적 기대치를 관리해야 합니다.'
+      },
+      // 기본 시나리오
+      parent: {
+        title: '👪 학부모 상담',
+        context: '학부모: "선생님, 저희 아이가 학원에 다닌 지 3개월이 되었는데 성적이 오르지 않아요. 아이가 집에서도 공부를 안 하는데 학원에서 어떻게 지도하고 계신가요?"'
+      },
+      diagnosis: {
+        title: '<span class="emoji-3d">📊</span> 학생 수준 진단',
+        context: '학생: "수학은 잘하는데 영어는 자신이 없어요. 특히 문법은 이해가 되는데 듣기·말하기가 너무 어려워요." 학생의 현재 수준을 정확히 진단하고 맞춤형 학습 계획을 제시해주세요.'
+      },
+      enrollment: {
+        title: '<span class="emoji-3d">📝</span> 학원 등록 상담',
+        context: '학부모: "다른 학원도 알아보고 있는데, 선생님 학원의 장점이 무엇인가요? 수강료는 어떻게 되나요? 아이가 정말 성적이 오를 수 있을까요?"'
+      },
+      underperformance: {
+        title: '📉 성적 부진 상담',
+        context: '학부모: "아이가 학원도 빠지지 않고 다니는데 왜 성적이 안 오르는 건가요? 선생님들이 제대로 가르치는 게 맞나요? 이대로면 학원을 옮겨야 할 것 같습니다."'
+      },
+      renewal: {
+        title: '<span class="emoji-3d">🔄</span> 재등록 상담',
+        context: '학부모: "이번 분기가 끝나면 학원을 그만둘까 생각 중입니다. 아이가 부담스러워하는 것 같고, 효과가 있는지 잘 모르겠어요." 재등록을 유도하는 상담을 진행해주세요.'
+      },
+      custom: {
+        title: '✍️ 사용자 직접 입력',
+        context: '' // 사용자 입력값으로 대체
+      }
+    };
+
+    // ========================================
+    // Step 1: Scenario Selection
+    // ========================================
+    document.querySelectorAll('.scenario-card').forEach(card => {
+      card.addEventListener('click', () => {
+        // 이전 선택 해제
+        document.querySelectorAll('.scenario-card').forEach(c => c.classList.remove('selected'));
+
+        // 현재 선택
+        card.classList.add('selected');
+        selectedScenario = card.dataset.scenario;
+
+        // Custom 시나리오인 경우 입력창 표시
+        if (selectedScenario === 'custom') {
+          document.getElementById('custom-input-section').classList.remove('hidden');
+          document.getElementById('next-to-step2').disabled = true;
+        } else {
+          document.getElementById('custom-input-section').classList.add('hidden');
+          document.getElementById('next-to-step2').disabled = false;
+        }
+
+        console.log('[Step1] 시나리오 선택:', selectedScenario);
+      });
+    });
+
+    // Custom 질문 입력 감지
+    document.getElementById('custom-question').addEventListener('input', (e) => {
+      const value = e.target.value.trim();
+      document.getElementById('next-to-step2').disabled = value.length === 0;
+    });
+
+    document.getElementById('next-to-step2').addEventListener('click', () => {
+      if (!selectedScenario) {
+        showToast('시나리오를 선택해주세요.', 'error');
+        return;
+      }
+
+      if (selectedScenario === 'custom') {
+        const customQuestion = document.getElementById('custom-question').value.trim();
+        if (!customQuestion) {
+          showToast('상담 상황을 입력해주세요.', 'error');
+          return;
+        }
+        scenarioData.custom.context = `상담 상황: "${customQuestion}"`;
+      }
+
+      // Step 2로 이동
+      document.getElementById('step1').classList.add('hidden');
+      document.getElementById('step2').classList.remove('hidden');
+
+      // Step Indicator 업데이트
+      document.getElementById('step1-indicator').classList.remove('active');
+      document.getElementById('step1-indicator').classList.add('completed');
+      document.getElementById('step2-indicator').classList.add('active');
+
+      // 시나리오 컨텍스트 삽입
+      const scenario = scenarioData[selectedScenario];
+      document.getElementById('scenario-context').textContent = scenario.context;
+
+      console.log('[Step2] 녹음 단계 진입');
+    });
+
+    document.getElementById('back-to-step1').addEventListener('click', () => {
+      document.getElementById('step2').classList.add('hidden');
+      document.getElementById('step1').classList.remove('hidden');
+
+      // Step Indicator 업데이트
+      document.getElementById('step1-indicator').classList.add('active');
+      document.getElementById('step1-indicator').classList.remove('completed');
+      document.getElementById('step2-indicator').classList.remove('active');
+    });
+
+    // ========================================
+    // Step 2: Recording
+    // ========================================
+    document.getElementById('record-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('record-btn');
+      const timerEl = document.getElementById('timer');
+
+      if (!recorder.isRecording) {
+        // 녹음 시작
+        const success = await recorder.start();
+        if (!success) return;
+
+        btn.classList.add('recording');
+        btn.textContent = '⏹️';
+        recordingStartTime = Date.now();
+
+        // 타이머 시작
+        timerInterval = setInterval(() => {
+          const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+          const minutes = Math.floor(elapsed / 60);
+          const seconds = elapsed % 60;
+          timerEl.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }, 1000);
+
+        showToast('녹음이 시작되었습니다.', 'success');
+      } else {
+        // 녹음 중지
+        clearInterval(timerInterval);
+        const audioBlob = await recorder.stop();
+
+        btn.classList.remove('recording');
+        btn.textContent = '<span class="emoji-3d">🎙️</span>';
+
+        if (audioBlob) {
+          // localStorage에 임시 저장
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const base64Audio = reader.result;
+            const sessionId = generateId();
+
+            localStorage.setItem('temp_audio', base64Audio);
+            localStorage.setItem('temp_session_id', sessionId);
+            localStorage.setItem('temp_scenario', selectedScenario);
+
+            showToast('녹음이 완료되었습니다. AI 분석 페이지로 이동합니다...', 'success', 2000);
+
+            // 2초 후 feedback.html로 이동
+            setTimeout(() => {
+              window.location.href = `feedback.html?session=${sessionId}&category=education-counseling`;
+            }, 2000);
+          };
+          reader.readAsDataURL(audioBlob);
+        }
+      }
+    });
+
+    // ========================================
+    // Page Init
+    // ========================================
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('[RolePlay-Education-Counseling] 페이지 로드 완료');
+    });
+  </script>
+</body>
+</html>
