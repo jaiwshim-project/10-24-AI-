@@ -1,4 +1,4 @@
-import { recordUsage, readUsage, analyticsConfigured, isAnalyticsAdmin, readAnalytics, verifyAnalyticsPin } from '../lib/interview-analytics.mjs';
+import { recordFirstAnswer, recordUsage, readUsage, analyticsConfigured, isAnalyticsAdmin, readAnalytics, verifyAnalyticsPin } from '../lib/interview-analytics.mjs';
 
 import { createHmac, timingSafeEqual, randomUUID } from 'node:crypto';
 
@@ -17,10 +17,14 @@ function validSession(value) {
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   if (req.method === 'POST') {
-    if (!['visit', 'install'].includes(req.body?.event) || !req.headers.origin ||
+    if (!['visit', 'install', 'first-answer'].includes(req.body?.event) || !req.headers.origin ||
         req.headers.origin !== 'https://' + req.headers.host) return res.status(400).end();
     try {
-      await recordUsage(req.body.event);
+      if (req.body.event === 'first-answer') {
+        if (!await recordFirstAnswer(req.body.ticket)) return res.status(400).end();
+      } else {
+        await recordUsage(req.body.event, req.body.device, req.body.standalone, req.body.test === true);
+      }
       return res.status(204).end();
     } catch { return res.status(503).end(); }
   }

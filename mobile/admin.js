@@ -35,6 +35,7 @@ const criteria = { listening: '경청', context: '상황 파악', questions: '�
 
 function renderPracticeTypes(groups) {
   const panel = field('counseling-metrics');
+  const expanded = new Set(Array.from(panel.querySelectorAll('details[open]'), el => el.parentElement.dataset.topic));
   panel.replaceChildren();
   for (const [topic, label] of Object.entries(topics)) {
     const data = groups[topic];
@@ -48,6 +49,7 @@ function renderPracticeTypes(groups) {
       ['완료율', completionRate(data)], ['평균 총점', average(data.score, '점')]
     ]);
     const details = add(section, 'details', '');
+    details.open = expanded.has(topic);
     if (data.components) {
       add(details, 'summary', 'PROVE 항목별 평균');
       const labels = ['문제 정의', '판단 근거', '본인 기여', '결과 확인', '다음 직무·전공에 적용'];
@@ -68,7 +70,8 @@ function renderPracticeTypes(groups) {
 function render(data) {
   const usage = data.usage;
   renderMetrics(field('app-usage'), [
-    ['누적 앱 설치', usage.installs + '회'], ['오늘 접속', usage.today + '회'], ['누적 접속', usage.total + '회']
+    ['설치 완료 감지', usage.installs + '회'], ['설치형 앱 실행 기기(누적)', usage.devices.installed + '대'],
+    ['오늘 방문 기기', usage.devices.today + '대'], ['오늘 테스트 접속', usage.testToday + '회'], ['오늘 접속', usage.today + '회'], ['누적 접속', usage.total + '회']
   ]);
   const usageDays = field('usage-days');
   usageDays.replaceChildren();
@@ -76,6 +79,14 @@ function render(data) {
     const row = add(usageDays, 'tr', '');
     add(row, 'th', entry.date).scope = 'row';
     add(row, 'td', (usage.daily[entry.date] ?? 0) + '회');
+  }
+  const comparison = field('comparison');
+  comparison.replaceChildren();
+  for (const [key, label] of Object.entries(topics)) {
+    const item = data.comparison[key];
+    const row = add(comparison, 'tr', '');
+    add(row, 'th', label).scope = 'row';
+    for (const value of [item.started, item.tracked ? item.answered + ' / ' + item.tracked : '—', item.completed, completionRate(item)]) add(row, 'td', value);
   }
   renderPracticeTypes({ ...data.interviews, ...data.counseling });
   renderMetrics(field('participation'), [
@@ -121,12 +132,11 @@ field('logout').addEventListener('click', () => {
   forget();
   location.reload();
 });
-async function refreshReport() {
+async function refreshReport(automatic = false) {
   const button = form.querySelector('button');
   if (button.disabled) return;
   button.disabled = true;
-  report.hidden = true;
-  status.textContent = '집계를 불러오는 중입니다.';
+  if (!automatic) status.textContent = '집계를 불러오는 중입니다.';
   try {
     const query = new URLSearchParams({ days: field('days').value, type: field('type').value });
     const response = await fetch('/api/interview-analytics?' + query, {
@@ -145,6 +155,7 @@ async function refreshReport() {
       setAuthenticated(true);
     }
     render(data);
+    field('updated').textContent = '마지막 갱신 ' + new Date().toLocaleTimeString('ko-KR', {timeZone: 'Asia/Seoul'}) + ' (한국 시간) · 60초마다 갱신';
     report.hidden = false;
     status.textContent = data.started || Object.values(data.counseling).some(item => item.started) ? '' : '선택한 기간에 집계된 연습이 없습니다.';
   } catch (error) {
@@ -153,6 +164,7 @@ async function refreshReport() {
     button.disabled = false;
   }
 }
+setInterval(() => { if (session && !document.hidden) refreshReport(true); }, 60000);
 form.addEventListener('submit', event => {
   event.preventDefault();
   refreshReport();

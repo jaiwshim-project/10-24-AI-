@@ -73,7 +73,7 @@
     .catch(() => {});
 
   function getAnalyticsParticipant() {
-    if (!analyticsEnabled) return null;
+    if (!analyticsEnabled || new URLSearchParams(location.search).get('usage') === 'test') return null;
     try {
       const key = 'roleplay-analytics-device-v1';
       const id = localStorage.getItem(key) || crypto.randomUUID();
@@ -416,6 +416,12 @@
       const answer = recognized;
       showCaption('', '', '나 · 말하는 중');
       turns.push({ question, answer });
+      if (turns.length === 1 && analyticsTicket) {
+        fetch('/api/interview-analytics', { method: 'POST', keepalive: true,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ event: 'first-answer', ticket: analyticsTicket })
+        }).catch(() => {});
+      }
       finalStudentReply = null;
       addMessage('candidate', '나', answer);
       if (retakeQuestions) {
