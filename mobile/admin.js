@@ -29,15 +29,16 @@ function completionRate(item) {
   return item.started ? (item.completed / item.started * 100).toFixed(1) + '%' : '데이터 없음';
 }
 
-const topics = { school: '진학상담교사(학교)', career: '취업상담코치(대학)', nutrition: '영양상담사(학교)' };
+const topics = { job: 'A1. 취업면접 (취준생/대학생)', college: 'A2. 대학입학 면접 (고등생)', school: '진학상담교사(학교)', career: '취업상담코치(대학)', nutrition: '영양상담사(학교)' };
 const criteria = { listening: '경청', context: '상황 파악', questions: '질문의 적절성',
   options: '대안 제시', agreement: '다음 행동 합의' };
 
-function renderCounseling(counseling) {
+function renderPracticeTypes(groups) {
   const panel = field('counseling-metrics');
   panel.replaceChildren();
   for (const [topic, label] of Object.entries(topics)) {
-    const data = counseling[topic];
+    const data = groups[topic];
+    if (!data) continue;
     const section = add(panel, 'section', '');
     section.className = 'counseling-metrics-card';
     section.dataset.topic = topic;
@@ -47,6 +48,13 @@ function renderCounseling(counseling) {
       ['완료율', completionRate(data)], ['평균 총점', average(data.score, '점')]
     ]);
     const details = add(section, 'details', '');
+    if (data.components) {
+      add(details, 'summary', 'PROVE 항목별 평균');
+      const labels = ['문제 정의', '판단 근거', '본인 기여', '결과 확인', '다음 직무·전공에 적용'];
+      renderMetrics(add(details, 'dl', ''), [...'PROVE'].map((letter, i) =>
+        [letter + ' · ' + labels[i], average(data.components[letter], '%')]));
+      continue;
+    }
     add(details, 'summary', '상담 평가 5개 항목');
     const list = add(details, 'dl', '');
     renderMetrics(list, Object.entries(criteria).map(([key, title]) => [title, average(data.criteria[key], '%')]));
@@ -69,7 +77,7 @@ function render(data) {
     add(row, 'th', entry.date).scope = 'row';
     add(row, 'td', (usage.daily[entry.date] ?? 0) + '회');
   }
-  renderCounseling(data.counseling);
+  renderPracticeTypes({ ...data.interviews, ...data.counseling });
   renderMetrics(field('participation'), [
     ['참여 기기', data.participants + '대'],
     ['2회 이상 참여한 기기', data.returningParticipants + '대'],
