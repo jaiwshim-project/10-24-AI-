@@ -86,8 +86,8 @@
       <section class="landing-section" id="interviews" aria-labelledby="interviews-title">
         <h2 id="interviews-title">A. 면접 롤플레이</h2>
         <div class="choices">
-          <button data-type="job"><span class="choice-icon" aria-hidden="true">💼</span><strong>A1. 취업면접</strong><span>지원 직무를 고르고 문제 해결 경험을 말해 보세요.</span><span class="choice-arrow" aria-hidden="true">↗</span></button>
-          <button data-type="college"><span class="choice-icon" aria-hidden="true">🎓</span><strong>A2. 대학입학 면접</strong><span>탐구 경험, 전공 지원동기, 제시문 중에서 연습하세요.</span><span class="choice-arrow" aria-hidden="true">↗</span></button>
+          <button data-type="job"><span class="choice-icon" aria-hidden="true">💼</span><strong>A1. 취업면접 (취준생/대학생)</strong><span>지원 직무를 고르고 문제 해결 경험을 말해 보세요.</span><span class="choice-arrow" aria-hidden="true">↗</span></button>
+          <button data-type="college"><span class="choice-icon" aria-hidden="true">🎓</span><strong>A2. 대학 입학 면접(고등생)</strong><span>탐구 경험, 전공 지원동기, 제시문 중에서 연습하세요.</span><span class="choice-arrow" aria-hidden="true">↗</span></button>
         </div>
       </section>
       <section class="landing-section" id="counseling" aria-labelledby="counseling-title">
@@ -166,7 +166,7 @@
             <label for="member-nickname">닉네임</label>
             <input id="member-nickname" type="text" autocomplete="nickname" minlength="2" maxlength="30" required>
             <label for="member-practice-type">주로 연습할 유형</label>
-            <select id="member-practice-type" required><option value="">실습 유형 선택</option><option value="job">취업 면접</option><option value="college">대학입학 면접</option><option value="school">진학상담</option><option value="career">취업상담</option><option value="nutrition">영양상담</option></select>
+            <select id="member-practice-type" required><option value="">실습 유형 선택</option><option value="job">A1. 취업면접 (취준생/대학생)</option><option value="college">A2. 대학 입학 면접(고등생)</option><option value="school">진학상담</option><option value="career">취업상담</option><option value="nutrition">영양상담</option></select>
           </fieldset>
           <div class="actions"><button class="primary" type="submit" id="member-submit">로그인</button></div>
         </form>
@@ -182,7 +182,7 @@
         <h2>유형별 목표 (선택)</h2>
         <form id="member-goal-form">
           <label for="member-goal-type">실습 유형</label>
-          <select id="member-goal-type"><option value="job">취업 면접</option><option value="college">대학입학 면접</option><option value="school">진학상담</option><option value="career">취업상담</option><option value="nutrition">영양상담</option></select>
+          <select id="member-goal-type"><option value="job">A1. 취업면접 (취준생/대학생)</option><option value="college">A2. 대학 입학 면접(고등생)</option><option value="school">진학상담</option><option value="career">취업상담</option><option value="nutrition">영양상담</option></select>
           <label for="member-goal">연습 목표</label>
           <textarea id="member-goal" maxlength="200" rows="3"></textarea>
           <div class="actions"><button class="quiet" type="submit" id="member-goal-save" disabled>목표 저장</button></div>

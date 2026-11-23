@@ -3,11 +3,11 @@
   const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const speech = window.speechSynthesis;
   const options = {
-    job: { title: '취업 면접', label: '지원할 직무를 아래에서 선택하세요.', values: {
+    job: { title: 'A1. 취업면접 (취준생/대학생)', label: '지원할 직무를 아래에서 선택하세요.', values: {
       engineering: '개발·엔지니어링', operations: '운영·물류·관리', sales: '영업·고객 응대',
       product: '기획·제품', general: '기타 직무'
     } },
-    college: { title: '대학 입학 면접', label: '질문 유형', values: {
+    college: { title: 'A2. 대학 입학 면접(고등생)', label: '질문 유형', values: {
       inquiry: '학생부·탐구 경험', motivation: '전공 지원동기', passage: '제시문 면접'
     } },
     counseling: { title: '상담 롤플레이', label: '상담 유형을 선택하세요', values: {
