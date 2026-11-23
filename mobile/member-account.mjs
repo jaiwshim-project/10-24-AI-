@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { isInternalRoleplayEmail, normalizeEmail, roleplayLoginEmail } from '../lib/roleplay-account.mjs';
 
 const client = createClient('https://xwpxulvywjthliphjuie.supabase.co', 'sb_publishable_Pr5BU31VxekvikkzMr2ctQ_K3-rXzdZ', {
   auth: { storageKey: 'roleplay-member-auth-v1', flowType: 'pkce' }
@@ -68,7 +69,8 @@ client.auth.onAuthStateChange((event, session) => {
   finishInitialization();
   ui('member-auth').hidden = Boolean(user);
   ui('member-private').hidden = !user;
-  ui('member-email-display').textContent = user?.email ?? '';
+  ui('member-email-display').textContent = isInternalRoleplayEmail(user?.email)
+    ? '' : user?.email ?? '';
   if (changed) {
     revision++;
     records = [];
@@ -128,12 +130,13 @@ async function refreshProfile(owner) {
   summary.hidden = true;
   if (!owner) return;
   const [profile, saved] = await Promise.all([
-    client.from('roleplay_member_profiles').select('nickname,user_type,practice_type').eq('owner_id', owner).maybeSingle(),
+    client.from('roleplay_member_profiles').select('nickname,user_type,practice_type,contact_email').eq('owner_id', owner).maybeSingle(),
     client.from(goalsTable).select('practice_type,goal').eq('owner_id', owner)
   ]);
   if (user?.id !== owner) return;
   if (profile.data) {
-    const { nickname, user_type: type, practice_type: practice } = profile.data;
+    const { nickname, user_type: type, practice_type: practice, contact_email: contactEmail } = profile.data;
+    if (contactEmail) ui('member-email-display').textContent = contactEmail;
     const label = (id, value) => [...ui(id).options].find(option => option.value === value)?.textContent;
     summary.textContent = [nickname, label('member-user-type', type), label('member-practice-type', practice)].filter(Boolean).join(' · ');
     summary.hidden = false;
@@ -182,7 +185,7 @@ ui('member-mode-signup').addEventListener('click', () => setSignup(true));
 form.addEventListener('submit', async event => {
   event.preventDefault();
   const registering = signup;
-  const email = ui('member-email').value.trim();
+  const email = normalizeEmail(ui('member-email').value);
   const password = ui('member-password').value;
   let profile;
   if (registering) {
@@ -204,22 +207,26 @@ form.addEventListener('submit', async event => {
   buttons.forEach(button => { button.disabled = true; });
   status.textContent = registering ? '가입을 요청하고 있습니다.' : '로그인 중입니다.';
   try {
-    const result = registering
-      ? await client.auth.signUp({ email, password, options: {
-        data: { roleplay_signup_profile_v1: profile },
-        emailRedirectTo: new URL('./?view=account', location.href).href
-      } })
-      : await client.auth.signInWithPassword({ email, password });
-    if (result.error) {
-      status.textContent = result.error.code === 'email_not_confirmed' ? '가입 확인 이메일의 링크를 먼저 눌러 주세요.'
-        : result.error.code === 'email_address_not_authorized' ? '현재 이 주소로 가입 확인 메일을 보낼 수 없습니다.'
-          : registering ? '가입 정보를 확인하거나 잠시 뒤 다시 시도해 주세요.'
-            : '로그인할 수 없습니다. 이메일과 비밀번호를 확인해 주세요.';
-    } else if (registering && !result.data.session) {
-      status.textContent = '확인 이메일을 보냈습니다. 메일의 링크를 누른 뒤 로그인해 주세요.';
-    } else {
-      status.textContent = '';
+    if (registering) {
+      const response = await fetch('/api/roleplay-signup', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, profile }),
+        signal: AbortSignal.timeout(12000)
+      });
+      if (!response.ok) {
+        const body = await response.json();
+        status.textContent = body.error ?? '가입을 완료하지 못했습니다.';
+        return;
+      }
     }
+    let result = await client.auth.signInWithPassword({ email: await roleplayLoginEmail(email), password });
+    if (!registering && result.error?.code === 'invalid_credentials' && !isInternalRoleplayEmail(email)) {
+      result = await client.auth.signInWithPassword({ email, password });
+    }
+    if (result.error) {
+      status.textContent = registering ? '가입은 완료되었습니다. 로그인 버튼으로 다시 시도해 주세요.'
+        : '로그인할 수 없습니다. 이메일과 비밀번호를 확인해 주세요.';
+    } else status.textContent = '';
   } catch {
     status.textContent = '서버에 연결하지 못했습니다. 다시 시도해 주세요.';
   } finally {
