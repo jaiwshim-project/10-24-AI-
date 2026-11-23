@@ -54,6 +54,35 @@
           </div>
         </div>
       </section>
+<section class="landing-section" id="rolecoach-shorts" aria-labelledby="rc-shorts-title">
+<h2 id="rc-shorts-title">롤플레이 AI 코치 쇼츠</h2>
+<div class="rc-short-grid"><a class="rc-short" href="https://www.youtube.com/shorts/-x34NdZ1Yww" data-clip="-x34NdZ1Yww" aria-label="롤플레이 AI 코치 쇼츠 1 재생"><span><img src="https://i.ytimg.com/vi/-x34NdZ1Yww/hqdefault.jpg" alt="" loading="lazy"><b aria-hidden="true">▶</b></span><strong>롤플레이 AI 코치 쇼츠 1</strong></a>
+<a class="rc-short" href="https://www.youtube.com/shorts/CXCmvNgL0u8" data-clip="CXCmvNgL0u8" aria-label="면접관을 사로잡는 PROVE 답변 공식 재생"><span><img src="https://i.ytimg.com/vi/CXCmvNgL0u8/hqdefault.jpg" alt="" loading="lazy"><b aria-hidden="true">▶</b></span><strong>면접관을 사로잡는 PROVE 답변 공식</strong></a>
+<a class="rc-short" href="https://www.youtube.com/shorts/LNph2EffBvw" data-clip="LNph2EffBvw" aria-label="AI 면접 코치의 꼬리질문이 합격을 만드는 이유 재생"><span><img src="https://i.ytimg.com/vi/LNph2EffBvw/hqdefault.jpg" alt="" loading="lazy"><b aria-hidden="true">▶</b></span><strong>AI 면접 코치의 꼬리질문이 합격을 만드는 이유</strong></a>
+<a class="rc-short" href="https://www.youtube.com/shorts/k2iILFd2mc4" data-clip="k2iILFd2mc4" aria-label="대학 면접, AI 코치가 뻔한 답변을 부수는 법 재생"><span><img src="https://i.ytimg.com/vi/k2iILFd2mc4/hqdefault.jpg" alt="" loading="lazy"><b aria-hidden="true">▶</b></span><strong>대학 면접, AI 코치가 뻔한 답변을 부수는 법</strong></a>
+<a class="rc-short" href="https://www.youtube.com/shorts/x2CcmbmTXLY" data-clip="x2CcmbmTXLY" aria-label="AI가 취업 상담 코치의 질문법을 교정하는 원리 재생"><span><img src="https://i.ytimg.com/vi/x2CcmbmTXLY/hqdefault.jpg" alt="" loading="lazy"><b aria-hidden="true">▶</b></span><strong>AI가 취업 상담 코치의 질문법을 교정하는 원리</strong></a>
+<a class="rc-short" href="https://www.youtube.com/shorts/keDcVIfx5zs" data-clip="keDcVIfx5zs" aria-label="진학상담 AI 코치가 교사에게 꼭 필요한 이유 재생"><span><img src="https://i.ytimg.com/vi/keDcVIfx5zs/hqdefault.jpg" alt="" loading="lazy"><b aria-hidden="true">▶</b></span><strong>진학상담 AI 코치가 교사에게 꼭 필요한 이유</strong></a></div>
+<div class="rc-short-stage" hidden><h3></h3><div class="rc-frame"></div><button type="button">영상 닫기</button></div>
+</section>
+<style>
+#rolecoach-shorts .rc-short-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(6px,2vw,18px)}
+.rc-short{display:block;min-width:0;color:inherit;text-decoration:none}.rc-short span{position:relative;display:block;aspect-ratio:3/4;background:#172527;border-radius:10px;overflow:hidden}.rc-short img{width:100%;height:100%;object-fit:cover}.rc-short b{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#112a2be6;color:white;border-radius:50%;padding:.38em .65em}.rc-short strong{display:block;font-size:clamp(.78rem,2vw,1rem);line-height:1.45;margin-top:.4em;overflow-wrap:anywhere}.rc-short-stage{margin:1rem auto;max-width:420px;scroll-margin:80px}.rc-short-stage iframe{width:100%;height:min(60vh,580px);border:0;border-radius:12px;background:#111}.rc-short-stage button{padding:.6em 1em}.rc-short:focus-visible{outline:3px solid currentColor}
+</style>
+<script>
+(()=>{
+ const root=document.querySelector('#rolecoach-shorts'),stage=root.querySelector('.rc-short-stage'),slot=stage.querySelector('.rc-frame');
+ let last;
+ root.querySelector('.rc-short-grid').addEventListener('click',e=>{
+ const link=e.target.closest('a[data-clip]');if(!link||e.ctrlKey||e.metaKey||e.shiftKey)return;
+ e.preventDefault();last=link;
+ const frame=document.createElement('iframe');frame.title=link.querySelector('strong').textContent;frame.allow='autoplay; encrypted-media; fullscreen; picture-in-picture';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';
+ frame.src='https://www.youtube-nocookie.com/embed/'+link.dataset.clip+'?playsinline=1&autoplay=1&mute='+(matchMedia('(pointer: coarse)').matches?'1':'0');
+ stage.querySelector('h3').textContent=frame.title;slot.replaceChildren(frame);stage.hidden=false;stage.scrollIntoView({block:'center'});
+ });
+ stage.querySelector('button').addEventListener('click',()=>{slot.replaceChildren();stage.hidden=true;last?.focus()});
+ new MutationObserver(()=>{if(last&&!root.getClientRects().length){slot.replaceChildren();stage.hidden=true;last=null}}).observe(root.closest('[id]')?.parentElement||root,{attributes:true,attributeFilter:['hidden','class','style']});
+})();
+</script>
       <section class="landing-section" id="interviews" aria-labelledby="interviews-title">
         <h2 id="interviews-title">A. 면접 롤플레이</h2>
         <div class="choices">
