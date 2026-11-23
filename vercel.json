@@ -1,16 +1,11 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+  "framework": null,
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "redirects": [
+    { "source": "/", "destination": "/mobile/", "permanent": false },
+    { "source": "/mobile", "destination": "/mobile/", "permanent": false }
   ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    }
-  ]
+  "rewrites": [{ "source": "/mobile/", "destination": "/mobile/index.html" }],
+  "functions": { "api/interview.js": { "maxDuration": 45 } }
 }
