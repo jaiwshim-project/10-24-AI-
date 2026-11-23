@@ -179,3 +179,39 @@ body { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
 .progress-score { color: var(--accent); font-size: 1.2rem; font-weight: 800; margin-bottom: 2px; }
 .progress-group ul { padding-inline-start: 1.25rem; }
 .progress-group li + li { margin-top: 5px; }
+
+
+/* A warm reading surface for the live conversation. */
+#session {
+  --accent: #784125;
+  --muted: #65574e;
+  color: #382d27;
+  background: #fffaf3;
+  border: 1px solid #e4d3be;
+  border-radius: 24px;
+  padding: clamp(14px, 3vw, 24px);
+  margin-block: 20px;
+  box-sizing: border-box;
+}
+#session .session-head { padding: 0 2px 4px; }
+#session-title { color: #49392f; line-height: 1.45; }
+#session .quiet { background: #fffdf9; border: 1px solid #cbb9a7; color: #554338; }
+#session #finish { flex-shrink: 0; }
+#session .conversation {
+  background: linear-gradient(155deg, #f6e9dc, #f7f1e8 55%, #eaf0e8);
+  border-color: #e1d4c5;
+  padding: clamp(12px, 3vw, 20px);
+  scrollbar-color: #af9e8d transparent;
+}
+#session .conversation-log { gap: 16px; }
+#session .message { padding: 12px 15px; line-height: 1.65; box-shadow: 0 2px 6px #4b37200c; }
+#session .message strong { margin-bottom: 4px; }
+#session .message--coach { color: #3b302a; background: #fffdfa; }
+#session .message--coach strong { color: #80452e; }
+#session .message--candidate { color: #243e34; background: #dcebdc; }
+#session .message--candidate strong { color: #365847; }
+#session .conversation-controls { background: #fffaf3; color: #44392f; }
+#session #status { color: #695247; line-height: 1.55; }
+#session .primary { background: #825039; color: white; border: 1px solid #764630; }
+#session button:disabled { opacity: .58; }
+#session :focus-visible { outline: 3px solid #327063; outline-offset: 2px; }
