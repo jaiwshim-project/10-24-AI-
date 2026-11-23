@@ -55,6 +55,32 @@
           </div>
         </div>
       </section>
+<section class="landing-section" id="practice-guides" aria-labelledby="guide-title">
+  <h2 id="guide-title">음성 롤플레이 실습 가이드</h2>
+  <div class="guide-grid"><a href="guide-1-full.webp" aria-label="모바일 음성 실습과 다섯 가지 유형 크게 보기"><img src="guide-1-preview.webp" width="720" height="1018" loading="lazy" alt="모바일 음성 실습과 다섯 가지 유형"><span>모바일 음성 실습과 다섯 가지 유형　⤢</span></a><a href="guide-2-full.webp" aria-label="실시간 대화 자막과 AI 분석·코칭 크게 보기"><img src="guide-2-preview.webp" width="720" height="1018" loading="lazy" alt="실시간 대화 자막과 AI 분석·코칭"><span>실시간 대화 자막과 AI 분석·코칭　⤢</span></a></div>
+  <dialog id="guide-viewer" aria-label="실습 가이드 확대 보기">
+    <div class="guide-tools"><a target="_blank" rel="noopener">원본 이미지 열기 ↗</a><button class="quiet" type="button" autofocus>닫기</button></div>
+    <img alt="">
+  </dialog>
+</section>
+<script>
+(() => {
+  const viewer = document.getElementById('guide-viewer');
+  const image = viewer.querySelector('img');
+  for (const link of document.querySelectorAll('.guide-grid a')) {
+    link.addEventListener('click', event => {
+      if (!viewer.showModal || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      event.preventDefault();
+      image.src = link.href;
+      image.alt = link.querySelector('img').alt;
+      viewer.querySelector('a').href = link.href;
+      viewer.showModal();
+      viewer.scrollTop = 0;
+    });
+  }
+  viewer.querySelector('button').onclick = () => viewer.close();
+})();
+</script>
 <section class="landing-section" id="rolecoach-shorts" aria-labelledby="rc-shorts-title">
 <h2 id="rc-shorts-title">롤플레이 AI 코치 쇼츠</h2>
 <div class="rc-short-grid"><a class="rc-short" href="https://www.youtube.com/shorts/R6qduXsPx7A" data-clip="R6qduXsPx7A" aria-label="영양상담사에게 AI 역할극이 필요한 이유 재생"><span><img src="https://i.ytimg.com/vi/R6qduXsPx7A/hqdefault.jpg" alt="" loading="lazy"><b aria-hidden="true">▶</b></span><strong>영양상담사에게 AI 역할극이 필요한 이유</strong></a>
