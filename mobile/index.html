@@ -114,24 +114,50 @@
       <section class="info-card" id="member-auth">
         <h2>로그인 또는 회원가입</h2>
         <p class="muted">로그인한 상태에서 완료한 면접·상담 실습과 평가를 계정에 저장합니다. 평가에는 답변 일부가 인용될 수 있습니다.</p>
+        <div class="actions member-auth-actions" aria-label="계정 메뉴">
+          <button type="button" class="quiet" id="member-mode-login" aria-pressed="true">로그인</button>
+          <button type="button" class="quiet" id="member-mode-signup" aria-pressed="false">회원가입</button>
+        </div>
         <form id="member-form">
           <label for="member-email">이메일</label>
           <input type="email" id="member-email" autocomplete="email" required>
           <label for="member-password">비밀번호</label>
           <input type="password" id="member-password" autocomplete="current-password" required>
-          <div class="actions">
-            <button class="primary" type="submit" value="login">로그인</button>
-            <button class="quiet" type="submit" value="signup">회원가입</button>
-          </div>
+          <fieldset id="member-signup-fields" hidden disabled>
+            <legend>가입 정보</legend>
+            <label for="member-phone">휴대폰 번호</label>
+            <input id="member-phone" type="tel" autocomplete="tel" maxlength="24" required>
+            <label for="member-user-type">사용자 유형</label>
+            <select id="member-user-type" required>
+              <option value="">사용자 유형 선택</option><option value="job-seeker">취업 준비생</option><option value="university">대학생</option>
+              <option value="high-school">고등학생</option><option value="teacher">교사</option><option value="coach">코치·상담사</option>
+              <option value="nutritionist">영양상담사</option><option value="other">기타</option>
+            </select>
+            <label for="member-nickname">닉네임</label>
+            <input id="member-nickname" type="text" autocomplete="nickname" minlength="2" maxlength="30" required>
+            <label for="member-practice-type">주로 연습할 유형</label>
+            <select id="member-practice-type" required><option value="">실습 유형 선택</option><option value="job">취업 면접</option><option value="college">대학입학 면접</option><option value="school">진학상담</option><option value="career">취업상담</option><option value="nutrition">영양상담</option></select>
+          </fieldset>
+          <div class="actions"><button class="primary" type="submit" id="member-submit">로그인</button></div>
         </form>
         <p id="member-auth-status" role="status"></p>
       </section>
       <section class="info-card" id="member-private" hidden>
         <p id="member-email-display"></p>
+        <p id="member-profile-summary" class="muted" hidden></p>
         <div class="actions">
           <button type="button" class="quiet" id="member-refresh">기록 새로고침</button>
           <button type="button" class="quiet" id="member-signout">로그아웃</button>
         </div>
+        <h2>유형별 목표 (선택)</h2>
+        <form id="member-goal-form">
+          <label for="member-goal-type">실습 유형</label>
+          <select id="member-goal-type"><option value="job">취업 면접</option><option value="college">대학입학 면접</option><option value="school">진학상담</option><option value="career">취업상담</option><option value="nutrition">영양상담</option></select>
+          <label for="member-goal">연습 목표</label>
+          <textarea id="member-goal" maxlength="200" rows="3"></textarea>
+          <div class="actions"><button class="quiet" type="submit" id="member-goal-save" disabled>목표 저장</button></div>
+        </form>
+        <p id="member-goal-status" role="status"></p>
         <h2>내 실습 기록</h2>
         <p id="member-record-status" role="status"></p>
         <div id="member-records"></div>

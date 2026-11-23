@@ -31,6 +31,7 @@
   const navigation = field('bottom-nav');
   let currentView = 'home';
   let startingSession = false;
+  let resumePracticeAfterLogin = false;
   const mic = field('mic');
   const micCheck = field('mic-check');
   const micHelp = field('mic-help');
@@ -107,6 +108,7 @@
 
   function show(name) {
     if (currentView === 'examples' && name !== 'examples') stopExampleAudio();
+    if (currentView === 'account' && name !== 'account') resumePracticeAfterLogin = false;
     if (name !== currentView) window.scrollTo(0, 0);
     currentView = name;
     for (const section of sections) field(section).hidden = section !== name;
@@ -253,20 +255,34 @@
       showLocalLink();
       return;
     }
-    if (!Recognition) {
-      field('setup-status').textContent = '이 브라우저에서 음성 면접을 실행할 수 없습니다. Chrome의 일반 탭에서 앱을 열고 다시 시도해 주세요.';
-      return;
-    }
-    if (!window.isSecureContext) {
-      field('setup-status').textContent = '마이크를 이용하려면 HTTPS로 열린 앱이 필요합니다.';
-      return;
-    }
     topic = field('topic').value;
     startingSession = true;
     syncNavigation();
     start.disabled = field('setup-back').disabled = field('topic').disabled = true;
-    field('setup-status').textContent = '첫 질문을 준비하고 있습니다.';
+    field('setup-status').textContent = '계정을 확인하고 있습니다.';
     try {
+      const member = window.roleplayMember;
+      if (!member) {
+        field('setup-status').textContent = '계정 화면을 열 수 없습니다. 앱을 새로고침해 주세요.';
+        return;
+      }
+      await member.ready;
+      if (!member.userId()) {
+        resumePracticeAfterLogin = true;
+        show('account');
+        field('member-auth-status').textContent = '롤플레이를 시작하려면 로그인하거나 회원가입해 주세요.';
+        field('account-title').focus();
+        return;
+      }
+      if (!Recognition) {
+        field('setup-status').textContent = '이 브라우저에서 음성 실습을 실행할 수 없습니다. Chrome에서 다시 시도해 주세요.';
+        return;
+      }
+      if (!window.isSecureContext) {
+        field('setup-status').textContent = '마이크를 이용하려면 HTTPS로 열린 앱이 필요합니다.';
+        return;
+      }
+      field('setup-status').textContent = '첫 질문을 준비하고 있습니다.';
       await analyticsAvailability;
       analyticsParticipant = getAnalyticsParticipant();
       const opening = await call({ ...openingRequest(), analyticsParticipant });
@@ -878,7 +894,14 @@
     }
   }
 
-  window.addEventListener('roleplay-member-change', renderMemberHistory);
+  window.addEventListener('roleplay-member-change', () => {
+    renderMemberHistory();
+    if (resumePracticeAfterLogin && currentView === 'account' && window.roleplayMember?.userId()) {
+      show('setup');
+      field('setup-status').textContent = '로그인했습니다. 실습 시작을 누르면 대화를 시작합니다.';
+      field('setup-title').focus();
+    }
+  });
   if (new URLSearchParams(location.search).get('view') === 'account') show('account');
 
   navigation.querySelectorAll('[data-page]').forEach(button => {

@@ -8,6 +8,8 @@ const ui = id => document.getElementById(id);
 let user = null;
 let records = [];
 let revision = 0;
+let finishInitialization;
+const ready = new Promise(resolve => { finishInitialization = resolve; });
 
 function notify() {
   window.dispatchEvent(new Event('roleplay-member-change'));
@@ -52,6 +54,7 @@ async function save(entry, owner) {
 }
 
 window.roleplayMember = {
+  ready,
   userId: () => user?.id ?? null,
   records: () => records.slice(),
   refresh,
@@ -62,6 +65,7 @@ client.auth.onAuthStateChange((event, session) => {
   const next = session?.user ?? null;
   const changed = user?.id !== next?.id;
   user = next;
+  finishInitialization();
   ui('member-auth').hidden = Boolean(user);
   ui('member-private').hidden = !user;
   ui('member-email-display').textContent = user?.email ?? '';
@@ -69,39 +73,149 @@ client.auth.onAuthStateChange((event, session) => {
     revision++;
     records = [];
     notify();
-    if (user) setTimeout(refresh, 0);
+    if (user) {
+      const owner = user.id;
+      setTimeout(() => { refreshProfile(owner); refresh(); }, 0);
+    } else refreshProfile(null);
   }
   if (event === 'SIGNED_IN') {
     ui('member-auth-status').textContent = '';
     ui('member-form').reset();
+    setSignup(false);
   }
 });
 
+
 const form = ui('member-form');
 const status = ui('member-auth-status');
-form.addEventListener('submit', async event => {
-  event.preventDefault();
-  const signup = event.submitter?.value === 'signup';
-  const email = ui('member-email').value.trim();
-  const password = ui('member-password').value;
-  if (signup && password.length < 8) {
-    status.textContent = '회원가입 비밀번호는 8자 이상 입력해 주세요.';
+const goalForm = ui('member-goal-form');
+const goalType = ui('member-goal-type');
+const goalText = ui('member-goal');
+const goalSave = ui('member-goal-save');
+const goalStatus = ui('member-goal-status');
+const goalsTable = 'roleplay_member_goals';
+let signup = false;
+let goals = new Map();
+
+function setSignup(active) {
+  signup = active;
+  const fields = ui('member-signup-fields');
+  fields.hidden = fields.disabled = !active;
+  const password = ui('member-password');
+  password.autocomplete = active ? 'new-password' : 'current-password';
+  password.minLength = active ? 8 : 0;
+  ui('member-mode-login').setAttribute('aria-pressed', String(!active));
+  ui('member-mode-signup').setAttribute('aria-pressed', String(active));
+  ui('member-submit').textContent = active ? '가입하기' : '로그인';
+  status.textContent = '';
+}
+
+function displayGoal() {
+  goalText.value = goals.get(goalType.value) ?? '';
+}
+
+function setGoalControls(loading) {
+  goalType.disabled = goalText.disabled = goalSave.disabled = loading;
+}
+
+async function refreshProfile(owner) {
+  goals = new Map();
+  goalForm.reset();
+  setGoalControls(true);
+  goalStatus.textContent = '';
+  const summary = ui('member-profile-summary');
+  summary.textContent = '';
+  summary.hidden = true;
+  if (!owner) return;
+  const [profile, saved] = await Promise.all([
+    client.from('roleplay_member_profiles').select('nickname,user_type,practice_type').eq('owner_id', owner).maybeSingle(),
+    client.from(goalsTable).select('practice_type,goal').eq('owner_id', owner)
+  ]);
+  if (user?.id !== owner) return;
+  if (profile.data) {
+    const { nickname, user_type: type, practice_type: practice } = profile.data;
+    const label = (id, value) => [...ui(id).options].find(option => option.value === value)?.textContent;
+    summary.textContent = [nickname, label('member-user-type', type), label('member-practice-type', practice)].filter(Boolean).join(' · ');
+    summary.hidden = false;
+    goalType.value = practice;
+  }
+  if (saved.error) {
+    goalStatus.textContent = '목표를 불러오지 못했습니다. 화면을 새로고침해 주세요.';
     return;
   }
-  const buttons = form.querySelectorAll('button');
-  buttons.forEach(button => { button.disabled = true; });
-  status.textContent = signup ? '가입을 요청하고 있습니다.' : '로그인 중입니다.';
+  goals = new Map(saved.data.map(item => [item.practice_type, item.goal]));
+  displayGoal();
+  setGoalControls(false);
+}
+
+goalType.addEventListener('change', () => {
+  displayGoal();
+  goalStatus.textContent = '';
+});
+goalForm.addEventListener('submit', async event => {
+  event.preventDefault();
+  const owner = user?.id;
+  if (!owner || goalSave.disabled) return;
+  const practice = goalType.value;
+  const goal = goalText.value.trim();
+  setGoalControls(true);
+  goalStatus.textContent = '저장하는 중입니다.';
   try {
-    const result = signup
+    const result = goal
+      ? await client.from(goalsTable).upsert({ owner_id: owner, practice_type: practice, goal })
+      : await client.from(goalsTable).delete().eq('owner_id', owner).eq('practice_type', practice);
+    if (user?.id !== owner) return;
+    if (result.error) throw result.error;
+    if (goal) goals.set(practice, goal);
+    else goals.delete(practice);
+    displayGoal();
+    goalStatus.textContent = goal ? '목표를 저장했습니다.' : '이 유형의 목표를 비웠습니다.';
+  } catch {
+    if (user?.id === owner) goalStatus.textContent = '목표를 저장하지 못했습니다. 다시 시도해 주세요.';
+  } finally {
+    if (user?.id === owner) setGoalControls(false);
+  }
+});
+
+ui('member-mode-login').addEventListener('click', () => setSignup(false));
+ui('member-mode-signup').addEventListener('click', () => setSignup(true));
+form.addEventListener('submit', async event => {
+  event.preventDefault();
+  const registering = signup;
+  const email = ui('member-email').value.trim();
+  const password = ui('member-password').value;
+  let profile;
+  if (registering) {
+    const phone = ui('member-phone').value.trim().replace(/[\s().-]/g, '');
+    const nickname = ui('member-nickname').value.trim();
+    if (!/^\+?[0-9]{8,15}$/.test(phone)) {
+      status.textContent = '휴대폰 번호를 숫자로 입력해 주세요. 국제번호에는 +를 사용할 수 있습니다.';
+      ui('member-phone').focus();
+      return;
+    }
+    if (nickname.length < 2) {
+      status.textContent = '닉네임을 두 글자 이상 입력해 주세요.';
+      ui('member-nickname').focus();
+      return;
+    }
+    profile = { phone, nickname, user_type: ui('member-user-type').value, practice_type: ui('member-practice-type').value };
+  }
+  const buttons = ui('member-auth').querySelectorAll('button');
+  buttons.forEach(button => { button.disabled = true; });
+  status.textContent = registering ? '가입을 요청하고 있습니다.' : '로그인 중입니다.';
+  try {
+    const result = registering
       ? await client.auth.signUp({ email, password, options: {
+        data: { roleplay_signup_profile_v1: profile },
         emailRedirectTo: new URL('./?view=account', location.href).href
       } })
       : await client.auth.signInWithPassword({ email, password });
     if (result.error) {
       status.textContent = result.error.code === 'email_not_confirmed' ? '가입 확인 이메일의 링크를 먼저 눌러 주세요.'
-        : signup ? '가입 요청을 처리하지 못했습니다. 이메일과 비밀번호를 확인하거나 잠시 뒤 다시 시도해 주세요.'
-          : '로그인할 수 없습니다. 이메일과 비밀번호를 확인해 주세요.';
-    } else if (signup && !result.data.session) {
+        : result.error.code === 'email_address_not_authorized' ? '현재 이 주소로 가입 확인 메일을 보낼 수 없습니다.'
+          : registering ? '가입 정보를 확인하거나 잠시 뒤 다시 시도해 주세요.'
+            : '로그인할 수 없습니다. 이메일과 비밀번호를 확인해 주세요.';
+    } else if (registering && !result.data.session) {
       status.textContent = '확인 이메일을 보냈습니다. 메일의 링크를 누른 뒤 로그인해 주세요.';
     } else {
       status.textContent = '';
