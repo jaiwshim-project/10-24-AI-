@@ -8,7 +8,7 @@
   <link rel="icon" href="./favicon.png">
   <link rel="stylesheet" href="./mobile.css">
   <link rel="stylesheet" href="./admin.css?v=2">
-  <script src="./admin.js?v=2" defer></script>
+  <script src="./admin.js?v=3" defer></script>
 </head>
 <body>
   <main class="admin">
@@ -22,6 +22,10 @@
     </form>
     <p id="metrics-status" role="status"></p>
     <div id="report" hidden>
+      <h2>앱 이용 현황</h2>
+      <dl id="app-usage"></dl>
+      <p class="muted">접속은 앱 페이지를 새로 열 때마다 집계하며 새로고침은 제외합니다. 설치는 브라우저가 설치 완료를 알려 준 횟수입니다. 날짜는 한국 시간 기준입니다.</p>
+      <details><summary>날짜별 접속 횟수</summary><table><thead><tr><th>날짜</th><th>접속</th></tr></thead><tbody id="usage-days"></tbody></table></details>
       <h2>면접 참여 현황</h2>
       <p class="muted">앱에서 집계된 연습을 표시합니다. 날짜는 한국 시간과 면접 시작일을 기준으로 집계합니다. 시작 후 24시간 동안 완료 기록이 없으면 미완료로 집계합니다.</p>
       <dl id="participation"></dl>

@@ -1,7 +1,15 @@
-import { analyticsConfigured, isAnalyticsAdmin, readAnalytics, verifyAnalyticsPin } from '../lib/interview-analytics.mjs';
+import { recordUsage, readUsage, analyticsConfigured, isAnalyticsAdmin, readAnalytics, verifyAnalyticsPin } from '../lib/interview-analytics.mjs';
 
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
+  if (req.method === 'POST') {
+    if (!['visit', 'install'].includes(req.body?.event) || !req.headers.origin ||
+        req.headers.origin !== 'https://' + req.headers.host) return res.status(400).end();
+    try {
+      await recordUsage(req.body.event);
+      return res.status(204).end();
+    } catch { return res.status(503).end(); }
+  }
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
     return res.status(405).json({ error: 'GET 요청만 지원합니다.' });
@@ -24,7 +32,7 @@ export default async function handler(req, res) {
   }
   try {
     const report = await readAnalytics(days, type);
-    return report ? res.status(200).json(report)
+    return report ? res.status(200).json({ ...report, usage: await readUsage() })
       : res.status(422).json({ error: '선택한 기간의 기록이 너무 많습니다. 더 짧은 기간을 선택해 주세요.' });
   } catch {
     return res.status(503).json({ error: '집계 저장소에 연결할 수 없습니다. 잠시 뒤 다시 시도해 주세요.' });

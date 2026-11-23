@@ -58,6 +58,17 @@ function renderCounseling(counseling) {
 }
 
 function render(data) {
+  const usage = data.usage;
+  renderMetrics(field('app-usage'), [
+    ['누적 앱 설치', usage.installs + '회'], ['오늘 접속', usage.today + '회'], ['누적 접속', usage.total + '회']
+  ]);
+  const usageDays = field('usage-days');
+  usageDays.replaceChildren();
+  for (const entry of data.daily) {
+    const row = add(usageDays, 'tr', '');
+    add(row, 'th', entry.date).scope = 'row';
+    add(row, 'td', (usage.daily[entry.date] ?? 0) + '회');
+  }
   renderCounseling(data.counseling);
   renderMetrics(field('participation'), [
     ['참여 기기', data.participants + '대'],
